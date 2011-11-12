@@ -1,46 +1,51 @@
-This is a DataMapper plugin that provides validations for DataMapper model classes.
+This module provides validations for any Ruby class.
 
-== Setup
-DataMapper validation capabilities are automatically available for DataMapper resources when you require dm-validations' in your application. There is no need to manually include anything, every DataMapper::Resource will be able to handle validations once this gem got required.
+== Specifying Validations
 
-== Specifying Model Validations
-
-There are two primary ways to implement validations for your models
+There are two primary ways to implement validations
 
 1) Placing validation methods with properties as params in your class
 
-  require 'dm-core'
-  require 'dm-validations'
+  require 'aequitas'
 
   class ProgrammingLanguage
-    include DataMapper::Resource
-    property :name, String
+    include Aequitas
+
+    attr_accessor :name
+
     validates_presence_of :name
   end
 
-2) Using auto-validations, please see DataMapper::Validation::AutoValidations. Note that not all validations that are provided via validation methods, are also available as autovalidation options. If they are available, they're functionally equivalent though.
+2) Using inferred validations on Virtus attributes, please see Aequitas::Inferred.
+Note that not all validations that are provided via validation methods,
+are also available as autovalidation options. If they are available,
+they're functionally equivalent though.
 
   class ProgrammingLanguage
-    include DataMapper::Resource
-    property :name, String, :required => true
+    include Virtus
+    include Aequitas
+
+    attribute :name, String, :required => true
   end
 
-See data_mapper/validation/macros.rb for to learn about the complete collection of validation rules available.
+See Aequitas::Macros to learn about the complete collection of validation rules available.
 
 == Validating
 
-DataMapper validations, when included, alter the default save/create/update process for a model.  Unless you specify a context the resource must be valid in the :default context before saving.
-
-You may manually validate a resource using the valid? method, which will return true if the resource is valid, and false if it is invalid.
+Aequitas validations may be manually evaluated against a resource using the
+`#valid?` method, which will return true if the resource is valid,
+and false if it is invalid.
 
 == Working with Validation Errors
 
-If your validators find errors in your model, they will populate the DataMapper::Validation::ViolationSet object that is available through each of your models via calls to your model's errors method.
+If an instance fails one or more validation rules, Aequitas::Violation instances
+will populate the Aequitas::ViolationSet object that is available through
+the #errors method.
 
 For example:
 
   my_account = Account.new(:name => "Jose")
-  if my_account.save
+  if my_account.valid?
     # my_account is valid and has been saved
   else
     my_account.errors.each do |e|
@@ -48,24 +53,22 @@ For example:
     end
   end
 
-See DataMapper::Validation::ViolationSet for all you can do with your model's
-errors method.
+See Aequitas::ViolationSet for all you can do with the #errors method.
 
 == Contextual Validation
 
-DataMapper Validation also provide a means of grouping your validations into
+Aequitas also provide a means of grouping your validations into
 contexts. This enables you to run different sets of validations when you
-need it. For instance, the same model may not only behave differently
-when initially saved or saved on update, but also require special validation sets
-for publishing, exporting, importing and so on.
+need it. For example, an instance may require separate validation rules
+depending on its state: publishing, exporting, importing and so on.
 
 Again, using our example for pure Ruby class validations:
 
   class ProgrammingLanguage
+    include Virtus
+    include Aequitas
 
-    include DataMapper::Resource
-
-    property :name, String
+    attribute :name, String
 
     def ensure_allows_manual_memory_management
       # ...
@@ -95,14 +98,14 @@ specifying context explicitly), again, :default context is used. One validation
 can be used in two, three or five contexts if you like:
 
   class Book
+    include Virtus
+    include Aequitas
 
-    include ::DataMapper::Resource
+    attribute :id,           Serial
+    attribute :name,         String
 
-    property :id,           Serial
-    property :name,         String
-
-    property :agreed_title, String
-    property :finished_toc, Boolean
+    attribute :agreed_title, String
+    attribute :finished_toc, Boolean
 
     # used in all contexts, including default
     validates_presence_of :name,         :when => [:default, :sending_to_print]
