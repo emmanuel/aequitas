@@ -1,12 +1,14 @@
 # -*- encoding: utf-8 -*-
 
-require 'forwardable'
-require 'data_mapper/support/equalizer'
+require 'aequitas/exceptions'
+require 'aequitas/equalizable'
 require 'aequitas/message_transformer'
 
 module Aequitas
-
     class Violation
+      extend Aequitas::Equalizable
+
+      equalize_on :resource, :rule, :custom_message, :attribute_name
 
       def self.default_transformer
         @default_transformer ||= MessageTransformer::Default.new
@@ -100,7 +102,7 @@ module Aequitas
         end
       end
 
-      # In general we want DataMapper::Equalizer-type equality/equivalence,
+      # In general we want Aequitas::Equalizable-type equality/equivalence,
       # but this allows direct equivalency test against Strings, which is handy
       def ==(other)
         if other.respond_to?(:to_str)
@@ -110,26 +112,5 @@ module Aequitas
         end
       end
 
-      module Equalization
-        extend DataMapper::Equalizer
-
-        EQUALIZE_ON = [:resource, :rule, :custom_message, :attribute_name]
-
-        equalize *EQUALIZE_ON
-
-        # TODO: could this definition of #inspect be moved into DataMapper::Equalizer itself?
-        #   It would provide a reasonable default implementation of #inspect
-        #   It would eliminate the need for an EQUALIZE_ON constant (and the splat)
-        def inspect
-          out = "#<#{self.class.name}"
-          self.class::Equalization::EQUALIZE_ON.each do |ivar_name|
-            out << " @#{ivar_name}=#{__send__(ivar_name).inspect}"
-          end
-          out << ">"
-        end
-      end
-      include Equalization
-
     end # class Violation
-
 end # module Aequitas

@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+require 'aequitas/blank'
 require 'aequitas/support/ordered_hash'
 require 'aequitas/violation'
 
@@ -51,6 +52,8 @@ module Aequitas
           end
 
         violations[violation.attribute_name] << violation
+
+        self
       end
 
       # Collect all violations into a single list.
@@ -60,7 +63,7 @@ module Aequitas
         violations.inject([]) do |list, (attribute_name, violations)|
           messages = violations
           messages = violations.full_messages if violations.respond_to?(:full_messages)
-          list += messages
+          list.concat(messages)
         end
       end
 
@@ -84,7 +87,7 @@ module Aequitas
       # @api public
       def each
         violations.each_value do |v|
-          yield(v) unless DataMapper::Ext.blank?(v)
+          yield(v) unless Aequitas.blank?(v)
         end
       end
 
