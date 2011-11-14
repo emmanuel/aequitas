@@ -2,84 +2,82 @@
 
 require 'forwardable'
 require 'set'
-require 'data_mapper/support/equalizer'
+require 'aequitas/equalizable'
 
 module Aequitas
+  class RuleSet
+    # Holds a collection of Rule instances to be run against
+    # Resources to validate the Resources in a specific context
 
-    class RuleSet
-      # Holds a collection of Rule instances to be run against
-      # Resources to validate the Resources in a specific context
+    extend Equalizable
+    extend Forwardable
+    include Enumerable
 
-      extend DataMapper::Equalizer
-      extend Forwardable
-      include Enumerable
+    equalize_on :rules
 
-      # @api public
-      attr_reader :rules
+    # @api public
+    def_delegators :attribute_index, :[], :fetch
 
-      # @api private
-      attr_reader :attribute_index
+    # @api public
+    def_delegators :rules, :each, :empty?
 
-      # @api public
-      attr_accessor :optimize
+    # @api public
+    attr_reader :rules
 
-      equalize :rules
+    # @api private
+    attr_reader :attribute_index
 
-      # @api public
-      def_delegators :attribute_index, :[], :fetch
+    # @api public
+    attr_accessor :optimize
 
-      # @api public
-      def_delegators :rules, :each, :empty?
+    def initialize(optimize = false)
+      @optimize = optimize
 
-      def initialize(optimize = false)
-        @optimize = optimize
+      @rules           = Set.new
+      @attribute_index = Hash.new { |h,k| h[k] = [] }
+    end
 
-        @rules           = Set.new
-        @attribute_index = Hash.new { |h,k| h[k] = [] }
+    def <<(rule)
+      unless rules.include?(rule)
+        rules << rule
+        attribute_index[rule.attribute_name] << rule
       end
+      self
+    end
 
-      def <<(rule)
-        unless rules.include?(rule)
-          rules << rule
-          attribute_index[rule.attribute_name] << rule
-        end
-        self
-      end
+    # Execute all rules in this context against the resource.
+    # 
+    # @param [Object] resource
+    #   the resource to be validated
+    # 
+    # @return [Array(Violation)]
+    #   an Array of Violations
+    def validate(resource)
+      rules = rules_for_resource(resource)
+      rules.map { |rule| rule.validate(resource) }.compact
+    end
 
-      # Execute all rules in this context against the resource.
-      # 
-      # @param [Object] resource
-      #   the resource to be validated
-      # 
-      # @return [Array(Violation)]
-      #   an Array of Violations
-      def validate(resource)
-        rules = rules_for_resource(resource)
-        rules.map { |rule| rule.validate(resource) }.compact
-      end
+    # Assimilate all the rules from another RuleSet into the receiver
+    # 
+    # @param [RuleSet, Array] rules
+    #   The other RuleSet whose rules are to be assimilated
+    # 
+    # @return [RuleSet]
+    #   +self+, the receiver
+    def concat(rules)
+      rules.each { |rule| self << rule.dup }
+      self
+    end
 
-      # Assimilate all the rules from another RuleSet into the receiver
-      # 
-      # @param [RuleSet, Array] rules
-      #   The other RuleSet whose rules are to be assimilated
-      # 
-      # @return [RuleSet]
-      #   +self+, the receiver
-      def concat(rules)
-        rules.each { |rule| self << rule.dup }
-        self
-      end
+    def inspect
+      "#<#{ self.class } {#{ rules.map { |e| e.inspect }.join( ', ' ) }}>"
+    end
 
-      def inspect
-        "#<#{ self.class } {#{ rules.map { |e| e.inspect }.join( ', ' ) }}>"
-      end
+  private
 
-    private
+    def rules_for_resource(resource)
+      rules.entries.select { |r| r.execute?(resource) }
+    end
 
-      def rules_for_resource(resource)
-        rules.entries.select { |r| r.execute?(resource) }
-      end
-
-    end # class RuleSet
-
+  end # class RuleSet
 end # module Aequitas

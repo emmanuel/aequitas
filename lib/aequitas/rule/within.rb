@@ -3,27 +3,25 @@
 require 'aequitas/rule'
 
 module Aequitas
-    class Rule
+  class Rule
+    module Within
 
-      module Within
+      # TODO: DRY this up (also implemented in Rule)
+      def self.rules_for(attribute_name, options)
+        Array(new(attribute_name, options))
+      end
 
-        # TODO: DRY this up (also implemented in Rule)
-        def self.rules_for(attribute_name, options)
-          Array(new(attribute_name, options))
+      # TODO: move options normalization into the validator macros
+      def self.new(attribute_name, options)
+        if options.fetch(:set).is_a?(::Range)
+          Within::Range.new(attribute_name, options)
+        else
+          Within::Set.new(attribute_name, options)
         end
+      end
 
-        # TODO: move options normalization into the validator macros
-        def self.new(attribute_name, options)
-          if options.fetch(:set).is_a?(::Range)
-            Within::Range.new(attribute_name, options)
-          else
-            Within::Set.new(attribute_name, options)
-          end
-        end
-
-      end # module Within
-
-    end # class Rule
+    end # module Within
+  end # class Rule
 end # module Aequitas
 
 require 'aequitas/rule/within/range'

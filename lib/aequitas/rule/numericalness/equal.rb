@@ -3,30 +3,28 @@
 require 'aequitas/rule/numericalness'
 
 module Aequitas
-    class Rule
-      module Numericalness
+  class Rule
+    module Numericalness
+      class Equal < Rule
 
-        class Equal < Rule
+        include Numericalness
 
-          include Numericalness
+        def valid_numericalness?(value)
+          value == expected
+        rescue ArgumentError
+          # TODO: figure out better solution for: can't compare String with Integer
+          true
+        end
 
-          def valid_numericalness?(value)
-            value == expected
-          rescue ArgumentError
-            # TODO: figure out better solution for: can't compare String with Integer
-            true
-          end
+        def violation_type(resource)
+          :equal_to
+        end
 
-          def violation_type(resource)
-            :equal_to
-          end
+        def violation_data(resource)
+          [ [ :expected, expected ] ]
+        end
 
-          def violation_data(resource)
-            [ [ :expected, expected ] ]
-          end
-
-        end # class Equal
-
-      end # module Numericalness
-    end # class Rule
+      end # class Equal
+    end # module Numericalness
+  end # class Rule
 end # module Aequitas

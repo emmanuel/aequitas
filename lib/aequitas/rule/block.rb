@@ -3,33 +3,31 @@
 require 'aequitas/rule'
 
 module Aequitas
-    class Rule
+  class Rule
+    class Block < Rule
 
-      class Block < Rule
+      attr_reader :block
 
-        attr_reader :block
-
-        def initialize(attribute_name, options, &block)
-          unless block_given?
-            raise ArgumentError, 'cannot initialize a Block validator without a block'
-          end
-
-          super
-
-          @block = block
+      def initialize(attribute_name, options, &block)
+        unless block_given?
+          raise ArgumentError, 'cannot initialize a Block validator without a block'
         end
 
-        def validate(resource)
-          result, error_message = resource.instance_eval(&self.block)
+        super
 
-          if result
-            nil
-          else
-            Violation.new(resource, error_message, self)
-          end
+        @block = block
+      end
+
+      def validate(resource)
+        result, error_message = resource.instance_eval(&self.block)
+
+        if result
+          nil
+        else
+          Violation.new(resource, error_message, self)
         end
+      end
 
-      end # class Block
-
-    end # class Rule
+    end # class Block
+  end # class Rule
 end # module Aequitas

@@ -3,33 +3,31 @@
 require 'aequitas/rule'
 
 module Aequitas
-    class Rule
+  class Rule
+    class Method < Rule
 
-      class Method < Rule
+      EQUALIZE_ON = superclass::EQUALIZE_ON.dup << :method
 
-        EQUALIZE_ON = superclass::EQUALIZE_ON.dup << :method
+      equalize *EQUALIZE_ON
 
-        equalize *EQUALIZE_ON
+      attr_reader :method
 
-        attr_reader :method
+      def initialize(attribute_name, options={})
+        super
 
-        def initialize(attribute_name, options={})
-          super
+        @method = options.fetch(:method, attribute_name)
+      end
 
-          @method = options.fetch(:method, attribute_name)
+      def validate(resource)
+        result, error_message = resource.__send__(method)
+
+        if result
+          nil
+        else
+          Violation.new(resource, error_message, self)
         end
+      end
 
-        def validate(resource)
-          result, error_message = resource.__send__(method)
-
-          if result
-            nil
-          else
-            Violation.new(resource, error_message, self)
-          end
-        end
-
-      end # class Method
-
-    end # class Rule
+    end # class Method
+  end # class Rule
 end # module Aequitas

@@ -433,6 +433,6 @@ module Aequitas
     def to_h
       @hash.dup
     end
-  end
 
+  end # class OrderedHash
 end # module Aequitas
