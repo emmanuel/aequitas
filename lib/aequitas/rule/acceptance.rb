@@ -4,7 +4,6 @@ require 'aequitas/rule'
 
 module Aequitas
     class Rule
-
       # TODO: update this to inherit from Rule::Within::Set
       class Acceptance < Rule
 
@@ -42,6 +41,5 @@ module Aequitas
         end
 
       end # class Acceptance
-
     end # class Rule
 end # module Aequitas

@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-require 'data_mapper/support/equalizer'
+require 'aequitas/blank'
+require 'aequitas/equalizable'
 require 'aequitas/message_transformer'
 require 'aequitas/violation'
 
@@ -9,13 +10,10 @@ module Aequitas
     # be intertwined with message generation.
     # Also, supporting multiple validation types per validator is too complicated
     class Rule
-      extend DataMapper::Equalizer
+      extend Equalizable
 
-      EQUALIZE_ON = [
-          :attribute_name, :allow_nil, :allow_blank,
-          :custom_message, :if_clause, :unless_clause]
-
-      equalize *EQUALIZE_ON
+      equalize_on :attribute_name, :allow_nil, :allow_blank,
+                  :custom_message, :if_clause, :unless_clause
 
       # @api private
       attr_reader :attribute_name
@@ -132,27 +130,6 @@ module Aequitas
         [ ]
       end
 
-      # Add an error message to a resource. If the error corresponds to
-      # a specific attribute name of the resource, add it to the errors for that
-      # attribute name, otherwise add it under the :general attribute name
-      #
-      # @param [Object] resource
-      #   The resource that has the error.
-      # @param [String] message
-      #   The message to add.
-      # @param [Symbol] attribute_name
-      #   The name of the field that caused the error.
-      #
-      # @return [Rule]
-      #   The receiver (self)
-      # 
-      # TODO: remove this method
-      #   Rules should return Violations, not mutate resource
-      def add_error(resource, message, attribute_name = :general)
-        resource.errors.add(attribute_name, message)
-        self
-      end
-
       def allow_nil?
         defined?(@allow_nil) ? @allow_nil : false
       end
@@ -172,25 +149,14 @@ module Aequitas
       #   true if blank/nil is allowed, and the value is blank/nil.
       #
       # @api private
+      # 
+      # TODO: rename to something more intention-revealing... 'opt_out?'
       def optional?(value)
         if value.nil?
           defined?(@allow_nil) ? allow_nil? : allow_blank?
-        elsif DataMapper::Ext.blank?(value)
+        elsif Aequitas.blank?(value)
           allow_blank?
         end
-      end
-
-      def inspect
-        out = "#<#{self.class.name}"
-        # out << "@attribute_name=#{attribute_name.inspect} "
-        # out << "@if_clause=#{if_clause.inspect} "         if if_clause
-        # out << "@unless_clause=#{unless_clause.inspect} " if unless_clause
-        # out << "@options=#{options.inspect}>"
-        self.class::EQUALIZE_ON.each do |ivar|
-          value = send(ivar)
-          out << " @#{ivar}=#{value.inspect}"
-        end
-        out << ">"
       end
 
       alias_method :to_s, :inspect

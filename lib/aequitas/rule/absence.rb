@@ -4,7 +4,6 @@ require 'aequitas/rule'
 
 module Aequitas
     class Rule
-
       class Absence < Rule
 
         def initialize(attribute_name, options = {})
@@ -24,6 +23,5 @@ module Aequitas
         end
 
       end # class Absence
-
     end # class Rule
 end # module Aequitas
