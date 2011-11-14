@@ -16,7 +16,7 @@ There are two primary ways to implement validations
     validates_presence_of :name
   end
 
-2) Using inferred validations on Virtus attributes, please see Aequitas::Inferred.
+2) (TODO) Using inferred validations on Virtus attributes, please see Aequitas::Inferred.
 Note that not all validations that are provided via validation methods,
 are also available as autovalidation options. If they are available,
 they're functionally equivalent though.
