@@ -18,14 +18,9 @@ module Aequitas
         assert_same message, Rule.new(:bar, message: message).custom_message
       end
 
-      it 'sets #if_clause to the :if option' do
-        if_clause = :foo
-        assert_same if_clause, Rule.new(:bar, if: if_clause).if_clause
-      end
-
-      it 'sets #unless_clause to the :unless option' do
-        unless_clause = :foo
-        assert_same unless_clause, Rule.new(:bar, unless: unless_clause).unless_clause
+      it 'initializes #guard with the :if and :unless options' do
+        expected_guard = Rule::Guard.new(if: :a, unless: :b)
+        assert_equal expected_guard, Rule.new(:bar, if: :a, unless: :b).guard
       end
     end
 

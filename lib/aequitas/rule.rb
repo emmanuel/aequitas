@@ -2,33 +2,25 @@
 
 require 'aequitas/blank'
 require 'aequitas/equalizable'
-require 'aequitas/message_transformer'
+require 'aequitas/rule/guard'
 require 'aequitas/violation'
 
 module Aequitas
   class Rule
     extend Equalizable
 
-    equalize_on :attribute_name, :allow_nil, :allow_blank,
-                :custom_message, :if_clause, :unless_clause
+    equalize_on :attribute_name, :allow_nil, :allow_blank, :custom_message, :guard
 
     # @api private
     attr_reader :attribute_name
-
     # @api private
     attr_reader :allow_nil
-
     # @api private
     attr_reader :allow_blank
-
     # @api private
     attr_reader :custom_message
-
     # @api private
-    attr_reader :if_clause
-
-    # @api private
-    attr_reader :unless_clause
+    attr_reader :guard
 
     # Get the validators for the given attribute_name and options
     # 
@@ -68,32 +60,16 @@ module Aequitas
     def initialize(attribute_name, options = {})
       @attribute_name = attribute_name
       @custom_message = options.fetch(:message, nil)
-      @if_clause      = options.fetch(:if,      nil)
-      @unless_clause  = options.fetch(:unless,  nil)
+      @guard          = RuleGuard.new(if: options[:if], unless: options[:unless])
 
       @allow_nil   = options[:allow_nil]   if options.include?(:allow_nil)
       @allow_blank = options[:allow_blank] if options.include?(:allow_blank)
     end
 
-    # Determines if this validator should be run against the
-    # resource by evaluating the :if and :unless clauses
-    # optionally passed while specifying any validator.
-    #
-    # @param [Object] resource
-    #   The resource that we check against.
-    #
-    # @return [Boolean]
-    #   true if should be run, otherwise false.
-    #
-    # @api private
+    # Determines if this validator should be run against the resource
+    # by delegating to the guard configured for this rule
     def execute?(resource)
-      if if_clause = self.if_clause
-        evaluate_conditional_clause(resource, if_clause)
-      elsif unless_clause = self.unless_clause
-        !evaluate_conditional_clause(resource, unless_clause)
-      else
-        true
-      end
+      guard.allow?(resource)
     end
 
     # Validate the +resource+ arg against this Rule
@@ -170,15 +146,6 @@ module Aequitas
 
     def allow_blank!
       @allow_blank = true
-    end
-
-    # @api private
-    def evaluate_conditional_clause(resource, clause)
-      if clause.kind_of?(Symbol)
-        resource.__send__(clause)
-      elsif clause.respond_to?(:call)
-        clause.call(resource)
-      end
     end
 
     # Get the corresponding Resource property, if it exists.
