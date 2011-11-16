@@ -50,8 +50,11 @@ module Aequitas
           Violation.new(resource, message, nil, attribute_name_or_violation)
         end
 
-      violations[violation.attribute_name] << violation
+      self << violation
+    end
 
+    def <<(violation)
+      violations[violation.attribute_name] << violation
       self
     end
 
@@ -92,7 +95,7 @@ module Aequitas
 
     # @api public
     def empty?
-      violations.all? { |attribute_name, violations| violations.empty? }
+      violations.all? { |_, violations| violations.empty? }
     end
 
     # @api public

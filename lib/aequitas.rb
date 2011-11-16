@@ -86,7 +86,6 @@ module Aequitas
     __send__(attribute_name) if respond_to?(attribute_name, true)
   end
 
-
   module ClassMethods
     include Aequitas::Macros
 
