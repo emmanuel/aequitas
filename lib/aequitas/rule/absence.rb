@@ -14,8 +14,7 @@ module Aequitas
       end
 
       def valid?(resource)
-        value = resource.validation_property_value(attribute_name)
-        DataMapper::Ext.blank?(value)
+        Aequitas.blank?(attribute_value(resource))
       end
 
       def violation_type(resource)

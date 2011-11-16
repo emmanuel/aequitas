@@ -24,7 +24,7 @@ module Aequitas
       end
 
       def valid?(resource)
-        value = resource.validation_property_value(attribute_name)
+        value = attribute_value(resource)
         return true if exempt_value?(value)
         accept.include?(value)
       end

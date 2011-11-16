@@ -23,15 +23,14 @@ module Aequitas
       end
 
       def valid?(resource)
-        value = resource.validation_property_value(attribute_name)
-        return true if optional?(value)
+        value = attribute_value(resource)
+        return true if skip?(value)
 
-        if resource.model.properties.named?(attribute_name)
-          return true unless resource.attribute_dirty?(attribute_name)
-        end
+        value == confirmation_value(resource)
+      end
 
-        confirm_value = resource.instance_variable_get("@#{@confirm_attribute_name}")
-        value == confirm_value
+      def confirmation_value(resource)
+        resource.instance_variable_get("@#{@confirm_attribute_name}")
       end
 
       def violation_type(resource)

@@ -56,9 +56,9 @@ module Aequitas
         #   if so, return a dummy validator when expected is nil
         return true if expected.nil?
 
-        value = resource.validation_property_value(attribute_name)
+        value = attribute_value(resource)
 
-        optional?(value) || valid_numericalness?(value)
+        skip?(value) || valid_numericalness?(value)
       end
 
     private

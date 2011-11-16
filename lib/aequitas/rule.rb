@@ -112,6 +112,10 @@ module Aequitas
       end
     end
 
+    def attribute_value(resource)
+      resource.validation_attribute_value(attribute_name)
+    end
+
     # @api private
     def violation_info(resource)
       Hash[ violation_data(resource) ]
@@ -147,8 +151,8 @@ module Aequitas
     #
     # @api private
     # 
-    # TODO: rename to something more intention-revealing... 'opt_out?'
-    def optional?(value)
+    # TODO: rename to something more intention-revealing... #opt_out?, #skip?
+    def skip?(value)
       if value.nil?
         defined?(@allow_nil) ? allow_nil? : allow_blank?
       elsif Aequitas.blank?(value)

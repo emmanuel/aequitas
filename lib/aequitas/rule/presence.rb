@@ -17,9 +17,9 @@ module Aequitas
       # Other property types are considered present if non-blank.
       # Non-properties are considered present if non-blank.
       def valid?(resource)
-        value = resource.validation_property_value(attribute_name)
+        value = attribute_value(resource)
 
-        boolean_type?(resource) ? !value.nil? : !DataMapper::Ext.blank?(value)
+        boolean_type?(resource) ? !value.nil? : !Aequitas.blank?(value)
       end
 
       def violation_type(resource)
@@ -38,6 +38,7 @@ module Aequitas
       # TODO: break this into concrete types and move the property check
       # into #initialize. Will require adding model to signature of #initialize
       def boolean_type?(resource)
+        return false # TODO: rework this to be independent of DM
         property = get_resource_property(resource, attribute_name)
 
         property ? property.load_as == TrueClass : false

@@ -8,7 +8,7 @@ module Aequitas
 
       def valid?(resource)
         property = get_resource_property(resource, attribute_name)
-        value    = resource.validation_property_value(attribute_name)
+        value    = attribute_value(resource)
 
         value.nil? || property.value_dumped?(value)
       end

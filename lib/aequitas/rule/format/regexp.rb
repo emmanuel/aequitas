@@ -23,8 +23,8 @@ module Aequitas
         end
 
         def valid?(resource)
-          value = resource.validation_property_value(attribute_name)
-          return true if optional?(value)
+          value = attribute_value(resource)
+          return true if skip?(value)
 
           value ? value.to_s =~ self.format : false
         rescue ::Encoding::CompatibilityError

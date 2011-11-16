@@ -46,14 +46,9 @@ module Aequitas
       end
 
       def valid?(resource)
-        value = resource.validation_property_value(attribute_name)
+        value = attribute_value(resource)
 
-        if optional?(value)
-          true
-        else
-          length = value_length(value.to_s)
-          valid_length?(length)
-        end
+        skip?(value) || valid_length?(value_length(value.to_s))
       end
 
     private

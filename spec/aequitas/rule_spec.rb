@@ -61,37 +61,37 @@ module Aequitas
       end
     end
 
-    describe '#optional?' do
+    describe '#skip?' do
       it 'is false when allow_nil is absent and the value is nil' do
-        refute_operator Rule.new(:foo), :optional?, nil
+        refute_operator Rule.new(:foo), :skip?, nil
       end
 
       it 'is false when allow_nil is absent and the value is non-nil' do
-        refute_operator Rule.new(:foo), :optional?, :foo
+        refute_operator Rule.new(:foo), :skip?, :foo
       end
 
       it 'is true when allow_nil is true and the value is nil' do
-        assert_operator Rule.new(:foo, allow_nil: true), :optional?, nil
+        assert_operator Rule.new(:foo, allow_nil: true), :skip?, nil
       end
 
       it 'is false when allow_nil is true and the value is non-nil' do
-        refute_operator Rule.new(:foo, allow_nil: true), :optional?, :foo
+        refute_operator Rule.new(:foo, allow_nil: true), :skip?, :foo
       end
 
       it 'is false when allow_nil is false and the value is nil' do
-        refute_operator Rule.new(:foo, allow_nil: false), :optional?, nil
+        refute_operator Rule.new(:foo, allow_nil: false), :skip?, nil
       end
 
       it 'is false when allow_nil is false and the value is non-nil' do
-        refute_operator Rule.new(:foo, allow_nil: false), :optional?, :foo
+        refute_operator Rule.new(:foo, allow_nil: false), :skip?, :foo
       end
 
       it 'is true when allow_blank is true and the value is nil' do
-        assert_operator Rule.new(:foo, allow_blank: true), :optional?, nil
+        assert_operator Rule.new(:foo, allow_blank: true), :skip?, nil
       end
 
       it 'is false when allow_blank is true and the value is non-nil' do
-        refute_operator Rule.new(:foo, allow_blank: true), :optional?, :foo
+        refute_operator Rule.new(:foo, allow_blank: true), :skip?, :foo
       end
     end
   end

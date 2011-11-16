@@ -22,9 +22,9 @@ module Aequitas
         end
 
         def valid?(resource)
-          value = resource.validation_property_value(attribute_name)
+          value = attribute_value(resource)
 
-          optional?(value) || set.include?(value)
+          skip?(value) || set.include?(value)
         end
 
         def violation_type(resource)
