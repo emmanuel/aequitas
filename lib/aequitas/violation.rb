@@ -11,7 +11,7 @@ module Aequitas
     equalize_on :resource, :rule, :custom_message, :attribute_name
 
     def self.default_transformer
-      @default_transformer ||= MessageTransformer::Default.new
+      @default_transformer ||= MessageTransformer.default
     end
 
     def self.default_transformer=(transformer)
