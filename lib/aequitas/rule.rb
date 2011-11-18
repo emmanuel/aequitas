@@ -126,8 +126,6 @@ module Aequitas
     #   true if blank/nil is allowed, and the value is blank/nil.
     #
     # @api private
-    # 
-    # TODO: rename to something more intention-revealing... #opt_out?, #skip?
     def skip?(value)
       if value.nil?
         defined?(@allow_nil) ? allow_nil? : allow_blank?
