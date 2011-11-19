@@ -1,4 +1,4 @@
-gem 'minitest', '~>2.6'
+gem 'minitest', '~>2.8'
 
 require 'minitest/autorun'
 
