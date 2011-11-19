@@ -7,7 +7,7 @@ module Aequitas
     class Guard
       extend Equalizable
 
-    equalize_on :if_test, :unless_test
+      equalize_on [:if_test, :unless_test]
 
       attr_reader :if_test
       attr_reader :unless_test

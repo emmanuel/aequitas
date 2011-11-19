@@ -7,9 +7,7 @@ module Aequitas
     # TODO: update this to inherit from Rule::Within::Set
     class Acceptance < Rule
 
-      EQUALIZE_ON = superclass::EQUALIZE_ON.dup << :accept
-
-      equalize *EQUALIZE_ON
+      equalize_on superclass.equalizer.keys + [:accept]
 
       DEFAULT_ACCEPTED_VALUES = [ '1', 1, 'true', true, 't' ]
 

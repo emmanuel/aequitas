@@ -13,7 +13,7 @@ module Aequitas
     extend Forwardable
     include Enumerable
 
-    equalize_on :rules
+    equalize_on [:rules]
 
     # @api public
     def_delegators :attribute_index, :[], :fetch

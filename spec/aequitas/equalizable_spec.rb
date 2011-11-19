@@ -7,7 +7,7 @@ module Aequitas
       Class.new do
         extend Equalizable
 
-        equalize_on :foo, :bar
+        equalize_on [:foo, :bar]
 
         attr_reader :foo, :bar, :baz
 

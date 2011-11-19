@@ -6,9 +6,7 @@ module Aequitas
   class Rule
     class Method < Rule
 
-      EQUALIZE_ON = superclass::EQUALIZE_ON.dup << :method
-
-      equalize *EQUALIZE_ON
+      equalize_on superclass.equalizer.keys + [:method]
 
       attr_reader :method
 

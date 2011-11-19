@@ -7,9 +7,7 @@ module Aequitas
     module Within
       class Set < Rule
 
-        EQUALIZE_ON = superclass::EQUALIZE_ON.dup << :set
-
-        equalize *EQUALIZE_ON
+        equalize_on superclass.equalizer.keys + [:set]
 
         include Within
 

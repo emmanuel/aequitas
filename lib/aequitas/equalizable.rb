@@ -1,10 +1,11 @@
 # -*- encoding: utf-8 -*-
 
 module Aequitas
+  # TODO: rename ValueObject
   module Equalizable
     attr_reader :equalizer
 
-    def equalize_on(*keys)
+    def equalize_on(keys)
       @equalizer = Equalizer.new(keys)
       @equalizer.compile
       include @equalizer
