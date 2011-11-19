@@ -70,7 +70,7 @@ module Aequitas
     #
     #     attribute :license_agreement_accepted, String
     #     attribute :terms_accepted, String
-    # 
+    #
     #     validates_acceptance_of :license_agreement, :accept => "1"
     #     validates_acceptance_of :terms_accepted, :allow_nil => false
     #
@@ -156,7 +156,7 @@ module Aequitas
     #
     #     attribute :password, String
     #     attribute :email, String
-    # 
+    #
     #     attr_accessor :password_confirmation
     #     attr_accessor :email_repeated
     #
@@ -315,7 +315,7 @@ module Aequitas
     #         return [false, "You're in the wrong zip code"]
     #       end
     #     end
-    # 
+    #
     #     # A call to #valid? will return false and
     #     # populate the object's errors with "You're in the
     #     # wrong zip code" unless zip_code == "94301"
