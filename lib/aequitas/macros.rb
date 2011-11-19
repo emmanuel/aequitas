@@ -303,7 +303,7 @@ module Aequitas
     #     include Virtus
     #     include Aequita
     #
-    #     property :zip_code, String
+    #     attribute :zip_code, String
     #
     #     validates_with_method :zip_code,
     #                          :method => :in_the_right_location?
@@ -391,9 +391,9 @@ module Aequitas
     #     include Virtus
     #     include Aequitas
     #
-    #     property :required_attribute, String
-    #     property :another_required, String
-    #     property :yet_again, String
+    #     attribute :required_attribute, String
+    #     attribute :another_required, String
+    #     attribute :yet_again, String
     #
     #     validates_presence_of :required_attribute
     #     validates_presence_of :another_required, :yet_again
@@ -417,7 +417,7 @@ module Aequitas
     #     include Virtus
     #     include Aequitas
     #
-    #     property :birth_date, Date
+    #     attribute :birth_date, Date
     #
     #     validates_primitive_type_of :birth_date
     #
@@ -446,10 +446,10 @@ module Aequitas
     #
     #     STATES = ['new', 'in_progress', 'published', 'archived']
     #
-    #     property :title, String
-    #     property :body, String
-    #     property :review_state, String
-    #     property :rating, Integer
+    #     attribute :title, String
+    #     attribute :body, String
+    #     attribute :review_state, String
+    #     attribute :rating, Integer
     #
     #     validates_within :review_state, :set => STATES
     #     validates_within :rating,       :set => 1..5
