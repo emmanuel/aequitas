@@ -56,8 +56,8 @@ module Aequitas
 
         @format = options.fetch(:format)
 
-        allow_nil!   unless defined?(@allow_nil)
-        allow_blank! unless defined?(@allow_blank)
+        skip_condition.default_to_allowing_nil!
+        skip_condition.default_to_allowing_blank!
       end
 
       def violation_type(resource)

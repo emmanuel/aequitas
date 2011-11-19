@@ -9,8 +9,8 @@ module Aequitas
       def initialize(attribute_name, options = {})
         super
 
-        @allow_nil   = false
-        @allow_blank = false
+        skip_condition.reject_nil!
+        skip_condition.reject_blank!
       end
 
       def valid?(resource)

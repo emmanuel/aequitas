@@ -18,24 +18,17 @@ module Aequitas
 
         @accept = Array(options.fetch(:accept, DEFAULT_ACCEPTED_VALUES))
 
-        allow_nil! unless defined?(@allow_nil)
+        skip_condition.default_to_allowing_nil!
       end
 
       def valid?(resource)
         value = attribute_value(resource)
-        return true if exempt_value?(value)
-        accept.include?(value)
+
+        skip?(value) || accept.include?(value)
       end
 
       def violation_type(resource)
         :accepted
-      end
-
-    private
-
-      # TODO: isn't this superfluous considering Rule#optional?
-      def exempt_value?(value)
-        allow_nil? && value.nil?
       end
 
     end # class Acceptance

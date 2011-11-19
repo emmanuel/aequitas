@@ -18,15 +18,14 @@ module Aequitas
           :"#{attribute_name}_confirmation"
         end
 
-        allow_nil!   unless defined?(@allow_nil)
-        allow_blank! unless defined?(@allow_blank)
+        skip_condition.default_to_allowing_nil!
+        skip_condition.default_to_allowing_blank!
       end
 
       def valid?(resource)
         value = attribute_value(resource)
-        return true if skip?(value)
 
-        value == confirmation_value(resource)
+        skip?(value) || value == confirmation_value(resource)
       end
 
       def confirmation_value(resource)
