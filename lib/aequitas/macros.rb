@@ -70,7 +70,7 @@ module Aequitas
     #
     #     attribute :license_agreement_accepted, String
     #     attribute :terms_accepted, String
-    # 
+    #
     #     validates_acceptance_of :license_agreement, :accept => "1"
     #     validates_acceptance_of :terms_accepted, :allow_nil => false
     #
@@ -156,7 +156,7 @@ module Aequitas
     #
     #     attribute :password, String
     #     attribute :email, String
-    # 
+    #
     #     attr_accessor :password_confirmation
     #     attr_accessor :email_repeated
     #
@@ -303,7 +303,7 @@ module Aequitas
     #     include Virtus
     #     include Aequita
     #
-    #     property :zip_code, String
+    #     attribute :zip_code, String
     #
     #     validates_with_method :zip_code,
     #                          :method => :in_the_right_location?
@@ -315,7 +315,7 @@ module Aequitas
     #         return [false, "You're in the wrong zip code"]
     #       end
     #     end
-    # 
+    #
     #     # A call to #valid? will return false and
     #     # populate the object's errors with "You're in the
     #     # wrong zip code" unless zip_code == "94301"
@@ -391,9 +391,9 @@ module Aequitas
     #     include Virtus
     #     include Aequitas
     #
-    #     property :required_attribute, String
-    #     property :another_required, String
-    #     property :yet_again, String
+    #     attribute :required_attribute, String
+    #     attribute :another_required, String
+    #     attribute :yet_again, String
     #
     #     validates_presence_of :required_attribute
     #     validates_presence_of :another_required, :yet_again
@@ -417,7 +417,7 @@ module Aequitas
     #     include Virtus
     #     include Aequitas
     #
-    #     property :birth_date, Date
+    #     attribute :birth_date, Date
     #
     #     validates_primitive_type_of :birth_date
     #
@@ -446,10 +446,10 @@ module Aequitas
     #
     #     STATES = ['new', 'in_progress', 'published', 'archived']
     #
-    #     property :title, String
-    #     property :body, String
-    #     property :review_state, String
-    #     property :rating, Integer
+    #     attribute :title, String
+    #     attribute :body, String
+    #     attribute :review_state, String
+    #     attribute :rating, Integer
     #
     #     validates_within :review_state, :set => STATES
     #     validates_within :rating,       :set => 1..5
