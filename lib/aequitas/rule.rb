@@ -59,8 +59,8 @@ module Aequitas
     def initialize(attribute_name, options = {})
       @attribute_name = attribute_name
       @custom_message = options.fetch(:message, nil)
-      @guard          = Guard.new(options)
-      @skip_condition = SkipCondition.new(options)
+      @guard          = options.fetch(:guard)          { Guard.new(options) }
+      @skip_condition = options.fetch(:skip_condition) { SkipCondition.new(options) }
     end
 
     # Validate the +resource+ arg against this Rule
