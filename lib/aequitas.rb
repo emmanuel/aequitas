@@ -1,19 +1,9 @@
+# -*- encoding: utf-8 -*-
+
 require 'aequitas/version'
 
-# require 'aequitas/support/ordered_hash'
-# 
-# require 'aequitas/exceptions'
-# require 'aequitas/context'
-# require 'aequitas/violation'
-# require 'aequitas/violation_set'
-# 
-# require 'aequitas/rule'
-# require 'aequitas/rule_set'
-# require 'aequitas/contextual_rule_set'
-
+require 'aequitas/class_methods'
 require 'aequitas/violation_set'
-require 'aequitas/contextual_rule_set'
-require 'aequitas/macros'
 
 module Aequitas
 
@@ -85,24 +75,5 @@ module Aequitas
   def validation_property_value(attribute_name)
     __send__(attribute_name) if respond_to?(attribute_name, true)
   end
-
-  module ClassMethods
-    include Aequitas::Macros
-
-    # Return the ContextualRuleSet for this model
-    #
-    # @api public
-    def validation_rules
-      @validation_rules ||= ContextualRuleSet.new(self)
-    end
-
-  private
-
-    # @api private
-    def inherited(base)
-      super
-      base.validation_rules.concat(validation_rules)
-    end
-  end # module ClassMethods
 
 end # module Aequitas
