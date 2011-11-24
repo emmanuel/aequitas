@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../spec_helper'
 require 'aequitas/rule/acceptance'
 
 module Aequitas
