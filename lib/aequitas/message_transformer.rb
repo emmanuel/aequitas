@@ -105,7 +105,7 @@ module Aequitas
         options = {
           :model     => ::I18n.translate("models.#{model_name}"),
           :attribute => ::I18n.translate("attributes.#{model_name}.#{attribute_name}"),
-          :value     => resource.validation_property_value(attribute_name)
+          :value     => resource.validation_attribute_value(attribute_name)
         }.merge(violation.info)
 
         ::I18n.translate("#{i18n_namespace}.#{violation.type}", options)

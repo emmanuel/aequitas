@@ -23,7 +23,7 @@ module Aequitas
   #
   # @api public
   def validate(context_name = default_validation_context)
-    # errors.replace(validation_violations(context_name))
+    # TODO: errors.replace(validation_violations(context_name))
     errors.clear
     validation_violations(context_name).each { |v| errors.add(v) }
 
@@ -72,7 +72,7 @@ module Aequitas
   #   the attribute value for validation.
   # 
   # @api public
-  def validation_property_value(attribute_name)
+  def validation_attribute_value(attribute_name)
     __send__(attribute_name) if respond_to?(attribute_name, true)
   end
 
