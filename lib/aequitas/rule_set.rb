@@ -60,10 +60,9 @@ module Aequitas
     # Assimilate all the rules from another RuleSet into the receiver
     # 
     # @param [RuleSet, Array] rules
-    #   The other RuleSet whose rules are to be assimilated
+    #   The other RuleSet (or Array) whose rules are to be assimilated
     # 
-    # @return [RuleSet]
-    #   +self+, the receiver
+    # @return [self]
     def concat(rules)
       rules.each { |rule| self << rule.dup }
       self
