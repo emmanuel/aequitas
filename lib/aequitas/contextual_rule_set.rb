@@ -80,15 +80,10 @@ module Aequitas
     #    Options supplied to validation macro, example:
     #    {:context=>:default, :maximum=>50, :allow_nil=>true, :message=>nil}
     # 
-    # @option [Symbol] :context
+    # @option [Symbol] :context, :group, :when, :on
     #   the context in which the new rule should be run
-    # @option [Boolean] :allow_nil
-    #   whether or not the new rule should allow nil values
-    # @option [Boolean] :message
-    #   the error message the new rule will provide on validation failure
     # 
-    # @return [ContextualRuleSet]
-    #   This method is a command, thus returns the receiver
+    # @return [self]
     def add(rule_class, attribute_names, options = {}, &block)
       context_names = extract_context_names(options)
 
@@ -111,8 +106,7 @@ module Aequitas
     # @param [ContextualRuleSet] other
     #   the ContextualRuleSet whose rules are to be assimilated
     # 
-    # @return [ContextualRuleSet]
-    #   +self+, the receiver
+    # @return [self]
     def concat(other)
       other.rule_sets.each do |context_name, rule_set|
         context(context_name).concat(rule_set)
@@ -126,11 +120,11 @@ module Aequitas
       new_value
     end
 
-    # Returns the current validation context on the stack if valid for this model,
-    # nil if no RuleSets are defined for the model (and no context names are on
-    # the validation stack), or :default if the current context is invalid for
-    # this model or no contexts have been defined for this model and
-    # no context name is on the stack.
+    # Returns the current validation context on the stack if valid for this contextual rule set,
+    #   nil if no RuleSets are defined (and no context names are on the validation context stack),
+    #   or :default if the current context is invalid for this rule set or
+    #     if no contexts have been defined for this contextual rule set and
+    #     no context name is on the stack.
     #
     # @return [Symbol]
     #   the current validation context from the stack (if valid for this model),
@@ -141,19 +135,24 @@ module Aequitas
     # 
     # @api private
     # 
-    # TODO: simplify the semantics of #current_context, #validate
+    # TODO: this logic behind this method is too complicated.
+    #   simplify the semantics of #current_context, #validate
     def current_context
       context = Aequitas::Context.current
       valid_context?(context) ? context : :default
     end
 
-    # Test if the context is valid for the model
+    # Test if the validation context name is valid for this contextual rule set.
+    #   A validation context name is valid if not nil and either:
+    #     1) no rule sets are defined for this contextual rule set
+    #   OR
+    #     2) there is a rule set defined for the given context name
     #
     # @param [Symbol] context
     #   the context to test
     #
     # @return [Boolean]
-    #   true if the context is valid for the model
+    #   true if the context is valid
     #
     # @api private
     def valid_context?(context_name)
@@ -161,13 +160,14 @@ module Aequitas
         (rule_sets.empty? || rule_sets.include?(context_name))
     end
 
-    # Assert that the given context is valid for this model
+    # Assert that the given validation context name
+    #   is valid for this contextual rule set
     #
     # @param [Symbol] context
     #   the context to test
     #
     # @raise [InvalidContextError]
-    #   raised if the context is not valid for this model
+    #   raised if the context is not valid for this contextual rule set
     #
     # @api private
     # 
@@ -192,14 +192,14 @@ module Aequitas
     # 
     # @api private
     def extract_context_names(options)
-      context_names = [
+      context_name = [
         options.delete(:context),
         options.delete(:group),
         options.delete(:when),
         options.delete(:on)
       ].compact.first
 
-      Array(context_names || :default)
+      Array(context_name || :default)
     end
 
   end # class ContextualRuleSet
