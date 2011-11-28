@@ -9,10 +9,7 @@ module Aequitas
 
         include Format
 
-        EQUALIZE_ON = superclass::EQUALIZE_ON.dup << :format << :format_name
-
-        equalize *EQUALIZE_ON
-
+        equalize_on(superclass.equalizer.keys + [:format, :format_name])
 
         attr_reader :format_name
 
