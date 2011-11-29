@@ -17,26 +17,26 @@ module Aequitas
       def self.new(attribute_name, options)
         options = options.dup
 
-        equal   = options.delete(:is)      || options.delete(:equals)
-        range   = options.delete(:within)  || options.delete(:in)
-        minimum = options.delete(:minimum) || options.delete(:min)
-        maximum = options.delete(:maximum) || options.delete(:max)
+        equal   = options.values_at(:is,  :equals).compact.first
+        range   = options.values_at(:in,  :within).compact.first
+        minimum = options.values_at(:min, :minimum).compact.first
+        maximum = options.values_at(:max, :maximum).compact.first
 
         if minimum && maximum
           range ||= minimum..maximum
         end
 
         if equal
-          Length::Equal.new(attribute_name,   options.merge(:equal => equal))
+          Length::Equal.new(attribute_name,   options.merge(:expected => equal))
         elsif range
-          Length::Range.new(attribute_name,   options.merge(:range => range))
+          Length::Range.new(attribute_name,   options.merge(:expected => range))
         elsif minimum
-          Length::Minimum.new(attribute_name, options.merge(:minimum => minimum))
+          Length::Minimum.new(attribute_name, options.merge(:bound => minimum))
         elsif maximum
-          Length::Maximum.new(attribute_name, options.merge(:maximum => maximum))
+          Length::Maximum.new(attribute_name, options.merge(:bound => maximum))
         else
           # raise ArgumentError, "expected one of :is, :equals, :within, :in, :minimum, :min, :maximum, or :max; got #{options.keys.inspect}"
-          warn "expected length specification: one of :is, :equals, :within, :in, :minimum, :min, :maximum, or :max; got #{options.keys.inspect}"
+          warn "expected length specification: one of :is, :equals, :in, :within, :min, :minimum, :max, or :maximum; got #{options.keys.inspect}"
           Length::Dummy.new(attribute_name, options)
         end
       end

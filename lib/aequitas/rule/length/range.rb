@@ -14,7 +14,7 @@ module Aequitas
         def initialize(attribute_name, options)
           super
 
-          @expected = options.fetch(:range)
+          @expected = options.fetch(:expected)
         end
 
         def violation_type(resource)
