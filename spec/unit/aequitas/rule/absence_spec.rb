@@ -26,7 +26,7 @@ module Aequitas
         end
       end
 
-      describe 'valid?' do
+      describe '#valid?' do
         let(:resource) { MiniTest::Mock.new }
 
         it "is false if the target's attribute is a non-empty string" do
