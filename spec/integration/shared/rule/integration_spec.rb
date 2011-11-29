@@ -3,6 +3,8 @@ require 'minitest/spec'
 module Aequitas
   class Rule
     class IntegrationSpec < MiniTest::Spec
+      class << self; public :describe; end
+
       let(:class_under_test) do
         attribute_name = self.attribute_name
 
