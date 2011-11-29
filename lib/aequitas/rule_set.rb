@@ -2,7 +2,7 @@
 
 require 'forwardable'
 require 'set'
-require 'aequitas/equalizable'
+require 'aequitas/support/equalizable'
 
 module Aequitas
   class RuleSet

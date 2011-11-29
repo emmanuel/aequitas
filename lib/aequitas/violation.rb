@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 require 'aequitas/exceptions'
-require 'aequitas/equalizable'
+require 'aequitas/support/equalizable'
 require 'aequitas/message_transformer'
 
 module Aequitas

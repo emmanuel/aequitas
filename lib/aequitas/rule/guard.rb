@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/equalizable'
+require 'aequitas/support/equalizable'
 
 module Aequitas
   class Rule

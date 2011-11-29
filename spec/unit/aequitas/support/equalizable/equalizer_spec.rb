@@ -1,5 +1,5 @@
-require_relative '../../../spec_helper'
-require 'aequitas/equalizable'
+require_relative '../../../../spec_helper'
+require 'aequitas/support/equalizable'
 
 module Aequitas
   describe Equalizable::Equalizer do
