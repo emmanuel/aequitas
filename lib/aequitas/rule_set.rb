@@ -27,12 +27,7 @@ module Aequitas
     # @api private
     attr_reader :attribute_index
 
-    # @api public
-    attr_accessor :optimize
-
-    def initialize(optimize = false)
-      @optimize = optimize
-
+    def initialize
       @rules           = Set.new
       @attribute_index = Hash.new { |h,k| h[k] = [] }
     end
@@ -42,6 +37,7 @@ module Aequitas
         rules << rule
         attribute_index[rule.attribute_name] << rule
       end
+
       self
     end
 
@@ -55,6 +51,9 @@ module Aequitas
     def validate(resource)
       rules = rules_for_resource(resource)
       rules.map { |rule| rule.validate(resource) }.compact
+      # TODO:
+      #   violations = rules.map { |rule| rule.validate(resource) }.compact
+      #   ViolationSet.new(resource).concat(violations)
     end
 
     # Assimilate all the rules from another RuleSet into the receiver
@@ -65,6 +64,7 @@ module Aequitas
     # @return [self]
     def concat(rules)
       rules.each { |rule| self << rule.dup }
+
       self
     end
 

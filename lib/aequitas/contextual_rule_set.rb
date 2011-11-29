@@ -19,11 +19,6 @@ module Aequitas
     # @api private
     attr_reader :rule_sets
 
-    # Whether to optimize the execution of validators for this model's resources
-    # 
-    # @api public
-    attr_reader :optimize
-
     def_delegators :rule_sets, :each, :empty?
 
     # Clear all named context rule sets
