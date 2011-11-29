@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/blank'
+require 'aequitas/support/blank'
 require 'aequitas/support/equalizable'
 require 'aequitas/rule/guard'
 require 'aequitas/rule/skip_condition'

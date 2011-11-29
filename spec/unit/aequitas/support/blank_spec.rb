@@ -1,5 +1,5 @@
-require_relative '../../spec_helper'
-require 'aequitas/blank'
+require_relative '../../../spec_helper'
+require 'aequitas/support/blank'
 
 module Aequitas
   describe '.blank?' do
