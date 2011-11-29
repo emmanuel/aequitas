@@ -11,7 +11,7 @@ module Aequitas
     #
     # @api public
     def validation_rules
-      @validation_rules ||= ContextualRuleSet.new(self)
+      @validation_rules ||= ContextualRuleSet.new
     end
 
   private

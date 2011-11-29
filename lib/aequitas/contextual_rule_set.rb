@@ -31,9 +31,17 @@ module Aequitas
     # @api public
     def_delegators :rule_sets, :clear
 
-    def initialize(model = nil)
-      @model     = model
-      @rule_sets = Hash.new { |h, context_name| h[context_name] = RuleSet.new }
+    def initialize
+      @rule_sets = Hash.new
+      define_context(:default)
+    end
+
+    def define_context(context_name)
+      rule_sets.fetch(context_name) do |context_name|
+        rule_sets[context_name] = RuleSet.new
+      end
+
+      self
     end
 
     # Delegate #validate to RuleSet
@@ -52,7 +60,7 @@ module Aequitas
     # 
     # @api public
     def context(context_name)
-      rule_sets[context_name]
+      rule_sets.fetch(context_name)
     end
 
     # Retrieve Rules applicable to a given attribute name
@@ -90,12 +98,7 @@ module Aequitas
       attribute_names.each do |attribute_name|
         rules = rule_class.rules_for(attribute_name, options, &block)
 
-        context_names.each { |context| context(context).concat(rules) }
-      end
-
-      # TODO: remove this shortcut, then eliminate the @model ivar entirely
-      context_names.each do |context|
-        ContextualRuleSet.create_context_instance_methods(@model, context) if @model
+        context_names.each { |context| add_rules_to_context(context, rules) }
       end
 
       self
@@ -109,15 +112,25 @@ module Aequitas
     # @return [self]
     def concat(other)
       other.rule_sets.each do |context_name, rule_set|
-        context(context_name).concat(rule_set)
+        add_rules_to_context(context_name, rules)
       end
+
       self
     end
 
-    def optimize=(new_value)
-      @optimize = new_value
-      rule_sets.each { |rule_set| rule_set.optimize = self.optimize }
-      new_value
+    # Define a context and append rules to it
+    # 
+    # @param [Symbol] context_name
+    #   name of the context to define and append rules to
+    # @param [RuleSet, Array] rules
+    #   Rules to append to +context_name+
+    # 
+    # @return [self]
+    def add_rules_to_context(context_name, rules)
+      define_context(context_name)
+      context(context_name).concat(rules)
+
+      self
     end
 
     # Returns the current validation context on the stack if valid for this contextual rule set,
@@ -156,8 +169,11 @@ module Aequitas
     #
     # @api private
     def valid_context?(context_name)
-      !context_name.nil? &&
-        (rule_sets.empty? || rule_sets.include?(context_name))
+      !context_name.nil? && context_defined?(context_name)
+    end
+
+    def context_defined?(context_name)
+      rule_sets.include?(context_name)
     end
 
     # Assert that the given validation context name
