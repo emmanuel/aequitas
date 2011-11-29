@@ -9,6 +9,8 @@ module Aequitas
 
         include Length
 
+        attr_reader :expected
+
         def initialize(attribute_name, options)
           super
 

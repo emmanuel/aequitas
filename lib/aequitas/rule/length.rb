@@ -6,8 +6,6 @@ module Aequitas
   class Rule
     module Length
 
-      attr_reader :expected
-
       # TODO: DRY this up (also implemented in Rule)
       def self.rules_for(attribute_name, options)
         Array(new(attribute_name, options))
@@ -29,7 +27,7 @@ module Aequitas
         if equal
           Length::Equal.new(attribute_name,   options.merge(:expected => equal))
         elsif range
-          Length::Range.new(attribute_name,   options.merge(:expected => range))
+          Length::Range.new(attribute_name,   options.merge(:range => range))
         elsif minimum
           Length::Minimum.new(attribute_name, options.merge(:bound => minimum))
         elsif maximum
@@ -71,6 +69,8 @@ module Aequitas
       end
 
       if RUBY_VERSION < '1.9'
+        # calculate length of multi-byte-encoded strings
+        #   as characters rather than bytes
         def value_length(value)
           value.to_str.scan(/./u).size
         end

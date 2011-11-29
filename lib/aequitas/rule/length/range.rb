@@ -9,12 +9,12 @@ module Aequitas
 
         include Length
 
-        attr_reader :expected
+        attr_reader :range
 
         def initialize(attribute_name, options)
           super
 
-          @expected = options.fetch(:expected)
+          @range = options.fetch(:range)
         end
 
         def violation_type(resource)
@@ -22,7 +22,7 @@ module Aequitas
         end
 
         def violation_data(resource)
-          [ [ :min, expected.begin ], [ :max, expected.end ] ]
+          [ [ :min, range.begin ], [ :max, range.end ] ]
         end
 
       private
@@ -37,7 +37,7 @@ module Aequitas
         #
         # @api private
         def valid_length?(length)
-          expected.include?(length)
+          range.include?(length)
         end
 
       end # class Range

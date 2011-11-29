@@ -9,12 +9,12 @@ module Aequitas
 
         include Length
 
-        attr_reader :expected
+        attr_reader :bound
 
         def initialize(attribute_name, options)
           super
 
-          @expected = options.fetch(:bound)
+          @bound = options.fetch(:bound)
         end
 
         def violation_type(resource)
@@ -22,12 +22,12 @@ module Aequitas
         end
 
         def violation_data(resource)
-          [ [ :minimum, expected ] ]
+          [ [ :minimum, bound ] ]
         end
 
       private
 
-        # Validate the minimum expected value length
+        # Validate the value length is greater than or equal to the bound
         #
         # @param [Integer] length
         #   the value length
@@ -37,7 +37,7 @@ module Aequitas
         #
         # @api private
         def valid_length?(length)
-          expected <= length
+          bound <= length
         end
 
       end # class Minimum
