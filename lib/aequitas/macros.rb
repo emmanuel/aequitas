@@ -48,7 +48,7 @@ module Aequitas
     #
     def validates_absence_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
-      validation_rules.add(Rule::Absence, attribute_names, options)
+      validation_rules.add(Rule::Absence::Blank, attribute_names, options)
     end
 
     # Validates that the attributes's value is in the set of accepted
@@ -392,18 +392,18 @@ module Aequitas
     #     include Aequitas
     #
     #     attribute :required_attribute, String
-    #     attribute :another_required, String
-    #     attribute :yet_again, String
+    #     attribute :another_required,   String
+    #     attribute :yet_again,          String
     #
     #     validates_presence_of :required_attribute
     #     validates_presence_of :another_required, :yet_again
     #
     #     # a call to valid? will return false unless
-    #     # all three attributes are !blank?
+    #     # all three attributes are not blank (according to Aequitas.blank?)
     #   end
     def validates_presence_of(*attribute_names)
-      options = attribute_names.last.kind_of?(Hash) ? attribute_names.pop : {}
-      validation_rules.add(Rule::Presence, attribute_names, options)
+      options = Macros.extract_options(attribute_names)
+      validation_rules.add(Rule::Presence::NotBlank, attribute_names, options)
     end
 
     # Validates that the specified attribute is of the correct primitive

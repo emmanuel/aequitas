@@ -28,13 +28,14 @@ module Aequitas
 
     class Default < self
       @error_messages = {
-        :absent                   => '%s must be absent',
-        :inclusion                => '%s must be one of %s',
-        :invalid                  => '%s has an invalid format',
-        :confirmation             => '%s does not match the confirmation',
-        :accepted                 => '%s is not accepted',
         :nil                      => '%s must not be nil',
         :blank                    => '%s must not be blank',
+        :not_nil                  => '%s must be nil',
+        :not_blank                => '%s must be blank',
+        :invalid                  => '%s has an invalid format',
+        :inclusion                => '%s must be one of %s',
+        :accepted                 => '%s is not accepted',
+        :confirmation             => '%s does not match the confirmation',
         :length_between           => '%s must be between %s and %s characters long',
         :too_long                 => '%s must be at most %s characters long',
         :too_short                => '%s must be at least %s characters long',
