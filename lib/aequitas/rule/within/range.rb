@@ -7,6 +7,8 @@ module Aequitas
     module Within
       module Range
 
+        Infinity = 1.0 / 0
+
         include Within
 
         attr_reader :range
