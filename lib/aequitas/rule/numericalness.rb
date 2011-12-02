@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 require 'bigdecimal'
+require 'bigdecimal/util'
 require 'aequitas/rule'
 
 module Aequitas
@@ -26,7 +27,7 @@ module Aequitas
 
         rules = []
         rules << Integer.new(attribute_name, options)                                    if int
-        rules << Numeric.new(attribute_name, options)                                    if !int
+        rules << NonInteger.new(attribute_name, options)                                 if !int
         rules << GreaterThan.new(attribute_name, options.merge(:expected => gt))         if gt
         rules << LessThan.new(attribute_name, options.merge(:expected => lt))            if lt
         rules << GreaterThanOrEqual.new(attribute_name, options.merge(:expected => gte)) if gte
@@ -74,7 +75,7 @@ module Aequitas
 end # module Aequitas
 
 require 'aequitas/rule/numericalness/integer'
-require 'aequitas/rule/numericalness/numeric'
+require 'aequitas/rule/numericalness/non_integer'
 
 require 'aequitas/rule/numericalness/equal'
 require 'aequitas/rule/numericalness/greater_than'

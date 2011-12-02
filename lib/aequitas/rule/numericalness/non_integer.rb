@@ -5,7 +5,7 @@ require 'aequitas/rule/numericalness'
 module Aequitas
   class Rule
     module Numericalness
-      class Numeric < Rule
+      class NonInteger < Rule
 
         include Numericalness
 
@@ -58,7 +58,7 @@ module Aequitas
           :not_a_number
         end
 
-      end # class Numeric
+      end # class NonInteger
     end # module Numericalness
   end # class Rule
 end # module Aequitas
