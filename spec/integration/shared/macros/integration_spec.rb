@@ -1,7 +1,7 @@
 require 'minitest/spec'
 
 module Aequitas
-  class Rule
+  module Macros
     class IntegrationSpec < MiniTest::Spec
       class << self; public :describe; end
 
@@ -54,5 +54,5 @@ module Aequitas
       end
 
     end # class IntegrationSpec
-  end # class Rule
+  end # module Macros
 end # module Aequitas

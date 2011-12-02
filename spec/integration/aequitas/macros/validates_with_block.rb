@@ -1,8 +1,8 @@
 require_relative '../../../spec_helper'
-require_relative '../../shared/rule/integration_spec'
+require_relative '../../shared/macros/integration_spec'
 require 'aequitas'
 
-Aequitas::Rule::IntegrationSpec.describe Aequitas::Rule::Block do
+Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_with_block' do
   before do
     block_value = self.block_value
     class_under_test.validates_with_block(attribute_name) { block_value }
