@@ -59,6 +59,10 @@ module Aequitas
       self
     end
 
+    def concat(other)
+      other.each { |violation| self << violation }
+    end
+
     # Collect all violations into a single list.
     # 
     # @api public

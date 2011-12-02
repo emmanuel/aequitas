@@ -72,10 +72,8 @@ module Aequitas
       "#<#{ self.class } {#{ rules.map { |e| e.inspect }.join( ', ' ) }}>"
     end
 
-  private
-
     def rules_for_resource(resource)
-      rules.entries.select { |r| r.execute?(resource) }
+      rules.select { |r| r.execute?(resource) }
     end
 
   end # class RuleSet

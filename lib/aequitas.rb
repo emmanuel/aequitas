@@ -8,6 +8,7 @@ require 'aequitas/violation_set'
 module Aequitas
 
   def self.included(base)
+    super
     base.extend ClassMethods
   end
 
