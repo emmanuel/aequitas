@@ -7,7 +7,7 @@ module Aequitas
     module Numericalness
 
       def self.included(validator)
-        validator.equalize_on validator.superclass.equalizer.keys + [:expected]
+        validator.equalize_on *(validator.superclass.equalizer.keys + [:expected])
       end
 
       # TODO: move options normalization into the validator macros?

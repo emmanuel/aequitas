@@ -8,7 +8,7 @@ module Aequitas
   class Violation
     extend Aequitas::Equalizable
 
-    equalize_on [:resource, :rule, :custom_message, :attribute_name]
+    equalize_on :resource, :rule, :custom_message, :attribute_name
 
     def self.default_transformer
       @default_transformer ||= MessageTransformer.default

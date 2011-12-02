@@ -6,7 +6,7 @@ module Aequitas
   class Rule
     class Confirmation < Rule
 
-      equalize_on superclass.equalizer.keys + [:confirmation_attribute_name]
+      equalize_on *(superclass.equalizer.keys + [:confirmation_attribute_name])
 
       attr_reader :confirmation_attribute_name
 

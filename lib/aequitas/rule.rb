@@ -10,7 +10,7 @@ module Aequitas
   class Rule
     extend Equalizable
 
-    equalize_on [:attribute_name, :custom_message, :guard, :skip_condition]
+    equalize_on :attribute_name, :custom_message, :guard, :skip_condition
 
     # @api private
     attr_reader :attribute_name

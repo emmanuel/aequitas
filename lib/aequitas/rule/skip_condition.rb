@@ -8,7 +8,7 @@ module Aequitas
     class SkipCondition
       extend Equalizable
 
-      equalize_on [:allow_nil, :allow_blank]
+      equalize_on :allow_nil, :allow_blank
 
       attr_reader :allow_nil
       attr_reader :allow_blank

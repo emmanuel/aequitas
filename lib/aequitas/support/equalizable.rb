@@ -18,7 +18,7 @@ module Aequitas
     # @return [self]
     #
     # @api public
-    def equalize_on(keys)
+    def equalize_on(*keys)
       @equalizer = Equalizer.new(keys)
       @equalizer.compile
       include @equalizer

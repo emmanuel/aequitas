@@ -9,7 +9,7 @@ module Aequitas
 
         include Format
 
-        equalize_on(superclass.equalizer.keys + [:format])
+        equalize_on *(superclass.equalizer.keys + [:format])
 
 
         def valid?(resource)
