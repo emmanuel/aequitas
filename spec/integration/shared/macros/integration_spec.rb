@@ -20,8 +20,17 @@ module Aequitas
       end
 
       let(:attribute_name) { :attribute_under_test }
-      let(:validation_rule) { class_under_test.validation_rules[attribute_name].first }
-      let(:expected_violation) { Violation.new(subject, nil, validation_rule) }
+      let(:class_of_violated_validation_rule) do
+        class_under_test.validation_rules[attribute_name].first.class
+      end
+      let(:validation_rules) do
+        class_under_test.validation_rules[attribute_name].select do |rule|
+          rule.instance_of?(class_of_violated_validation_rule)
+        end
+      end
+      let(:expected_violations) do
+        validation_rules.map { |rule| Violation.new(subject, nil, rule) }
+      end
 
       subject { class_under_test.new(attribute_value) }
 
@@ -49,7 +58,7 @@ module Aequitas
         end
 
         it 'has a violation under the expected attribute name' do
-          assert_equal [expected_violation], subject.validate.errors.on(attribute_name)
+          assert_equal expected_violations, subject.validate.errors.on(attribute_name)
         end
       end
 
