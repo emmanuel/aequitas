@@ -40,7 +40,6 @@ module Aequitas
         :too_long                 => '%s must be at most %s characters long',
         :too_short                => '%s must be at least %s characters long',
         :wrong_length             => '%s must be %s characters long',
-        :taken                    => '%s is already taken',
         :not_a_number             => '%s must be a number',
         :not_an_integer           => '%s must be an integer',
         :greater_than             => '%s must be greater than %s',
@@ -50,6 +49,7 @@ module Aequitas
         :less_than                => '%s must be less than %s',
         :less_than_or_equal_to    => '%s must be less than or equal to %s',
         :value_between            => '%s must be between %s and %s',
+        :not_unique               => '%s is already taken',
         :primitive                => '%s must be of type %s'
       }
 
@@ -102,10 +102,13 @@ module Aequitas
         resource       = violation.resource
         model_name     = resource.model.model_name
         attribute_name = violation.attribute_name
+        # TODO: Include attribute value in Violation; it may have changed by now
+        # attribute_value = violation.attribute_value
 
         options = {
           :model     => ::I18n.translate("models.#{model_name}"),
           :attribute => ::I18n.translate("attributes.#{model_name}.#{attribute_name}"),
+          # TODO: Include attribute value in Violation; it may have changed by now
           :value     => resource.validation_attribute_value(attribute_name)
         }.merge(violation.info)
 

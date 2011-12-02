@@ -47,6 +47,7 @@ module Aequitas
         if attribute_name_or_violation.kind_of?(Violation)
           attribute_name_or_violation
         else
+          # TODO: Violation.from_message(resource, message, attribute_name_or_violation)
           Violation.new(resource, message, nil, attribute_name_or_violation)
         end
 
