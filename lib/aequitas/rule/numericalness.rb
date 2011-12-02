@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+require 'bigdecimal'
 require 'aequitas/rule'
 
 module Aequitas
