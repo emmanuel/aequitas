@@ -23,37 +23,5 @@ module Aequitas
         validation_rules.context(:default).concat(inline_attribute_rules)
       end
     end
-
-    class InlineAttributeRuleExtractor
-      attr_reader :attribute
-
-      def self.extract(attribute)
-        new(attribute).extract
-      end
-
-      def initialize(attribute)
-        @attribute = attribute
-      end
-
-      def extract
-        rules = []
-        rules.concat Array(extract_presence_rules)
-        rules.concat Array(extract_length_rules)
-        rules.concat Array(extract_format_rules)
-        rules
-      end
-
-      def extract_presence_rules
-        nil
-      end
-
-      def extract_length_rules
-        nil
-      end
-
-      def extract_format_rules
-        nil
-      end
-    end
   end
 end
