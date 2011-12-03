@@ -9,22 +9,22 @@ describe Aequitas::Virtus::ClassMethodOverrides do
       include Virtus
       include Aequitas
 
-      attribute :boolean_with_presence, Boolean,  :required => true
+      attribute :validated_attribute, Boolean, :required => true
 
       self
     end
   end
 
   describe '.validation_rules' do
-    it 'includes a Rule::Presence::NotNil for :boolean_with_presence' do
-      attribute_rules = class_under_test.validation_rules[:boolean_with_presence]
+    it 'includes a Rule::Presence::NotNil for :validated_attribute' do
+      attribute_rules = class_under_test.validation_rules[:validated_attribute]
       refute_predicate attribute_rules, :empty?
       assert_instance_of Aequitas::Rule::Presence::NotNil, attribute_rules.first
     end
   end
 
-  describe '#boolean_with_presence' do
-    subject { class_under_test.new(:boolean_with_presence => attribute_value) }
+  describe '#valid?' do
+    subject { class_under_test.new(:validated_attribute => attribute_value) }
 
     describe 'when empty string' do
       let(:attribute_value) { '' }

@@ -1,3 +1,5 @@
+require 'aequitas/virtus/inline_attribute_rule_extractor'
+
 module Virtus
   class Attribute
     Object.accept_options  :required# , :prohibited, :forbidden # hmm...

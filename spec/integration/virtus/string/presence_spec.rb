@@ -5,7 +5,7 @@ require 'aequitas/virtus'
 
 describe Aequitas::Virtus::ClassMethodOverrides do
   let(:class_under_test) do
-    class ClassUnderTest
+    Class.new do
       include Virtus
       include Aequitas
 
@@ -16,7 +16,7 @@ describe Aequitas::Virtus::ClassMethodOverrides do
   end
 
   describe '.validation_rules' do
-    it 'includes a Rule::Presence::NotNil for :boolean_with_presence' do
+    it 'includes a Rule::Presence::NotBlank for :validated_attribute' do
       attribute_rules = class_under_test.validation_rules[:validated_attribute]
       refute_predicate attribute_rules, :empty?
       assert_instance_of Aequitas::Rule::Presence::NotBlank, attribute_rules.first

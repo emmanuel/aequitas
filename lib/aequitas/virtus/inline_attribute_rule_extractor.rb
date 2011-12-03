@@ -35,4 +35,7 @@ module Aequitas
     end
   end # module Virtus
 end # module Aequitas
-  
+
+require 'aequitas/virtus/inline_attribute_rule_extractor/object'
+require 'aequitas/virtus/inline_attribute_rule_extractor/boolean'
+require 'aequitas/virtus/inline_attribute_rule_extractor/string'
