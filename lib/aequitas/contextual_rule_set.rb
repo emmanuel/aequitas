@@ -1,14 +1,18 @@
 # -*- encoding: utf-8 -*-
 
 require 'forwardable'
+require 'aequitas/support/equalizable'
 require 'aequitas/exceptions'
 require 'aequitas/context'
 require 'aequitas/rule_set'
 
 module Aequitas
   class ContextualRuleSet
+    extend Equalizable
     extend Forwardable
     include Enumerable
+
+    equalize_on :rule_sets
 
     # MessageTransformer to use for transforming Violations on Resources
     # instantiated from the model to which this ContextualRuleSet is bound
