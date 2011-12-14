@@ -4,8 +4,26 @@ require 'aequitas/virtus/inline_attribute_rule_extractor'
 
 module Aequitas
   module Virtus
-    class InlineAttributeRuleExtractor
-      class Object < InlineAttributeRuleExtractor
+    module InlineAttributeRuleExtractor
+      class Object
+
+        attr_reader :attribute
+
+        def initialize(attribute)
+          @attribute = attribute
+        end
+
+        def options
+          attribute.options
+        end
+
+        def extract
+          rules = []
+          rules.concat Array(extract_presence_rules) if options.fetch(:required, false)
+          rules.concat Array(extract_length_rules)   if options.fetch(:length,   false)
+          rules.concat Array(extract_format_rules)   if options.fetch(:format,   false)
+          rules
+        end
 
         def extract_presence_rules
           Rule::Presence::NotBlank.new(attribute.name)
@@ -20,6 +38,6 @@ module Aequitas
         end
 
       end # class Object
-    end # class InlineAttributeRuleExtractor
+    end # module InlineAttributeRuleExtractor
   end # module Virtus
 end # module Aequitas

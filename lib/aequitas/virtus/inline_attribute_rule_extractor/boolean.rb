@@ -4,7 +4,7 @@ require 'aequitas/virtus/inline_attribute_rule_extractor/object'
 
 module Aequitas
   module Virtus
-    class InlineAttributeRuleExtractor
+    module InlineAttributeRuleExtractor
       class Boolean < Object
 
         def extract_presence_rules
@@ -12,6 +12,6 @@ module Aequitas
         end
 
       end # class Boolean
-    end # class InlineAttributeRuleExtractor
+    end # module InlineAttributeRuleExtractor
   end # module Virtus
 end # module Aequitas

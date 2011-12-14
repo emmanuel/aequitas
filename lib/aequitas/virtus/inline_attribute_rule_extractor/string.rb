@@ -4,7 +4,7 @@ require 'aequitas/virtus/inline_attribute_rule_extractor/object'
 
 module Aequitas
   module Virtus
-    class InlineAttributeRuleExtractor
+    module InlineAttributeRuleExtractor
       class String < Object
 
         def extract_length_rules
@@ -22,6 +22,6 @@ module Aequitas
         end
 
       end # class String
-    end # class InlineAttributeRuleExtractor
+    end # module InlineAttributeRuleExtractor
   end # module Virtus
 end # module Aequitas
