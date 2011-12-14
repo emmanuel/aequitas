@@ -4,11 +4,9 @@ require 'aequitas/rule/within/range'
 
 module Aequitas
   class Rule
-    module Within
-      module Range
-        class Bounded < Rule
-
-          include Range
+    class Within
+      class Range
+        class Bounded < Range
 
           def violation_type(resource)
             :value_between
@@ -19,7 +17,7 @@ module Aequitas
           end
 
         end # class Bounded
-      end # module Range
-    end # module Within
+      end # class Range
+    end # class Within
   end # class Rule
 end # module Aequitas
