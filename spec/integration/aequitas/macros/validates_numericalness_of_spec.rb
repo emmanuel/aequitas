@@ -52,7 +52,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Numericalness::Equal
+      Aequitas::Rule::Magnitude::Equal
     end
 
     describe 'when validated attribute is greater than bound' do
@@ -81,7 +81,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Numericalness::NotEqual
+      Aequitas::Rule::Magnitude::NotEqual
     end
 
     describe 'when validated attribute is greater than bound' do
@@ -110,7 +110,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Numericalness::GreaterThan
+      Aequitas::Rule::Magnitude::GreaterThan
     end
 
     describe 'when validated attribute is greater than bound' do
@@ -139,7 +139,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Numericalness::LessThan
+      Aequitas::Rule::Magnitude::LessThan
     end
 
     describe 'when validated attribute is greater than bound' do
@@ -168,7 +168,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Numericalness::GreaterThanOrEqual
+      Aequitas::Rule::Magnitude::GreaterThanOrEqual
     end
 
     describe 'when validated attribute is greater than bound' do
@@ -197,7 +197,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Numericalness::LessThanOrEqual
+      Aequitas::Rule::Magnitude::LessThanOrEqual
     end
 
     describe 'when validated attribute is greater than bound' do

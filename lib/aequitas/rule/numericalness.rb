@@ -3,14 +3,13 @@
 require 'bigdecimal'
 require 'bigdecimal/util'
 require 'aequitas/rule'
+require 'aequitas/rule/magnitude'
 
 module Aequitas
   class Rule
-    module Numericalness
+    class Numericalness < Rule
 
-      def self.included(validator)
-        validator.equalize_on *(validator.superclass.equalizer.keys + [:expected])
-      end
+      equalize_on *superclass.equalizer.keys + [:expected]
 
       # TODO: move options normalization into the validator macros?
       def self.rules_for(attribute_name, options)
@@ -18,22 +17,10 @@ module Aequitas
 
         int = scour_options_of_keys(options, [:only_integer, :integer_only])
 
-        gt  = scour_options_of_keys(options, [:gt,  :greater_than])
-        lt  = scour_options_of_keys(options, [:lt,  :less_than])
-        gte = scour_options_of_keys(options, [:gte, :greater_than_or_equal_to])
-        lte = scour_options_of_keys(options, [:lte, :less_than_or_equal_to])
-        eq  = scour_options_of_keys(options, [:eq,  :equal, :equals, :exactly, :equal_to])
-        ne  = scour_options_of_keys(options, [:ne,  :not_equal_to])
-
         rules = []
         rules << Integer.new(attribute_name, options)                                    if int
         rules << NonInteger.new(attribute_name, options)                                 if !int
-        rules << GreaterThan.new(attribute_name, options.merge(:expected => gt))         if gt
-        rules << LessThan.new(attribute_name, options.merge(:expected => lt))            if lt
-        rules << GreaterThanOrEqual.new(attribute_name, options.merge(:expected => gte)) if gte
-        rules << LessThanOrEqual.new(attribute_name, options.merge(:expected => lte))    if lte
-        rules << Equal.new(attribute_name, options.merge(:expected => eq))               if eq
-        rules << NotEqual.new(attribute_name, options.merge(:expected => ne))            if ne
+        rules.concat(Magnitude.rules_for(attribute_name, options))
         rules
       end
 
@@ -42,12 +29,6 @@ module Aequitas
       end
 
       attr_reader :expected
-
-      def initialize(attribute_name, options)
-        super
-
-        @expected = options[:expected]
-      end
 
       def valid?(resource)
         # TODO: is it even possible for expected to be nil?
@@ -59,7 +40,19 @@ module Aequitas
         skip?(value) || valid_numericalness?(value)
       end
 
-    private
+      def valid_numericalness?(value)
+        # XXX: workaround for jruby. This is needed because the jruby
+        # compiler optimizes a bit too far with magic variables like $~.
+        # the value.send line sends $~. Inserting this line makes sure the
+        # jruby compiler does not optimise here.
+        # see http://jira.codehaus.org/browse/JRUBY-3765
+        $~ = nil if RUBY_PLATFORM[/java/]
+
+        value_as_string(value) =~ expected
+      rescue ArgumentError
+        # TODO: figure out better solution for: can't compare String with Integer
+        true
+      end
 
       def value_as_string(value)
         case value
@@ -76,10 +69,3 @@ end # module Aequitas
 
 require 'aequitas/rule/numericalness/integer'
 require 'aequitas/rule/numericalness/non_integer'
-
-require 'aequitas/rule/numericalness/equal'
-require 'aequitas/rule/numericalness/greater_than'
-require 'aequitas/rule/numericalness/greater_than_or_equal'
-require 'aequitas/rule/numericalness/less_than'
-require 'aequitas/rule/numericalness/less_than_or_equal'
-require 'aequitas/rule/numericalness/not_equal'

@@ -1,15 +1,13 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule/numericalness'
+require 'aequitas/rule/magnitude'
 
 module Aequitas
   class Rule
-    module Numericalness
-      class GreaterThanOrEqual < Rule
+    class Magnitude
+      class GreaterThanOrEqual < Magnitude
 
-        include Numericalness
-
-        def valid_numericalness?(value)
+        def valid_magnitude?(value)
           value >= expected
         rescue ArgumentError
           # TODO: figure out better solution for: can't compare String with Integer
@@ -25,6 +23,6 @@ module Aequitas
         end
 
       end # class GreaterThanOrEqual
-    end # module Numericalness
+    end # class Magnitude
   end # class Rule
 end # module Aequitas

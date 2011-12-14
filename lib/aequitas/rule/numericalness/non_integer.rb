@@ -4,10 +4,8 @@ require 'aequitas/rule/numericalness'
 
 module Aequitas
   class Rule
-    module Numericalness
-      class NonInteger < Rule
-
-        include Numericalness
+    class Numericalness
+      class NonInteger < Numericalness
 
         attr_reader :precision
         attr_reader :scale
@@ -38,20 +36,6 @@ module Aequitas
           else
             /\A[+-]?(?:\d+|\d*\.\d+)\z/
           end
-        end
-
-        def valid_numericalness?(value)
-          # XXX: workaround for jruby. This is needed because the jruby
-          # compiler optimizes a bit too far with magic variables like $~.
-          # the value.send line sends $~. Inserting this line makes sure the
-          # jruby compiler does not optimise here.
-          # see http://jira.codehaus.org/browse/JRUBY-3765
-          $~ = nil if RUBY_PLATFORM[/java/]
-
-          value_as_string(value) =~ expected
-        rescue ArgumentError
-          # TODO: figure out better solution for: can't compare String with Integer
-          true
         end
 
         def violation_type(resource)

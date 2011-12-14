@@ -1,30 +1,28 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule/numericalness'
+require 'aequitas/rule/magnitude'
 
 module Aequitas
   class Rule
-    module Numericalness
-      class Equal < Rule
+    class Magnitude
+      class LessThanOrEqual < Magnitude
 
-        include Numericalness
-
-        def valid_numericalness?(value)
-          value == expected
+        def valid_magnitude?(value)
+          value <= expected
         rescue ArgumentError
           # TODO: figure out better solution for: can't compare String with Integer
           true
         end
 
         def violation_type(resource)
-          :equal_to
+          :less_than_or_equal_to
         end
 
         def violation_data(resource)
-          [ [ :expected, expected ] ]
+          [ [ :maximum, expected ] ]
         end
 
-      end # class Equal
-    end # module Numericalness
+      end # class LessThanOrEqual
+    end # class Magnitude
   end # class Rule
 end # module Aequitas
