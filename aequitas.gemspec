@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["emmanuel.gomez@gmail.com"]
   s.homepage    = "https://github.com/emmanuel/aequitas"
   s.summary     = %q{Library for performing validations on Ruby objects.}
-  s.description = %q{TODO: Write a gem description}
+  s.description = %q{Library for validating Ruby objects with rich metadata support.}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
