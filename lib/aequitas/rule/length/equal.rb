@@ -4,10 +4,10 @@ require 'aequitas/rule/length'
 
 module Aequitas
   class Rule
-    module Length
-      class Equal < Rule
+    class Length
+      class Equal < Length
 
-        include Length
+        equalize_on *superclass.superclass.equalizer.keys + [:expected]
 
         attr_reader :expected
 
@@ -41,6 +41,6 @@ module Aequitas
         end
 
       end # class Equal
-    end # module Length
+    end # class Length
   end # class Rule
 end # module Aequitas

@@ -4,10 +4,10 @@ require 'aequitas/rule/length'
 
 module Aequitas
   class Rule
-    module Length
-      class Range < Rule
+    class Length
+      class Range < Length 
 
-        include Length
+        equalize_on *superclass.superclass.equalizer.keys + [:range]
 
         attr_reader :range
 
@@ -25,8 +25,6 @@ module Aequitas
           [ [ :min, range.begin ], [ :max, range.end ] ]
         end
 
-      private
-
         # Validate the value length is within expected range
         #
         # @param [Integer] length
@@ -41,6 +39,6 @@ module Aequitas
         end
 
       end # class Range
-    end # module Length
+    end # class Length
   end # class Rule
 end # module Aequitas

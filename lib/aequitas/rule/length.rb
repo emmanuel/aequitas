@@ -4,15 +4,10 @@ require 'aequitas/rule'
 
 module Aequitas
   class Rule
-    module Length
-
-      # TODO: DRY this up (also implemented in Rule)
-      def self.rules_for(attribute_name, options)
-        Array(new(attribute_name, options))
-      end
+    class Length < Rule
 
       # TODO: move options normalization into the validator macros
-      def self.new(attribute_name, options)
+      def self.rules_for(attribute_name, options)
         options = options.dup
 
         equal   = options.values_at(:is,  :equals).compact.first
@@ -24,23 +19,25 @@ module Aequitas
           range ||= minimum..maximum
         end
 
-        if equal
-          Length::Equal.new(attribute_name,   options.merge(:expected => equal))
-        elsif range
-          Length::Range.new(attribute_name,   options.merge(:range => range))
-        elsif minimum
-          Length::Minimum.new(attribute_name, options.merge(:bound => minimum))
-        elsif maximum
-          Length::Maximum.new(attribute_name, options.merge(:bound => maximum))
-        else
-          # raise ArgumentError, "expected one of :is, :equals, :within, :in, :minimum, :min, :maximum, or :max; got #{options.keys.inspect}"
-          warn "expected length specification: one of :is, :equals, :in, :within, :min, :minimum, :max, or :maximum; got #{options.keys.inspect}"
-          Length::Dummy.new(attribute_name, options)
-        end
+        rule =
+          if equal
+            Length::Equal.new(attribute_name,   options.merge(:expected => equal))
+          elsif range
+            Length::Range.new(attribute_name,   options.merge(:range => range))
+          elsif minimum
+            Length::Minimum.new(attribute_name, options.merge(:bound => minimum))
+          elsif maximum
+            Length::Maximum.new(attribute_name, options.merge(:bound => maximum))
+          else
+            # raise ArgumentError, "expected one of :is, :equals, :within, :in, :minimum, :min, :maximum, or :max; got #{options.keys.inspect}"
+            warn "expected length specification: one of :is, :equals, :in, :within, :min, :minimum, :max, or :maximum; got #{options.keys.inspect}"
+            Length::Dummy.new(attribute_name, options)
+          end
+
+        [rule]
       end
 
-      class Dummy < Rule
-        include Length
+      class Dummy < Length
       end
 
       def valid?(resource)
@@ -48,8 +45,6 @@ module Aequitas
 
         skip?(value) || valid_length?(value_length(value.to_s))
       end
-
-    private
 
       def valid_length?(length)
         raise NotImplementedError, "#{self.class}#valid_length? must be implemented"
@@ -76,7 +71,7 @@ module Aequitas
         end
       end
 
-    end # module Length
+    end # class Length
   end # class Rule
 end # module Aequitas
 
