@@ -18,7 +18,7 @@ module Aequitas
 
         def extract_format_rules
           format = attribute.options.fetch(:format)
-          Rule::Format.new(attribute.name, :with => format)
+          Rule::Format.rules_for(attribute.name, :with => format)
         end
 
       end # class String

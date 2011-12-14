@@ -4,12 +4,10 @@ require 'aequitas/rule/format'
 
 module Aequitas
   class Rule
-    module Format
-      class Regexp < Rule
+    class Format
+      class Regexp < Format
 
-        include Format
-
-        equalize_on *(superclass.equalizer.keys + [:format, :format_name])
+        equalize_on *superclass.equalizer.keys + [:format_name]
 
         attr_reader :format_name
 
@@ -39,6 +37,6 @@ module Aequitas
         # end
 
       end # class Regexp
-    end # module Format
+    end # class Format
   end # class Rule
 end # module Aequitas

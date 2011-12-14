@@ -8,7 +8,7 @@ require 'aequitas/rule/formats/url'
 
 module Aequitas
   class Rule
-    module Format
+    class Format < Rule
 
       FORMATS = {
         :email_address => Formats::EmailAddress,
@@ -22,30 +22,30 @@ module Aequitas
         :url           => '%s is not a valid URL',
       }
 
-
-      def self.rules_for(attribute_name, options)
-        Array(new(attribute_name, options))
-      end
+      equalize_on *superclass.equalizer.keys + [:format]
 
       # @raise [UnknownValidationFormat]
       #   if the :as (or :with) option is a Symbol that is not a key in FORMATS,
       #   or if the provided format is not a Regexp, Symbol or Proc
-      def self.new(attribute_name, options)
+      def self.rules_for(attribute_name, options)
         format = options.delete(:as) || options.delete(:with)
 
-        case format
-        when Symbol
-          regexp = FORMATS.fetch(format) do
-            raise UnknownValidationFormat, "No such predefined format '#{format}'"
+        rule =
+          case format
+          when Symbol
+            regexp = FORMATS.fetch(format) do
+              raise UnknownValidationFormat, "No such predefined format '#{format}'"
+            end
+            self::Regexp.new(attribute_name, options.merge(:format => regexp, :format_name => format))
+          when ::Regexp
+            self::Regexp.new(attribute_name, options.merge(:format => format))
+          when ::Proc
+            self::Proc.new(attribute_name, options.merge(:format => format))
+          else
+            raise UnknownValidationFormat, "Expected a Regexp, Symbol, or Proc format. Got: #{format.inspect}"
           end
-          self::Regexp.new(attribute_name, options.merge(:format => regexp, :format_name => format))
-        when ::Regexp
-          self::Regexp.new(attribute_name, options.merge(:format => format))
-        when ::Proc
-          self::Proc.new(attribute_name, options.merge(:format => format))
-        else
-          raise UnknownValidationFormat, "Expected a Regexp, Symbol, or Proc format. Got: #{format.inspect}"
-        end
+
+        Array(rule)
       end
 
 
