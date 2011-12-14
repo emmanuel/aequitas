@@ -5,11 +5,11 @@ require 'aequitas/virtus'
 
 describe Aequitas::Virtus::ClassMethodOverrides do
   let(:class_under_test) do
-    class ClassUnderTest
+    Class.new do
       include Virtus
       include Aequitas
 
-      attribute :validated_attribute, Boolean, :required => true
+      attribute :validated_attribute, 'Boolean', :required => true
 
       self
     end
