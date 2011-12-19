@@ -12,27 +12,21 @@ module Aequitas
 
       # TODO: move options normalization into the validator macros?
       def self.rules_for(attribute_name, options)
-        options = options.dup
-
-        eq  = scour_options_of_keys(options, [:eq,  :equal, :equals, :exactly, :equal_to])
-        ne  = scour_options_of_keys(options, [:ne,  :not_equal_to])
-        gt  = scour_options_of_keys(options, [:gt,  :greater_than])
-        lt  = scour_options_of_keys(options, [:lt,  :less_than])
-        gte = scour_options_of_keys(options, [:gte, :greater_than_or_equal_to])
-        lte = scour_options_of_keys(options, [:lte, :less_than_or_equal_to])
+        eq  = options.values_at(:eq,  :equal, :equals, :equal_to, :exactly).compact.first
+        ne  = options.values_at(:ne,  :not_equal_to).compact.first
+        gt  = options.values_at(:gt,  :greater_than).compact.first
+        lt  = options.values_at(:lt,  :less_than).compact.first
+        gte = options.values_at(:gte, :greater_than_or_equal_to).compact.first
+        lte = options.values_at(:lte, :less_than_or_equal_to).compact.first
 
         rules = []
-        rules << GreaterThan.new(attribute_name, options.merge(:expected => gt))         if gt
-        rules << LessThan.new(attribute_name, options.merge(:expected => lt))            if lt
+        rules << Equal.new(attribute_name,              options.merge(:expected => eq))  if eq
+        rules << NotEqual.new(attribute_name,           options.merge(:expected => ne))  if ne
+        rules << GreaterThan.new(attribute_name,        options.merge(:expected => gt))  if gt
+        rules << LessThan.new(attribute_name,           options.merge(:expected => lt))  if lt
         rules << GreaterThanOrEqual.new(attribute_name, options.merge(:expected => gte)) if gte
-        rules << LessThanOrEqual.new(attribute_name, options.merge(:expected => lte))    if lte
-        rules << Equal.new(attribute_name, options.merge(:expected => eq))               if eq
-        rules << NotEqual.new(attribute_name, options.merge(:expected => ne))            if ne
+        rules << LessThanOrEqual.new(attribute_name,    options.merge(:expected => lte)) if lte
         rules
-      end
-
-      def self.scour_options_of_keys(options, keys)
-        keys.map { |key| options.delete(key) }.compact.first
       end
 
       attr_reader :expected
@@ -40,7 +34,7 @@ module Aequitas
       def initialize(attribute_name, options)
         super
 
-        @expected = options[:expected]
+        @expected = options.fetch(:expected)
       end
 
       def valid?(resource)

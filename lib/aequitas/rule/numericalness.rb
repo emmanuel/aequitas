@@ -13,19 +13,13 @@ module Aequitas
 
       # TODO: move options normalization into the validator macros?
       def self.rules_for(attribute_name, options)
-        options = options.dup
-
-        int = scour_options_of_keys(options, [:only_integer, :integer_only])
+        int = options.values_at(:only_integer, :integer_only).compact.first
 
         rules = []
-        rules << Integer.new(attribute_name, options)                                    if int
-        rules << NonInteger.new(attribute_name, options)                                 if !int
+        rules << Integer.new(attribute_name, options)    if int
+        rules << NonInteger.new(attribute_name, options) if !int
         rules.concat(Magnitude.rules_for(attribute_name, options))
         rules
-      end
-
-      def self.scour_options_of_keys(options, keys)
-        keys.map { |key| options.delete(key) }.compact.first
       end
 
       attr_reader :expected
