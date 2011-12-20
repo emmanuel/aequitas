@@ -342,6 +342,11 @@ module Aequitas
       validation_rules.add(Rule::PrimitiveType, attribute_names, options)
     end
 
+    def validates_value_of(*attribute_names)
+      options = Macros.extract_options(attribute_names)
+      validation_rules.add(Rule::Value, attribute_names, options)
+    end
+
     # Validates that the value of a field is within a range/set.
     #
     # This validation is defined by passing a field along with a :set

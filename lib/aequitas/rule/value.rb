@@ -31,12 +31,14 @@ module Aequitas
         rules
       end
 
-      attr_reader :expected
-
       def initialize(attribute_name, options)
         super
 
         @expected = options.fetch(:expected)
+      end
+
+      def expected
+        @expected.respond_to?(:call) ? @expected.call : @expected
       end
 
       def valid?(resource)
