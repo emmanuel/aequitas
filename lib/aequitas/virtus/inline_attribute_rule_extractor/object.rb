@@ -18,23 +18,12 @@ module Aequitas
         end
 
         def extract
-          rules = []
-          rules.concat Array(extract_presence_rules) if options.fetch(:required, false)
-          rules.concat Array(extract_length_rules)   if options.fetch(:length,   false)
-          rules.concat Array(extract_format_rules)   if options.fetch(:format,   false)
-          rules
+          Array(extract_presence_rules)
         end
 
         def extract_presence_rules
-          Rule::Presence::NotBlank.new(attribute.name)
-        end
-
-        def extract_length_rules
-          nil
-        end
-
-        def extract_format_rules
-          nil
+          required = options.fetch(:required, false)
+          Rule::Presence::NotBlank.new(attribute.name) if required
         end
 
       end # class Object

@@ -7,18 +7,26 @@ module Aequitas
     module InlineAttributeRuleExtractor
       class String < Object
 
+        def extract
+          rules = super
+          rules.concat(Array(extract_length_rules))
+          rules.concat(Array(extract_format_rules))
+        end
+
         def extract_length_rules
-          length = attribute.options.fetch(:length)
+          length = options.fetch(:length, false)
 
           case length
-          when Integer; Rule::Length::Equal.new(attribute.name, :expected => length)
-          when Range;   Rule::Length::Range.new(attribute.name, :range    => length)
+          when ::Integer; Rule::Length::Equal.new(attribute.name, :expected => length)
+          when ::Range;   Rule::Length::Range.new(attribute.name, :range    => length)
+          when ::FalseClass;
+          else raise ArgumentError, "expected Integer or Range :length, got: #{length.inspect}"
           end
         end
 
         def extract_format_rules
-          format = attribute.options.fetch(:format)
-          Rule::Format.rules_for(attribute.name, :with => format)
+          format = options.fetch(:format, false)
+          Rule::Format.rules_for(attribute.name, :with => format) if format
         end
 
       end # class String
