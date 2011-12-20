@@ -18,6 +18,7 @@ module Aequitas
         lt  = options.values_at(:lt,  :less_than).compact.first
         gte = options.values_at(:gte, :greater_than_or_equal_to).compact.first
         lte = options.values_at(:lte, :less_than_or_equal_to).compact.first
+        rng = options.values_at(:in,  :within).compact.first
 
         rules = []
         rules << Equal.new(attribute_name,              options.merge(:expected => eq))  if eq
@@ -26,6 +27,7 @@ module Aequitas
         rules << LessThan.new(attribute_name,           options.merge(:expected => lt))  if lt
         rules << GreaterThanOrEqual.new(attribute_name, options.merge(:expected => gte)) if gte
         rules << LessThanOrEqual.new(attribute_name,    options.merge(:expected => lte)) if lte
+        rules << Range.new(attribute_name,              options.merge(:expected => rng)) if rng
         rules
       end
 
@@ -57,3 +59,4 @@ require 'aequitas/rule/value/greater_than_or_equal'
 require 'aequitas/rule/value/less_than'
 require 'aequitas/rule/value/less_than_or_equal'
 require 'aequitas/rule/value/not_equal'
+require 'aequitas/rule/value/range'

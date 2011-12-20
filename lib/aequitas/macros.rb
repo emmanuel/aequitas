@@ -279,8 +279,8 @@ module Aequitas
     #
     def validates_numericalness_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
-      validation_rules.add(Rule::Numericalness, attribute_names, options)
       validation_rules.add(Rule::Value,         attribute_names, options)
+      validation_rules.add(Rule::Numericalness, attribute_names, options)
     end
 
     # Validates that the specified attribute is present.

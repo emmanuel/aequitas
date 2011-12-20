@@ -8,7 +8,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
       class_under_test.validates_numericalness_of attribute_name
     end
 
-    describe 'when validated attribute is a non-integer number' do
+    describe 'when validated attribute is a float' do
       let(:attribute_value) { 1.0 }
 
       it_should_be_a_valid_instance
@@ -38,7 +38,13 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
       it_should_be_a_valid_instance
     end
 
-    describe 'when validated attribute is not an integer' do
+    describe 'when validated attribute is a float' do
+      let(:attribute_value) { 1.0 }
+
+      it_should_be_an_invalid_instance
+    end
+
+    describe 'when validated attribute is non-numeric' do
       let(:attribute_value) { 'a' }
 
       it_should_be_an_invalid_instance
@@ -218,4 +224,67 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
       it_should_be_a_valid_instance
     end
   end
+
+  describe 'with :in or :within options' do
+    describe 'with lower and upper bounds' do
+      before do
+        class_under_test.validates_numericalness_of attribute_name, :in => bound
+      end
+
+      let(:bound) { 1..5 }
+
+      describe 'when validated attribute value is within the range' do
+        let(:attribute_value) { bound.begin + 1 }
+
+        it_should_be_a_valid_instance
+      end
+
+      describe 'when validated attribute value is not within the range' do
+        let(:attribute_value) { bound.end + 1 }
+
+        it_should_be_an_invalid_instance
+      end
+    end
+
+    # describe 'with no lower bound' do
+    #   before do
+    #     class_under_test.validates_within attribute_name, :range => range
+    #   end
+    # 
+    #   let(:range) { -(1.0/0)..5 }
+    # 
+    #   describe 'when validated attribute value is within the range' do
+    #     let(:attribute_value) { range.end - 1 }
+    # 
+    #     it_should_be_a_valid_instance
+    #   end
+    # 
+    #   describe 'when validated attribute value is not within the range' do
+    #     let(:attribute_value) { range.end + 1 }
+    # 
+    #     it_should_be_an_invalid_instance
+    #   end
+    # end
+
+    # describe 'with no upper bound' do
+    #   before do
+    #     class_under_test.validates_within attribute_name, :range => range
+    #   end
+    # 
+    #   let(:range) { 1..(1.0/0) }
+    # 
+    #   describe 'when validated attribute value is within the range' do
+    #     let(:attribute_value) { range.begin + 1 }
+    # 
+    #     it_should_be_a_valid_instance
+    #   end
+    # 
+    #   describe 'when validated attribute value is not within the range' do
+    #     let(:attribute_value) { range.begin - 1 }
+    # 
+    #     it_should_be_an_invalid_instance
+    #   end
+    # end
+  end
+
 end
