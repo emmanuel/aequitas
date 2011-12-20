@@ -18,8 +18,7 @@ module Aequitas
         rules = []
         rules << Integer.new(attribute_name, options)    if int
         rules << NonInteger.new(attribute_name, options) if !int
-
-        rules.concat(Value.rules_for(attribute_name, options))
+        rules
       end
 
       attr_reader :expected
