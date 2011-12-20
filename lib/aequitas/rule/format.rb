@@ -3,17 +3,11 @@
 require 'aequitas/rule'
 require 'aequitas/exceptions'
 
-require 'aequitas/rule/formats/email'
-require 'aequitas/rule/formats/url'
-
 module Aequitas
   class Rule
     class Format < Rule
 
-      FORMATS = {
-        :email_address => Formats::EmailAddress,
-        :url           => Formats::Url
-      }
+      FORMATS = {}
       # TODO: evaluate re-implementing custom error messages per format type
       # previously these strings were wrapped in lambdas, which were, at one
       # point, invoked with #try_call with the humanized attribute name and value
@@ -48,7 +42,6 @@ module Aequitas
         Array(rule)
       end
 
-
       attr_reader :format
 
       def initialize(attribute_name, options)
@@ -76,6 +69,9 @@ module Aequitas
     end # class Format
   end # class Rule
 end # module Aequitas
+
+require 'aequitas/rule/format/email_address'
+require 'aequitas/rule/format/url'
 
 require 'aequitas/rule/format/proc'
 require 'aequitas/rule/format/regexp'

@@ -1,15 +1,17 @@
 # encoding: UTF-8
 
+require 'aequitas/rule/format'
+
 module Aequitas
   class Rule
-    module Formats
+    class Format
 
       # Almost RFC2822 (No attribution reference available).
       #
       # This differs in that it does not allow local domains (test@localhost).
       # 99% of the time you do not want to allow these email addresses
       # in a public web application.
-      EmailAddress = begin
+      EMAIL_ADDRESS = begin
         if (RUBY_VERSION == '1.9.2' && RUBY_ENGINE == 'jruby' && JRUBY_VERSION <= '1.6.3') || RUBY_VERSION == '1.9.3'
           # There is an obscure bug in jruby 1.6 that prevents matching
           # on unicode properties here. Remove this logic branch once
@@ -47,6 +49,8 @@ module Aequitas
         pattern        = /\A#{addr_spec}\z/u
       end
 
-    end # module Formats
+      Format::FORMATS[:email_address] = EMAIL_ADDRESS
+
+    end # class Format
   end # class Rule
 end # module Aequitas
