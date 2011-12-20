@@ -8,7 +8,7 @@ module Aequitas
 
       # TODO: move options normalization into the validator macros
       def self.rules_for(attribute_name, options)
-        if options.fetch(:set).is_a?(::Range)
+        if options[:set].is_a?(::Range)
           Within::Range.rules_for(attribute_name, options)
         else
           Array(Within::Set.new(attribute_name, options))

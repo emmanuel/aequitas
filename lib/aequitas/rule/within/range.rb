@@ -25,7 +25,7 @@ module Aequitas
               UnboundedEnd.new(attribute_name, options)
             end
 
-            Array(rule)
+          Array(rule)
         end
 
         def initialize(attribute_name, options={})

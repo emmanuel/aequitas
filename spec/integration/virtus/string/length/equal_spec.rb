@@ -16,7 +16,7 @@ describe Aequitas::Virtus::ClassMethodOverrides do
   end
 
   describe '.validation_rules' do
-    it 'includes a Rule::Length::Range for :boolean_with_presence' do
+    it 'includes a Rule::Length::Equal for :boolean_with_presence' do
       attribute_rules = class_under_test.validation_rules[:validated_attribute]
       refute_predicate attribute_rules, :empty?
       assert_instance_of Aequitas::Rule::Length::Equal, attribute_rules.first

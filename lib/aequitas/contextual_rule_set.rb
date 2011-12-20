@@ -16,7 +16,7 @@ module Aequitas
 
     # MessageTransformer to use for transforming Violations on Resources
     # instantiated from the model to which this ContextualRuleSet is bound
-    # 
+    #
     # @api public
     # attr_accessor :transformer
 
@@ -44,7 +44,7 @@ module Aequitas
     end
 
     # Delegate #validate to RuleSet
-    # 
+    #
     # @api public
     def validate(resource, context_name)
       context(context_name).validate(resource)
@@ -56,17 +56,17 @@ module Aequitas
     #   Context name for which to return a RuleSet
     # @return [RuleSet]
     #   RuleSet for the given context
-    # 
+    #
     # @api public
     def context(context_name)
       rule_sets.fetch(context_name)
     end
 
     # Retrieve Rules applicable to a given attribute name
-    # 
+    #
     # @param [Symbol] attribute_name
     #   name of the attribute for which to retrieve applicable Rules
-    # 
+    #
     # @return [Array]
     #   list of Rules applicable to +attribute_name+
     def [](attribute_name)
@@ -75,21 +75,21 @@ module Aequitas
 
     # Create a new rule of the given class for each name in +attribute_names+
     # and add the rules to the RuleSet(s) indicated
-    # 
+    #
     # @param [Aequitas::Rule] rule_class
     #    Rule class, example: Aequitas::Rule::Presence
     #
     # @param [Array<Symbol>] attribute_names
     #    Attribute names given to validation macro, example:
     #    [:first_name, :last_name] in validates_presence_of :first_name, :last_name
-    # 
+    #
     # @param [Hash] options
     #    Options supplied to validation macro, example:
     #    {:context=>:default, :maximum=>50, :allow_nil=>true, :message=>nil}
-    # 
+    #
     # @option [Symbol] :context, :group, :when, :on
     #   the context in which the new rule should be run
-    # 
+    #
     # @return [self]
     def add(rule_class, attribute_names, options = {}, &block)
       context_names = extract_context_names(options)
@@ -104,10 +104,10 @@ module Aequitas
     end
 
     # Assimilate all rules contained in +other+ into the receiver
-    # 
+    #
     # @param [ContextualRuleSet] other
     #   the ContextualRuleSet whose rules are to be assimilated
-    # 
+    #
     # @return [self]
     def concat(other)
       other.rule_sets.each do |context_name, rule_set|
@@ -118,12 +118,12 @@ module Aequitas
     end
 
     # Define a context and append rules to it
-    # 
+    #
     # @param [Symbol] context_name
     #   name of the context to define and append rules to
     # @param [RuleSet, Array] rules
     #   Rules to append to +context_name+
-    # 
+    #
     # @return [self]
     def add_rules_to_context(context_name, rules)
       define_context(context_name)
@@ -144,9 +144,9 @@ module Aequitas
     #   this model, or :default if the context on the stack is invalid for
     #   this model or no context is on the stack and this model has at least
     #   one validation context
-    # 
+    #
     # @api private
-    # 
+    #
     # TODO: this logic behind this method is too complicated.
     #   simplify the semantics of #current_context, #validate
     def current_context
@@ -185,7 +185,7 @@ module Aequitas
     #   raised if the context is not valid for this contextual rule set
     #
     # @api private
-    # 
+    #
     # TODO: is this method actually needed?
     def assert_valid_context(context_name)
       unless valid_context?(context_name)
@@ -198,13 +198,13 @@ module Aequitas
   private
 
     # Allow :context to be aliased to :group, :when & :on
-    # 
+    #
     # @param [Hash] options
     #   the options from which +context_names+ is to be extracted
-    # 
+    #
     # @return [Array(Symbol)]
     #   the context name(s) from +options+
-    # 
+    #
     # @api private
     def extract_context_names(options)
       context_name = [

@@ -9,7 +9,7 @@ module Aequitas
 
         def valid?(resource)
           value = attribute_value(resource)
-          
+
           skip?(value) || format.call(value)
         # rescue ::Encoding::CompatibilityError
         #   # This is to work around a bug in jruby - see formats/email.rb
