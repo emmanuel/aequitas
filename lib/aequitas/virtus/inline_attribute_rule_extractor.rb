@@ -9,6 +9,7 @@ module Aequitas
           when ::Virtus::Attribute::String;   self::String
           # when ::Virtus::Attribute::Decimal;  self::Decimal
           # when ::Virtus::Attribute::Float;    self::Float
+          when ::Virtus::Attribute::Numeric;  self::Numeric
           when ::Virtus::Attribute::Object;   self::Object
           end
 
@@ -22,3 +23,4 @@ end # module Aequitas
 require 'aequitas/virtus/inline_attribute_rule_extractor/object'
 require 'aequitas/virtus/inline_attribute_rule_extractor/boolean'
 require 'aequitas/virtus/inline_attribute_rule_extractor/string'
+require 'aequitas/virtus/inline_attribute_rule_extractor/numeric'
