@@ -52,7 +52,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Magnitude::Equal
+      Aequitas::Rule::Value::Equal
     end
 
     describe 'when validated attribute is greater than bound' do
@@ -81,7 +81,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Magnitude::NotEqual
+      Aequitas::Rule::Value::NotEqual
     end
 
     describe 'when validated attribute is greater than bound' do
@@ -110,7 +110,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Magnitude::GreaterThan
+      Aequitas::Rule::Value::GreaterThan
     end
 
     describe 'when validated attribute is greater than bound' do
@@ -139,7 +139,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Magnitude::LessThan
+      Aequitas::Rule::Value::LessThan
     end
 
     describe 'when validated attribute is greater than bound' do
@@ -168,7 +168,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Magnitude::GreaterThanOrEqual
+      Aequitas::Rule::Value::GreaterThanOrEqual
     end
 
     describe 'when validated attribute is greater than bound' do
@@ -197,7 +197,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     let(:bound) { 1 }
     let(:class_of_violated_validation_rule) do
-      Aequitas::Rule::Magnitude::LessThanOrEqual
+      Aequitas::Rule::Value::LessThanOrEqual
     end
 
     describe 'when validated attribute is greater than bound' do

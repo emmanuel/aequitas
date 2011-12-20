@@ -9,7 +9,7 @@ describe Aequitas::Virtus::ClassMethodOverrides do
       include Virtus
       include Aequitas
 
-      attribute :validated_attribute, Integer, :not_equal_to => 3
+      attribute :validated_attribute, Integer, :equal_to => 3
 
       self
     end
@@ -19,7 +19,7 @@ describe Aequitas::Virtus::ClassMethodOverrides do
     it 'includes the expected Rule for :validated_attribute' do
       attribute_rules = class_under_test.validation_rules[:validated_attribute]
       refute_predicate attribute_rules, :empty?
-      assert_instance_of Aequitas::Rule::Magnitude::NotEqual, attribute_rules.first
+      assert_instance_of Aequitas::Rule::Value::Equal, attribute_rules.first
     end
   end
 
@@ -28,17 +28,17 @@ describe Aequitas::Virtus::ClassMethodOverrides do
 
     describe 'when value is less than expected' do
       let(:attribute_value) { 1 }
-      it('is valid') { assert_predicate subject, :valid? }
+      it('is not valid') { refute_predicate subject, :valid? }
     end
 
     describe 'when value is equal to expected' do
       let(:attribute_value) { 3 }
-      it('is not valid') { refute_predicate subject, :valid? }
+      it('is valid') { assert_predicate subject, :valid? }
     end
 
     describe 'when value is greater than expected' do
       let(:attribute_value) { 5 }
-      it('is valid') { assert_predicate subject, :valid? }
+      it('is not valid') { refute_predicate subject, :valid? }
     end
 
   end

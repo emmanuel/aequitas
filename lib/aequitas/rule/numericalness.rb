@@ -3,7 +3,7 @@
 require 'bigdecimal'
 require 'bigdecimal/util'
 require 'aequitas/rule'
-require 'aequitas/rule/magnitude'
+require 'aequitas/rule/value'
 
 module Aequitas
   class Rule
@@ -19,7 +19,7 @@ module Aequitas
         rules << Integer.new(attribute_name, options)    if int
         rules << NonInteger.new(attribute_name, options) if !int
 
-        rules.concat(Magnitude.rules_for(attribute_name, options))
+        rules.concat(Value.rules_for(attribute_name, options))
       end
 
       attr_reader :expected

@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule/magnitude'
+require 'aequitas/rule/value'
 
 module Aequitas
   class Rule
-    class Magnitude
-      class LessThan < Magnitude
+    class Value
+      class LessThan < Value
 
-        def valid_magnitude?(value)
+        def valid_value?(value)
           value < expected
         rescue ArgumentError
           # TODO: figure out better solution for: can't compare String with Integer
@@ -23,6 +23,6 @@ module Aequitas
         end
 
       end # class LessThan
-    end # class Magnitude
+    end # class Value
   end # class Rule
 end # module Aequitas

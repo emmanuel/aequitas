@@ -9,11 +9,11 @@ module Aequitas
 
         def extract
           rules = super
-          rules.concat Array(extract_magnitude_rules)
+          rules.concat Array(extract_value_rules)
         end
 
-        def extract_magnitude_rules
-          Rule::Magnitude.rules_for(attribute.name, options)
+        def extract_value_rules
+          Rule::Value.rules_for(attribute.name, options)
         end
 
       end # class Numeric

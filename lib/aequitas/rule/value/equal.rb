@@ -1,28 +1,28 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule/magnitude'
+require 'aequitas/rule/value'
 
 module Aequitas
   class Rule
-    class Magnitude
-      class GreaterThan < Magnitude
+    class Value
+      class Equal < Value
 
-        def valid_magnitude?(value)
-          value > expected
+        def valid_value?(value)
+          value == expected
         rescue ArgumentError
           # TODO: figure out better solution for: can't compare String with Integer
           true
         end
 
         def violation_type(resource)
-          :greater_than
+          :equal_to
         end
 
         def violation_data(resource)
-          [ [ :minimum, expected ] ]
+          [ [ :expected, expected ] ]
         end
 
-      end # class GreaterThan
-    end # class Magnitude
+      end # class Equal
+    end # class Value
   end # class Rule
 end # module Aequitas

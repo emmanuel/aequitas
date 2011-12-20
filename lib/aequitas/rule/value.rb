@@ -6,7 +6,7 @@ require 'aequitas/rule'
 
 module Aequitas
   class Rule
-    class Magnitude < Rule
+    class Value < Rule
 
       equalize_on *superclass.equalizer.keys + [:expected]
 
@@ -44,16 +44,16 @@ module Aequitas
 
         value = attribute_value(resource)
 
-        skip?(value) || valid_magnitude?(value)
+        skip?(value) || valid_value?(value)
       end
 
-    end # class Magnitude
+    end # class Value
   end # class Rule
 end # module Aequitas
 
-require 'aequitas/rule/magnitude/equal'
-require 'aequitas/rule/magnitude/greater_than'
-require 'aequitas/rule/magnitude/greater_than_or_equal'
-require 'aequitas/rule/magnitude/less_than'
-require 'aequitas/rule/magnitude/less_than_or_equal'
-require 'aequitas/rule/magnitude/not_equal'
+require 'aequitas/rule/value/equal'
+require 'aequitas/rule/value/greater_than'
+require 'aequitas/rule/value/greater_than_or_equal'
+require 'aequitas/rule/value/less_than'
+require 'aequitas/rule/value/less_than_or_equal'
+require 'aequitas/rule/value/not_equal'
