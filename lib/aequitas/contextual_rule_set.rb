@@ -207,13 +207,7 @@ module Aequitas
     #
     # @api private
     def extract_context_names(options)
-      context_name = [
-        options.delete(:context),
-        options.delete(:group),
-        options.delete(:when),
-        options.delete(:on)
-      ].compact.first
-
+      context_name = options.values_at(:context, :group, :when, :on).compact.first
       Array(context_name || :default)
     end
 

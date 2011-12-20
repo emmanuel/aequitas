@@ -28,7 +28,7 @@ module Aequitas
       #   if the :as (or :with) option is a Symbol that is not a key in FORMATS,
       #   or if the provided format is not a Regexp, Symbol or Proc
       def self.rules_for(attribute_name, options)
-        format = options.delete(:as) || options.delete(:with)
+        format = options.values_at(:as, :with).compact.first
 
         rule =
           case format
