@@ -18,12 +18,18 @@ module Aequitas
         end
 
         def extract
-          Array(extract_presence_rules)
+          inline_rules = []
+          inline_rules.concat Array(extract_presence_rule)
+          # inline_rules.concat Array(extract_primitive_type_rule)
         end
 
-        def extract_presence_rules
+        def extract_presence_rule
           required = options.fetch(:required, false)
           Rule::Presence::NotBlank.new(attribute.name) if required
+        end
+
+        def extract_primitive_type_rule
+          Rule::PrimitiveType::Virtus.new(attribute.name, :attribute => attribute)
         end
 
       end # class Object

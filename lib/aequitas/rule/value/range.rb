@@ -20,6 +20,6 @@ module Aequitas
         end
 
       end # class Range
-    end # class Within
+    end # class Value
   end # class Rule
 end # module Aequitas

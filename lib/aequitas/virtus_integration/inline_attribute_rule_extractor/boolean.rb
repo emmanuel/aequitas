@@ -7,7 +7,7 @@ module Aequitas
     module InlineAttributeRuleExtractor
       class Boolean < Object
 
-        def extract_presence_rules
+        def extract_presence_rule
           Rule::Presence::NotNil.new(attribute.name)
         end
 

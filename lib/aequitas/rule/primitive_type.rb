@@ -6,11 +6,22 @@ module Aequitas
   class Rule
     class PrimitiveType < Rule
 
-      def valid?(resource)
-        property = get_resource_property(resource, attribute_name)
-        value    = attribute_value(resource)
+      attr_reader :primitive
 
-        value.nil? || property.value_dumped?(value)
+      def initialize(attribute_name, options = {})
+        super
+
+        @primitive = options.fetch(:primitive)
+      end
+
+      def valid?(resource)
+        value = attribute_value(resource)
+
+        skip?(value) || primitive?(value)
+      end
+
+      def primitive?(value)
+        value.is_a?(primitive)
       end
 
       def violation_type(resource)
@@ -18,11 +29,11 @@ module Aequitas
       end
 
       def violation_data(resource)
-        property = get_resource_property(resource, attribute_name)
-
-        [ [ :primitive, property.load_as ] ]
+        [ [ :primitive, primitive ] ]
       end
 
     end # class PrimitiveType
   end # class Rule
 end # module Aequitas
+
+require 'aequitas/rule/primitive_type/virtus'
