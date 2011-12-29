@@ -1,4 +1,4 @@
-require 'aequitas/virtus/inline_attribute_rule_extractor'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor'
 
 module Virtus
   class Attribute
@@ -13,12 +13,13 @@ module Aequitas
   module ClassMethods
     def self.extended(base)
       super
-      base.extend Aequitas::Virtus::ClassMethodOverrides
+      base.extend Aequitas::VirtusIntegration::ClassMethods
     end
   end
 
-  module Virtus
-    module ClassMethodOverrides
+  module VirtusIntegration
+    module ClassMethods
+      # WARNING: overriding Virtus' private API here, this is fragile
       def virtus_add_attribute(attribute)
         super
         inline_attribute_rules = InlineAttributeRuleExtractor.extract(attribute)

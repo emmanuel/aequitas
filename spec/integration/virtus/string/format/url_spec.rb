@@ -1,9 +1,9 @@
 require_relative '../../../../spec_helper'
 require 'virtus'
 require 'aequitas'
-require 'aequitas/virtus'
+require 'aequitas/virtus_integration'
 
-describe Aequitas::Virtus::ClassMethodOverrides do
+describe Aequitas::VirtusIntegration::ClassMethods do
   let(:class_under_test) do
     Class.new do
       include Virtus

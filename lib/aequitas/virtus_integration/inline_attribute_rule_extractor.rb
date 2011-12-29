@@ -1,5 +1,7 @@
+# -*- encoding: utf-8 -*-
+
 module Aequitas
-  module Virtus
+  module VirtusIntegration
     module InlineAttributeRuleExtractor
 
       def self.extract(attribute)
@@ -17,10 +19,10 @@ module Aequitas
       end
 
     end # module InlineAttributeRuleExtractor
-  end # module Virtus
+  end # module VirtusIntegration
 end # module Aequitas
 
-require 'aequitas/virtus/inline_attribute_rule_extractor/object'
-require 'aequitas/virtus/inline_attribute_rule_extractor/boolean'
-require 'aequitas/virtus/inline_attribute_rule_extractor/string'
-require 'aequitas/virtus/inline_attribute_rule_extractor/numeric'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor/object'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor/boolean'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor/string'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor/numeric'

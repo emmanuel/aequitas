@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/virtus/inline_attribute_rule_extractor/object'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor/object'
 
 module Aequitas
-  module Virtus
+  module VirtusIntegration
     module InlineAttributeRuleExtractor
       class Boolean < Object
 
@@ -13,5 +13,5 @@ module Aequitas
 
       end # class Boolean
     end # module InlineAttributeRuleExtractor
-  end # module Virtus
+  end # module VirtusIntegration
 end # module Aequitas

@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/virtus/inline_attribute_rule_extractor'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor'
 
 module Aequitas
-  module Virtus
+  module VirtusIntegration
     module InlineAttributeRuleExtractor
       class Object
 
@@ -28,5 +28,5 @@ module Aequitas
 
       end # class Object
     end # module InlineAttributeRuleExtractor
-  end # module Virtus
+  end # module VirtusIntegration
 end # module Aequitas
