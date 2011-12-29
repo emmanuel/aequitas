@@ -16,7 +16,7 @@ module Aequitas
         end
 
         def primitive?(value)
-          attribute.primitive?(value)
+          attribute.value_coerced?(value)
         end
 
       end # class Virtus
