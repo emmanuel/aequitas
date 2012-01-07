@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 
 require 'aequitas/support/blank'
-require 'aequitas/support/equalizable'
+require 'aequitas/support/value_object'
 
 module Aequitas
   class Rule
     class SkipCondition
-      extend Equalizable
+      extend ValueObject
 
       equalize_on :allow_nil, :allow_blank
 

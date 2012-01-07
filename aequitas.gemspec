@@ -64,7 +64,7 @@ Gem::Specification.new do |s|
     lib/aequitas/rule/within.rb
     lib/aequitas/rule_set.rb
     lib/aequitas/support/blank.rb
-    lib/aequitas/support/equalizable.rb
+    lib/aequitas/support/value_object.rb
     lib/aequitas/support/ordered_hash.rb
     lib/aequitas/version.rb
     lib/aequitas/violation.rb
@@ -109,8 +109,8 @@ Gem::Specification.new do |s|
     spec/unit/aequitas/rule/skip_condition_spec.rb
     spec/unit/aequitas/rule_spec.rb
     spec/unit/aequitas/support/blank_spec.rb
-    spec/unit/aequitas/support/equalizable/equalizer_spec.rb
-    spec/unit/aequitas/support/equalizable_spec.rb
+    spec/unit/aequitas/support/value_object/equalizer_spec.rb
+    spec/unit/aequitas/support/value_object_spec.rb
     spec/unit/aequitas/violation_set_spec.rb
   ]
   # git ls-files -- {test,spec,features}/*
@@ -150,8 +150,8 @@ Gem::Specification.new do |s|
     spec/unit/aequitas/rule/skip_condition_spec.rb
     spec/unit/aequitas/rule_spec.rb
     spec/unit/aequitas/support/blank_spec.rb
-    spec/unit/aequitas/support/equalizable/equalizer_spec.rb
-    spec/unit/aequitas/support/equalizable_spec.rb
+    spec/unit/aequitas/support/value_object/equalizer_spec.rb
+    spec/unit/aequitas/support/value_object_spec.rb
     spec/unit/aequitas/violation_set_spec.rb
   ]
   # `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }

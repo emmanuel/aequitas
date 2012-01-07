@@ -1,14 +1,14 @@
 require_relative '../../../../spec_helper'
-require 'aequitas/support/equalizable'
+require 'aequitas/support/value_object'
 
 module Aequitas
-  describe Equalizable::Equalizer do
-    let(:equalizer) { Equalizable::Equalizer.new(keys) }
+  describe ValueObject::Equalizer do
+    let(:equalizer) { ValueObject::Equalizer.new(keys) }
     let(:keys) { [:a, :b, :c] }
 
     describe '#initialize' do
       it "doesn't raise" do
-        assert_kind_of Equalizable::Equalizer, equalizer
+        assert_kind_of ValueObject::Equalizer, equalizer
       end
     end
 

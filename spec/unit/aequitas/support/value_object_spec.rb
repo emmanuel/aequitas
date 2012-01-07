@@ -1,11 +1,11 @@
 require_relative '../../../spec_helper'
-require 'aequitas/support/equalizable'
+require 'aequitas/support/value_object'
 
 module Aequitas
-  describe Equalizable do
-    let(:equalizable_test_class) do
+  describe ValueObject do
+    let(:value_object_test_class) do
       Class.new do
-        extend Equalizable
+        extend ValueObject
 
         equalize_on :foo, :bar
 
@@ -19,20 +19,20 @@ module Aequitas
 
     describe '.equalizer' do
       it 'returns the Equalizer module for the class' do
-        assert_instance_of Equalizable::Equalizer,
-          equalizable_test_class.equalizer
+        assert_instance_of ValueObject::Equalizer,
+          value_object_test_class.equalizer
       end
     end
 
     describe '.equalizer.keys' do
       it 'returns the keys that the class is equalized on' do
-        assert_equal [:foo, :bar], equalizable_test_class.equalizer.keys
+        assert_equal [:foo, :bar], value_object_test_class.equalizer.keys
       end
     end
 
     describe 'when all equalized attributes are the same' do
-      let(:first)  { equalizable_test_class.new(:a, :b, :c) }
-      let(:second) { equalizable_test_class.new(:a, :b, :d) }
+      let(:first)  { value_object_test_class.new(:a, :b, :c) }
+      let(:second) { value_object_test_class.new(:a, :b, :d) }
 
       describe '#eql?' do
         it 'returns true' do
@@ -48,8 +48,8 @@ module Aequitas
     end
 
     describe 'when an equalized attribute is different' do
-      let(:first)  { equalizable_test_class.new(:a, :b, :c) }
-      let(:second) { equalizable_test_class.new(:a, :c, :d) }
+      let(:first)  { value_object_test_class.new(:a, :b, :c) }
+      let(:second) { value_object_test_class.new(:a, :c, :d) }
 
       describe '#eql?' do
         it 'returns false' do

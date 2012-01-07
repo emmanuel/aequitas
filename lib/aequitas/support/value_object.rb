@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 module Aequitas
-  # TODO: rename ValueObject (?)
-  module Equalizable
+  module ValueObject
 
     # An Equalizer module which defines #inspect, #eql?, #== and #hash
     # for instances of this class
@@ -109,5 +108,5 @@ module Aequitas
         RUBY
       end
     end # class Equalizer
-  end # module Equalizable
+  end # module ValueObject
 end # module Aequitas

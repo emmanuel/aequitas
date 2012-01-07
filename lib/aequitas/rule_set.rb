@@ -2,14 +2,14 @@
 
 require 'forwardable'
 require 'set'
-require 'aequitas/support/equalizable'
+require 'aequitas/support/value_object'
 
 module Aequitas
   class RuleSet
     # Holds a collection of Rule instances to be run against
     # Resources to validate the Resources in a specific context
 
-    extend Equalizable
+    extend ValueObject
     extend Forwardable
     include Enumerable
 

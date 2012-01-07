@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 
 require 'aequitas/exceptions'
-require 'aequitas/support/equalizable'
+require 'aequitas/support/value_object'
 require 'aequitas/message_transformer'
 
 module Aequitas
   class Violation
-    extend Aequitas::Equalizable
+    extend Aequitas::ValueObject
 
     equalize_on :resource, :rule, :custom_message, :attribute_name
 
@@ -102,7 +102,7 @@ module Aequitas
       end
     end
 
-    # In general we want Aequitas::Equalizable-type equality/equivalence,
+    # In general we want Aequitas::ValueObject-type equality/equivalence,
     # but this allows direct equivalency test against Strings, which is handy
     def ==(other)
       if other.respond_to?(:to_str)
