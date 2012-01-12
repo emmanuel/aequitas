@@ -1,3 +1,4 @@
+require 'aequitas'
 require 'aequitas/virtus_integration/inline_attribute_rule_extractor'
 
 module Virtus
