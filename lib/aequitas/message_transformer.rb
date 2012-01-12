@@ -9,7 +9,7 @@ module Aequitas
   #   message transformer or pass the transformer to {Violation#message}.
   class MessageTransformer
     def self.default
-      defined?(I18n) ? DefaultI18n.new : Default.new
+      defined?(I18n) ? DefaultI18n.new : DefaultStatic.new
     end
 
     # Transforms the specified Violation to an error message string.
@@ -26,7 +26,7 @@ module Aequitas
       raise NotImplementedError, "#{self.class}#transform has not been implemented"
     end
 
-    class Default < self
+    class DefaultStatic < MessageTransformer
       @error_messages = {
         :nil                      => '%s must not be nil',
         :blank                    => '%s must not be blank',
@@ -82,6 +82,10 @@ module Aequitas
         end
       end
 
+      def initialize
+        require 'dm-core'
+      end
+
       def transform(violation)
         raise ArgumentError, "+violation+ must be specified" if violation.nil?
 
@@ -89,9 +93,9 @@ module Aequitas
 
         self.class.error_message(violation.type, attribute_name, violation.values)
       end
-    end # class Default
+    end # class DefaultStatic
 
-    class DefaultI18n < self
+    class DefaultI18n < MessageTransformer
       def initialize
         require 'i18n'
       end
@@ -100,6 +104,8 @@ module Aequitas
         raise ArgumentError, "+violation+ must be specified" if violation.nil?
 
         resource       = violation.resource
+        # TODO: resource#model and Model#model_name are assumptions from DM
+        #   Figure out a more flexible way to lookup error messages in I18n
         model_name     = resource.model.model_name
         attribute_name = violation.attribute_name
         # TODO: Include attribute value in Violation; it may have changed by now
@@ -109,7 +115,7 @@ module Aequitas
           :model     => ::I18n.translate("models.#{model_name}"),
           :attribute => ::I18n.translate("attributes.#{model_name}.#{attribute_name}"),
           # TODO: Include attribute value in Violation; it may have changed by now
-          :value     => resource.validation_attribute_value(attribute_name)
+          :value     => resource.validation_attribute_value(attribute_name),
         }.merge(violation.info)
 
         ::I18n.translate("#{i18n_namespace}.#{violation.type}", options)
