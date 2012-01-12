@@ -18,7 +18,7 @@ module Aequitas
     # instantiated from the model to which this ContextualRuleSet is bound
     #
     # @api public
-    # attr_accessor :transformer
+    attr_accessor :transformer
 
     # @api private
     attr_reader :rule_sets

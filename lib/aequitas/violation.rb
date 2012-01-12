@@ -50,7 +50,7 @@ module Aequitas
     def message(transformer = Undefined)
       return @custom_message if @custom_message
 
-      transformer = Undefined == transformer ? self.transformer : transformer
+      transformer = self.transformer if Undefined.equal?(transformer)
 
       transformer.transform(self)
     end
