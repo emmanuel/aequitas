@@ -1,15 +1,23 @@
 # -*- encoding: utf-8 -*-
 
 module Aequitas
+
   # Transforms Violations to error message strings.
   #
   # @abstract
   #   Subclass and override {#transform} to implement a custom message
-  #   transformer. Use {Violation.message_transformer=} to set a new
+  #   transformer. Use {Violation.default_transformer=} to set a new default
   #   message transformer or pass the transformer to {Violation#message}.
   class MessageTransformer
+    # Get the default MessageTransformer for this process
+    #
+    # @return [MessageTransformer]
+    #   default MessageTransformer for this process
+    #
+    # @see {Violation.default_transformer}
+    #
     def self.default
-      defined?(I18n) ? DefaultI18n.new : DefaultStatic.new
+      defined?(::I18n) ? DefaultI18n.new : DefaultStatic.new
     end
 
     # Transforms the specified Violation to an error message string.
