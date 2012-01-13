@@ -13,7 +13,8 @@ module Aequitas
       def initialize(attribute_name, options={})
         super
 
-        @method = options.fetch(:method, attribute_name)
+        @method         = options.fetch(:method,         attribute_name)
+        @violation_type = options.fetch(:violation_type, :unsatisfied_condition)
       end
 
       def validate(resource)
@@ -24,6 +25,10 @@ module Aequitas
         else
           Violation.new(resource, error_message, self)
         end
+      end
+
+      def violation_type(resource)
+        @violation_type
       end
 
     end # class Method

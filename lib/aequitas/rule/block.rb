@@ -16,6 +16,7 @@ module Aequitas
         super
 
         @block = block
+        @violation_type = options.fetch(:violation_type, :unsatisfied_condition)
       end
 
       def validate(resource)
@@ -26,6 +27,10 @@ module Aequitas
         else
           Violation.new(resource, error_message, self)
         end
+      end
+
+      def violation_type(resource)
+        @violation_type
       end
 
     end # class Block

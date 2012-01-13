@@ -58,7 +58,8 @@ module Aequitas
         :less_than_or_equal_to    => '%s must be less than or equal to %s',
         :value_between            => '%s must be between %s and %s',
         :not_unique               => '%s is already taken',
-        :primitive                => '%s must be of type %s'
+        :primitive                => '%s must be of type %s',
+        :unsatisfied_condition    => '%s condition was not satisfied',
       }
 
       class << self
