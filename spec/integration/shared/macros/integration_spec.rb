@@ -60,6 +60,12 @@ module Aequitas
         it 'has a violation under the expected attribute name' do
           assert_equal expected_violations, subject.validate.errors.on(attribute_name)
         end
+
+        it "the expected violation's message contains the attribute name" do
+          message = subject.validate.errors.on(attribute_name).first.message
+          humanized_attr = ::DataMapper::Inflector.humanize(attribute_name.to_s)
+          assert_includes message, humanized_attr
+        end
       end
 
     end # class IntegrationSpec
