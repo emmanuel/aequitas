@@ -43,7 +43,7 @@ module Aequitas
       def valid?(resource)
         value = attribute_value(resource)
 
-        skip?(value) || valid_length?(value_length(value.to_s))
+        skip?(value) || valid_length?(value_length(value))
       end
 
       def valid_length?(length)
@@ -52,15 +52,19 @@ module Aequitas
 
       # Return the length in characters
       #
-      # @param [#to_str] value
-      #   the string to get the number of characters for
+      # @param [#length, #to_s] value
+      #   the value to get the length of. if it does not respond to #length,
+      #   then #to_s will be called, and the length of that will be calculated
+      #   instead
       #
       # @return [Integer]
-      #   the number of characters in the string
+      #   the length of the value
       #
       # @api private
       def value_length(value)
-        value.to_str.length
+        value.length
+      rescue NoMethodError
+        value.to_s.length
       end
 
       if RUBY_VERSION < '1.9'
