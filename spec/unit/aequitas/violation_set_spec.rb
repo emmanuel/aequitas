@@ -18,7 +18,7 @@ module Aequitas
       let(:violation) { Violation.new(object, 'message', nil, :attribute) }
 
       it 'returns nil when no error is present on the requested attribute' do
-        assert_nil violation_set.on(:foo)
+        assert_predicate violation_set.on(:foo), :empty?
       end
 
       describe 'after adding a message via a symbol attribute name' do

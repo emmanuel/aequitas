@@ -42,6 +42,10 @@ module Aequitas
         it '#errors is empty' do
           assert_predicate subject.validate.errors, :empty?
         end
+
+        it 'errors on attribute name is empty' do
+          assert_predicate subject.validate.errors.on(attribute_name), :empty?
+        end
       end
 
       def self.it_should_be_an_invalid_instance

@@ -79,7 +79,7 @@ module Aequitas
     # @param [Symbol] attribute_name
     #   The name of the field you want an violation for.
     #
-    # @return [Array(Violation, String), NilClass]
+    # @return [Array(Violation, String)]
     #   Array of Violations, if there are violations on +attribute_name+
     #   nil if there are no violations on +attribute_name+
     # 
@@ -87,8 +87,7 @@ module Aequitas
     # 
     # TODO: use a data structure that ensures uniqueness
     def on(attribute_name)
-      attribute_violations = violations[attribute_name]
-      attribute_violations.empty? ? nil : attribute_violations.uniq
+      violations[attribute_name].uniq
     end
 
     # @api public
