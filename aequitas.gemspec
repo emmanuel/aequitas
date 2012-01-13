@@ -64,13 +64,14 @@ Gem::Specification.new do |s|
     lib/aequitas/rule/within.rb
     lib/aequitas/rule_set.rb
     lib/aequitas/support/blank.rb
-    lib/aequitas/support/value_object.rb
     lib/aequitas/support/ordered_hash.rb
+    lib/aequitas/support/value_object.rb
     lib/aequitas/version.rb
     lib/aequitas/violation.rb
     lib/aequitas/violation_set.rb
     lib/aequitas/virtus_integration.rb
     lib/aequitas/virtus_integration/inline_attribute_rule_extractor.rb
+    lib/aequitas/virtus_integration/inline_attribute_rule_extractor/array.rb
     lib/aequitas/virtus_integration/inline_attribute_rule_extractor/boolean.rb
     lib/aequitas/virtus_integration/inline_attribute_rule_extractor/numeric.rb
     lib/aequitas/virtus_integration/inline_attribute_rule_extractor/object.rb
@@ -87,6 +88,8 @@ Gem::Specification.new do |s|
     spec/integration/aequitas/macros/validates_with_method.rb
     spec/integration/aequitas/macros/validates_within.rb
     spec/integration/shared/macros/integration_spec.rb
+    spec/integration/virtus/array/length/equal_spec.rb
+    spec/integration/virtus/array/length/range_spec.rb
     spec/integration/virtus/boolean/presence_spec.rb
     spec/integration/virtus/integer/value/equal_to_spec.rb
     spec/integration/virtus/integer/value/greater_than_or_equal.rb
@@ -127,6 +130,8 @@ Gem::Specification.new do |s|
     spec/integration/aequitas/macros/validates_with_method.rb
     spec/integration/aequitas/macros/validates_within.rb
     spec/integration/shared/macros/integration_spec.rb
+    spec/integration/virtus/array/length/equal_spec.rb
+    spec/integration/virtus/array/length/range_spec.rb
     spec/integration/virtus/boolean/presence_spec.rb
     spec/integration/virtus/integer/value/equal_to_spec.rb
     spec/integration/virtus/integer/value/greater_than_or_equal.rb
