@@ -21,9 +21,7 @@ module Aequitas
         skip_condition.default_to_allowing_nil!
       end
 
-      def valid?(resource)
-        value = attribute_value(resource)
-
+      def valid_value?(value)
         skip?(value) || accept.include?(value)
       end
 

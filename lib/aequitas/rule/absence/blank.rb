@@ -7,8 +7,8 @@ module Aequitas
     class Absence
       class Blank < Absence
 
-        def valid?(resource)
-          Aequitas.blank?(attribute_value(resource))
+        def valid_value?(value)
+          Aequitas.blank?(value)
         end
 
         def violation_type(resource)

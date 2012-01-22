@@ -7,7 +7,7 @@ module Aequitas
     class Value
       class LessThanOrEqual < Value
 
-        def valid_value?(value)
+        def expected_value?(value)
           value <= expected
         rescue ArgumentError
           # TODO: figure out better solution for: can't compare String with Integer

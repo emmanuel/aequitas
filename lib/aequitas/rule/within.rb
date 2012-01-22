@@ -6,11 +6,6 @@ module Aequitas
   class Rule
     class Within < Rule
 
-      # TODO: move options normalization into the validator macros
-      def self.rules_for(attribute_name, options)
-        Array(new(attribute_name, options))
-      end
-
       equalize_on *superclass.equalizer.keys + [:set]
 
       attr_reader :set
@@ -21,9 +16,7 @@ module Aequitas
         @set = options.fetch(:set)
       end
 
-      def valid?(resource)
-        value = attribute_value(resource)
-
+      def valid_value?(value)
         skip?(value) || set.include?(value)
       end
 

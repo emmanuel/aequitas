@@ -10,7 +10,6 @@ module Aequitas
 
       attr_reader :confirmation_attribute_name
 
-
       def initialize(attribute_name, options = {})
         super
 
@@ -22,10 +21,14 @@ module Aequitas
         skip_condition.default_to_allowing_blank!
       end
 
-      def valid?(resource)
+      def validate(resource)
         value = attribute_value(resource)
 
-        skip?(value) || value == confirmation_value(resource)
+        if skip?(value) || value == confirmation_value(resource)
+          nil
+        else
+          Violation::Rule.new(resource, custom_message, :rule => self)
+        end
       end
 
       def confirmation_value(resource)

@@ -7,8 +7,8 @@ module Aequitas
     class Absence
       class Nil < Absence
 
-        def valid?(resource)
-          attribute_value(resource).nil?
+        def valid_value?(value)
+          value.nil?
         end
 
         def violation_type(resource)

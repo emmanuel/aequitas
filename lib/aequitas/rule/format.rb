@@ -53,6 +53,13 @@ module Aequitas
         skip_condition.default_to_allowing_blank!
       end
 
+      def valid_value?(value)
+        expected_format?(value)
+      rescue ::Encoding::CompatibilityError
+        # This is to work around a bug in jruby - see formats/email.rb
+        false
+      end
+
       def violation_type(resource)
         :invalid
       end

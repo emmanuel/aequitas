@@ -40,13 +40,11 @@ module Aequitas
       class Dummy < Length
       end
 
-      def valid?(resource)
-        value = attribute_value(resource)
-
-        skip?(value) || valid_length?(value_length(value))
+      def valid_value?(value)
+        skip?(value) || expected_length?(value_length(value))
       end
 
-      def valid_length?(length)
+      def expected_length?(length)
         raise NotImplementedError, "#{self.class}#valid_length? must be implemented"
       end
 

@@ -72,7 +72,9 @@ module Aequitas
     #   NilClass if +resource+ is valid
     #   Violation with additional info if +resource+ is invalid
     def validate(resource)
-      if valid?(resource)
+      value = attribute_value(resource)
+
+      if skip?(value) || valid_value?(value)
         nil
       else
         Violation::Rule.new(resource, custom_message, :rule => self)

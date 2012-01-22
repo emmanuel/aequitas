@@ -2,44 +2,50 @@ require_relative '../../../../spec_helper'
 require 'aequitas/rule/absence/blank'
 
 describe Aequitas::Rule::Absence::Blank do
-  subject { Aequitas::Rule::Absence::Blank.new(attribute_name, options) }
+  let(:rule) { Aequitas::Rule::Absence::Blank.new(attribute_name, options) }
   let(:attribute_name) { :foo }
   let(:options) { Hash.new }
 
-  describe '#valid?' do
-    let(:resource) { MiniTest::Mock.new }
+  describe '#valid_value?' do
+    subject { rule.valid_value?(value) }
 
-    it "is false if the target's attribute is a non-empty string" do
-      resource.expect(:validation_attribute_value, 'a', [attribute_name])
-      refute_operator subject, :valid?, resource
+    describe 'when testing a non-empty string' do
+      let(:value) { 'a' }
+
+      it('returns false') { refute subject, "expected false for #{value.inspect}" }
     end
 
-    it "is false if the target's attribute is a symbol" do
-      resource.expect(:validation_attribute_value, :a, [attribute_name])
-      refute_operator subject, :valid?, resource
+    describe 'when testing a symbol' do
+      let(:value) { :a }
+
+      it('returns false') { refute subject, "expected false for #{value.inspect}" }
     end
 
-    it "is true if the target's attribute is an empty string" do
-      resource.expect(:validation_attribute_value, '', [attribute_name])
-      assert_operator subject, :valid?, resource
+    describe 'when testing an empty string' do
+      let(:value) { '' }
+
+      it('returns true') { assert subject, "expected false for #{value.inspect}" }
     end
 
-    it "is true if the target's attribute is false" do
-      resource.expect(:validation_attribute_value, false, [attribute_name])
-      assert_operator subject, :valid?, resource
+    describe 'when testing false' do
+      let(:value) { false }
+
+      it('returns true') { assert subject, "expected true for #{value.inspect}" }
     end
 
-    it "is true if the target's attribute is nil" do
-      resource.expect(:validation_attribute_value, nil, [attribute_name])
-      assert_operator subject, :valid?, resource
+    describe 'when testing nil' do
+      let(:value) { nil }
+
+      it('returns true') { assert subject, "expected true for #{value.inspect}" }
     end
   end
 
   describe '#violation_type' do
-    it 'returns :absent' do
-      resource = MiniTest::Mock.new
-      assert_equal :not_blank, subject.violation_type(resource)
-    end
+    subject { rule.violation_type(resource) }
+
+    let(:resource) { MiniTest::Mock.new }
+
+    it('returns :absent') { assert_equal :not_blank, subject }
   end
 
 end

@@ -7,7 +7,7 @@ module Aequitas
     class Value
       class Range < Value
 
-        def valid_value?(value)
+        def expected_value?(value)
           expected.cover?(value)
         end
 

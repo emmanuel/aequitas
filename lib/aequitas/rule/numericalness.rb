@@ -23,12 +23,10 @@ module Aequitas
 
       attr_reader :expected
 
-      def valid?(resource)
+      def valid_value?(value)
         # TODO: is it even possible for expected to be nil?
         #   if so, return a dummy validator when expected is nil
         return true if expected.nil?
-
-        value = attribute_value(resource)
 
         skip?(value) || valid_numericalness?(value)
       end

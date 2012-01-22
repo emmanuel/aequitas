@@ -10,7 +10,6 @@ module Aequitas
 
       equalize_on *superclass.equalizer.keys + [:expected]
 
-      # TODO: move options normalization into the validator macros?
       def self.rules_for(attribute_name, options)
         eq  = options.values_at(:eq,  :equal, :equals, :equal_to, :exactly).compact.first
         ne  = options.values_at(:ne,  :not_equal_to).compact.first
@@ -41,14 +40,16 @@ module Aequitas
         @expected.respond_to?(:call) ? @expected.call : @expected
       end
 
-      def valid?(resource)
+      def valid_value?(value)
         # TODO: is it even possible for expected to be nil?
         #   if so, return a dummy validator when expected is nil
         return true if expected.nil?
 
-        value = attribute_value(resource)
+        skip?(value) || expected_value?(value)
+      end
 
-        skip?(value) || valid_value?(value)
+      def expected_value?(value)
+        raise NotImplementedError, "#{self.class}#expected_value? is not implemented"
       end
 
     end # class Value

@@ -25,8 +25,6 @@ module Aequitas
           [ [ :expected, expected ] ]
         end
 
-      private
-
         # Validate the value length is equal to the expected length
         #
         # @param [Integer] length
@@ -36,7 +34,7 @@ module Aequitas
         #   the error message if invalid, nil if not
         #
         # @api private
-        def valid_length?(length)
+        def expected_length?(length)
           expected == length
         end
 

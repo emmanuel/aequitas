@@ -7,13 +7,8 @@ module Aequitas
     class Format
       class Proc < Format
 
-        def valid?(resource)
-          value = attribute_value(resource)
-
-          skip?(value) || format.call(value)
-        # rescue ::Encoding::CompatibilityError
-        #   # This is to work around a bug in jruby - see formats/email.rb
-        #   false
+        def expected_format?(value)
+          format.call(value)
         end
 
       end # class Proc

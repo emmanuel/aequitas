@@ -17,14 +17,8 @@ module Aequitas
           @format_name = options.fetch(:format_name, nil)
         end
 
-        def valid?(resource)
-          value = attribute_value(resource)
-          return true if skip?(value)
-
+        def expected_format?(value)
           value ? value.to_s =~ self.format : false
-        rescue ::Encoding::CompatibilityError
-          # This is to work around a bug in jruby - see formats/email.rb
-          false
         end
 
         # TODO: integrate format into error message key?

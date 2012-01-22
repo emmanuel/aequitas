@@ -15,7 +15,7 @@ module Aequitas
           super(attribute_name, :primitive => attribute.class.primitive)
         end
 
-        def primitive?(value)
+        def expected_type?(value)
           attribute.value_coerced?(value)
         end
 

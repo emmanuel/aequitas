@@ -34,7 +34,7 @@ module Aequitas
         #   the error message if invalid, nil if valid
         #
         # @api private
-        def valid_length?(length)
+        def expected_length?(length)
           bound <= length
         end
 

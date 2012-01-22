@@ -14,13 +14,11 @@ module Aequitas
         @primitive = options.fetch(:primitive)
       end
 
-      def valid?(resource)
-        value = attribute_value(resource)
-
-        skip?(value) || primitive?(value)
+      def valid_value?(value)
+        skip?(value) || expected_type?(value)
       end
 
-      def primitive?(value)
+      def expected_type?(value)
         value.is_a?(primitive)
       end
 

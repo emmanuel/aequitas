@@ -4,11 +4,13 @@ require 'aequitas/rule/acceptance'
 module Aequitas
   class Rule
     describe Acceptance do
-      subject { Acceptance.new(attribute_name, options) }
+      let(:rule) { Acceptance.new(attribute_name, options) }
       let(:attribute_name) { :foo }
       let(:options) { Hash.new }
 
       describe '#initialize' do
+        subject { rule }
+
         describe 'when the :accept option is present' do
           let(:options) { { accept: [:foo] } }
 
@@ -40,30 +42,30 @@ module Aequitas
         end
       end
 
-      describe '#valid?' do
-        let(:resource) { MiniTest::Mock.new }
+      describe '#valid_value?' do
+        subject { rule.valid_value?(value) }
+
         let(:options) { { accept: ['a'] } }
 
-        describe "when the target attribute's value is among the #accept values" do
-          it 'returns true' do
-            resource.expect(:validation_attribute_value, 'a', [attribute_name])
-            assert_operator subject, :valid?, resource
-          end
+        describe "when testing a value that is among the #accept values" do
+          let(:value) { 'a' }
+
+          it('returns true') { assert subject, "expected true for #{value.inspect}" }
         end
 
-        describe "when the target attribute's value is not among the #accept values" do
-          it 'returns false' do
-            resource.expect(:validation_attribute_value, 'b', [attribute_name])
-            refute_operator subject, :valid?, resource
-          end
+        describe "when testing a value that is not among the #accept values" do
+          let(:value) { 'b' }
+
+          it('returns false') { refute subject, "expected false for #{value.inspect}" }
         end
       end
 
       describe '#violation_type' do
-        it 'returns :accepted' do
-          resource = MiniTest::Mock.new
-          assert_equal :accepted, subject.violation_type(resource)
-        end
+        subject { rule.violation_type(resource) }
+
+        let(:resource) { MiniTest::Mock.new }
+
+        it('returns :accepted') { assert_equal :accepted, subject }
       end
 
     end
