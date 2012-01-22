@@ -21,7 +21,7 @@ module Aequitas
           :length_between
         end
 
-        def violation_data(resource)
+        def violation_data
           [ [ :min, range.begin ], [ :max, range.end ] ]
         end
 

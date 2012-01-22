@@ -107,17 +107,17 @@ module Aequitas
     end
 
     # @api private
-    def violation_info(resource)
-      Hash[ violation_data(resource) ]
+    def violation_info
+      Hash[ violation_data ]
     end
 
     # @api private
-    def violation_values(resource)
-      violation_data(resource).map { |(_, value)| value }
+    def violation_values
+      violation_data.map { |(_, value)| value }
     end
 
     # @api private
-    def violation_data(resource)
+    def violation_data
       [ ]
     end
 

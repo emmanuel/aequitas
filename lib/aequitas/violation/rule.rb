@@ -41,7 +41,7 @@ module Aequitas
 
       # @api private
       def values
-        rule.violation_values(resource)
+        rule.violation_values
       end
 
     end # class Rule

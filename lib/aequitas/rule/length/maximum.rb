@@ -21,7 +21,7 @@ module Aequitas
           :too_long
         end
 
-        def violation_data(resource)
+        def violation_data
           [ [ :maximum, bound ] ]
         end
 

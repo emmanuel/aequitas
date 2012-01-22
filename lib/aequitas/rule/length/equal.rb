@@ -21,7 +21,7 @@ module Aequitas
           :wrong_length
         end
 
-        def violation_data(resource)
+        def violation_data
           [ [ :expected, expected ] ]
         end
 

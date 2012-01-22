@@ -15,7 +15,7 @@ module Aequitas
           :value_between
         end
 
-        def violation_data(resource)
+        def violation_data
           [ [ :minimum, expected.begin ], [ :maximum, expected.end ] ]
         end
 

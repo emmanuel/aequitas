@@ -21,7 +21,7 @@ module Aequitas
           :too_short
         end
 
-        def violation_data(resource)
+        def violation_data
           [ [ :minimum, bound ] ]
         end
 

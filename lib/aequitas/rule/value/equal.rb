@@ -18,7 +18,7 @@ module Aequitas
           :equal_to
         end
 
-        def violation_data(resource)
+        def violation_data
           [ [ :expected, expected ] ]
         end
 

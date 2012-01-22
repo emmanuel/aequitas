@@ -18,7 +18,7 @@ module Aequitas
           :not_equal_to
         end
 
-        def violation_data(resource)
+        def violation_data
           [ [ :not_expected, expected ] ]
         end
 

@@ -26,7 +26,7 @@ module Aequitas
         :primitive
       end
 
-      def violation_data(resource)
+      def violation_data
         [ [ :primitive, primitive ] ]
       end
 

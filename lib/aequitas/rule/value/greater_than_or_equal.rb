@@ -18,7 +18,7 @@ module Aequitas
           :greater_than_or_equal_to
         end
 
-        def violation_data(resource)
+        def violation_data
           [ [ :minimum, expected ] ]
         end
 

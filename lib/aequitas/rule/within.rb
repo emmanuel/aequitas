@@ -24,7 +24,8 @@ module Aequitas
         :inclusion
       end
 
-      def violation_data(resource)
+      # TODO: is it worth converting to a String (dumping this information)?
+      def violation_data
         [ [ :set, set.to_a.join(', ') ] ]
       end
 
