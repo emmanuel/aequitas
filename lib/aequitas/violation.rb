@@ -18,10 +18,38 @@ module Aequitas
       @default_transformer = transformer
     end
 
+    # Object that triggered this Violation
+    #
+    # @return [Object]
+    #   object which triggered this violation
+    # 
+    # @api public
     attr_reader :resource
+
+    # Custom message for this Violation
+    #
+    # @return [String, #call]
+    #   custom message returned by #message and #to_s
+    #
+    # @api public
     attr_reader :custom_message
+
+    # Rule which generated this Violation
+    #
+    # @return [Aequitas::Rule]
+    #   validaiton rule that triggered this violation
+    # 
+    # @api public
     attr_reader :rule
+
+    # Name of the attribute which this Violation pertains to
+    #
+    # @return [Symbol]
+    #   the name of the validated attribute associated with this violation
+    #
+    # @api public
     attr_reader :attribute_name
+
 
     # Configure a Violation instance
     # 
@@ -29,20 +57,12 @@ module Aequitas
     #   the validated object
     # @param [String, #call, Hash] message
     #   an optional custom message for this Violation
-    # @param [Rule] rule
-    #   the Rule whose violation triggered the creation of the receiver
-    # @param [Symbol] attribute_name
-    #   the name of the attribute whose validation rule was violated
-    #   or nil, if a Rule was provided.
-    # 
-    def initialize(resource, message = nil, rule = nil, attribute_name = nil)
-      unless message || rule
-        raise ArgumentError, "expected +message+ or +rule+"
-      end
-
+    # @param [Hash] options
+    #   options hash for configuring concrete subclasses
+    #
+    # @api public
+    def initialize(resource, message, options = {})
       @resource       = resource
-      @rule           = rule
-      @attribute_name = attribute_name
       @custom_message = evaluate_message(message)
     end
 
@@ -59,28 +79,21 @@ module Aequitas
     alias_method :to_s, :message
 
     # @api public
-    def attribute_name
-      if @attribute_name
-        @attribute_name
-      elsif rule
-        rule.attribute_name
-      end
-    end
-
-    # @api public
     def type
-      rule ? rule.violation_type(resource) : nil
+      raise NotImplementedError, "#{self.class}#type is not implemented"
     end
 
     # @api public
     def info
-      rule ? rule.violation_info(resource) : { }
+      raise NotImplementedError, "#{self.class}#info is not implemented"
     end
 
+    # @api public
     def values
-      rule ? rule.violation_values(resource) : [ ]
+      raise NotImplementedError, "#{self.class}#values is not implemented"
     end
 
+    # @api private
     def transformer
       if resource.respond_to?(:validation_rules) && transformer = resource.validation_rules.transformer
         transformer
@@ -89,6 +102,8 @@ module Aequitas
       end
     end
 
+    # TODO: Drop this or heavily refactor it.
+    #   This is too complicated and coupled to DM.
     def evaluate_message(message)
       if message.respond_to?(:call)
         if resource.respond_to?(:model) && resource.model.respond_to?(:properties)
@@ -114,3 +129,6 @@ module Aequitas
 
   end # class Violation
 end # module Aequitas
+
+require 'aequitas/violation/rule'
+require 'aequitas/violation/message'

@@ -75,7 +75,7 @@ module Aequitas
       if valid?(resource)
         nil
       else
-        Violation.new(resource, custom_message, self)
+        Violation::Rule.new(resource, custom_message, :rule => self)
       end
     end
 

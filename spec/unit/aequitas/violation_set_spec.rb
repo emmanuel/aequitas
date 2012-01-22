@@ -15,7 +15,7 @@ module Aequitas
     end
 
     describe '#on' do
-      let(:violation) { Violation.new(object, 'message', nil, :attribute) }
+      let(:violation) { Violation::Message.new(object, 'message', :attribute_name => :attribute) }
 
       it 'returns nil when no error is present on the requested attribute' do
         assert_predicate violation_set.on(:foo), :empty?
@@ -41,8 +41,8 @@ module Aequitas
     end
 
     describe '#add' do
-      let(:violation_1) { Violation.new(object, 'message 1', nil, :attribute) }
-      let(:violation_2) { Violation.new(object, 'message 2', nil, :attribute) }
+      let(:violation_1) { Violation::Message.new(object, 'message 1', :attribute_name => :attribute) }
+      let(:violation_2) { Violation::Message.new(object, 'message 2', :attribute_name => :attribute) }
 
       it 'returns the receiver' do
         # assert_that violation_set.add(:foo, 'message'), is(:equal?, violation_set)
@@ -93,8 +93,8 @@ module Aequitas
       end
 
       describe 'after adding an equivalent Violation twice' do
-        let(:violation_1) { Violation.new(object, 'message', nil, :attribute) }
-        let(:violation_2) { Violation.new(object, 'message', nil, :attribute) }
+        let(:violation_1) { Violation::Message.new(object, 'message', :attribute_name => :attribute) }
+        let(:violation_2) { Violation::Message.new(object, 'message', :attribute_name => :attribute) }
 
         it 'returns a single instance of that message via #on' do
           violation_set.add(violation_1)
@@ -127,7 +127,7 @@ module Aequitas
       end
 
       describe 'after adding a Violation' do
-        let(:violation) { Violation.new(object, 'message', nil, :attribute) }
+        let(:violation) { Violation::Message.new(object, 'message', :attribute_name => :attribute) }
 
         it 'is false' do
           violation_set.add(violation)
@@ -137,9 +137,9 @@ module Aequitas
     end
 
     describe '#each' do
-      let(:violation_1) { Violation.new(object, 'message 1', nil, :attribute) }
-      let(:violation_2) { Violation.new(object, 'message 2', nil, :attribute) }
-      let(:violation_3) { Violation.new(object, 'another message', nil, :foo) }
+      let(:violation_1) { Violation::Message.new(object, 'message 1', :attribute_name => :attribute) }
+      let(:violation_2) { Violation::Message.new(object, 'message 2', :attribute_name => :attribute) }
+      let(:violation_3) { Violation::Message.new(object, 'another message', :attribute_name => :foo) }
 
       it 'iterates over properties and yields error message arrays' do
         violation_set.add(violation_1)

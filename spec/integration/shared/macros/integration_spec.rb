@@ -29,7 +29,7 @@ module Aequitas
         end
       end
       let(:expected_violations) do
-        validation_rules.map { |rule| Violation.new(subject, nil, rule) }
+        validation_rules.map { |rule| Violation::Rule.new(subject, nil, :rule => rule) }
       end
 
       subject { class_under_test.new(attribute_value) }
