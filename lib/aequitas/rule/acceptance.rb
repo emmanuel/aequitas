@@ -25,7 +25,7 @@ module Aequitas
         skip?(value) || accept.include?(value)
       end
 
-      def violation_type(resource)
+      def violation_type
         :accepted
       end
 

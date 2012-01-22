@@ -17,7 +17,7 @@ module Aequitas
           @range = options.fetch(:range)
         end
 
-        def violation_type(resource)
+        def violation_type
           :length_between
         end
 

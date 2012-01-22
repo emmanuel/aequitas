@@ -20,7 +20,7 @@ module Aequitas
         skip?(value) || set.include?(value)
       end
 
-      def violation_type(resource)
+      def violation_type
         :inclusion
       end
 

@@ -17,7 +17,7 @@ module Aequitas
           @bound = options.fetch(:bound)
         end
 
-        def violation_type(resource)
+        def violation_type
           :too_short
         end
 

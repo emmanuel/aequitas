@@ -31,7 +31,7 @@ module Aequitas
 
       # @api private
       def type
-        rule.violation_type(resource)
+        rule.violation_type
       end
 
       # @api private

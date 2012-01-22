@@ -14,7 +14,7 @@ module Aequitas
           true
         end
 
-        def violation_type(resource)
+        def violation_type
           :greater_than_or_equal_to
         end
 

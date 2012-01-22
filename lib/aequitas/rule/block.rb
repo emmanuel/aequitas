@@ -6,7 +6,7 @@ module Aequitas
   class Rule
     class Block < Rule
 
-      attr_reader :block
+      attr_reader :block, :violation_type
 
       def initialize(attribute_name, options, &block)
         unless block_given?
@@ -27,10 +27,6 @@ module Aequitas
         else
           Violation::Rule.new(resource, error_message, :rule => self)
         end
-      end
-
-      def violation_type(resource)
-        @violation_type
       end
 
     end # class Block

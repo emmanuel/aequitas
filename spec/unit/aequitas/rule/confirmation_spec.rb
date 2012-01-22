@@ -7,7 +7,6 @@ module Aequitas
       let(:rule) { Confirmation.new(attribute_name, options) }
       let(:attribute_name) { :foo }
       let(:options) { { } }
-      let(:resource) { MiniTest::Mock.new }
 
       describe '#initialize' do
         let(:skip_condition) { MiniTest::Mock.new }
@@ -22,6 +21,7 @@ module Aequitas
         it('calls #default_to_allowing_blank! on its skip_condition') { rule }
       end
 
+      describe '#validate' do
       # def validate(resource)
       #   value = attribute_value(resource)
       # 
@@ -31,11 +31,11 @@ module Aequitas
       #     Violation::Rule.new(resource, custom_message, :rule => self)
       #   end
       # end
-      describe '#validate' do
         subject { rule.validate(resource) }
 
         let(:options)         { { :skip_condition => skip_condition } }
         let(:skip_condition)  { MiniTest::Mock.new }
+        let(:resource)        { MiniTest::Mock.new }
         let(:attribute_value) { :bar }
 
         before do
@@ -76,7 +76,7 @@ module Aequitas
       end
 
       describe 'violation_type' do
-        subject { rule.violation_type(resource) }
+        subject { rule.violation_type }
 
         it('returns :confirmation') { assert_equal :confirmation, subject }
       end

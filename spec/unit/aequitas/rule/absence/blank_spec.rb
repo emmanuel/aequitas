@@ -41,9 +41,7 @@ describe Aequitas::Rule::Absence::Blank do
   end
 
   describe '#violation_type' do
-    subject { rule.violation_type(resource) }
-
-    let(:resource) { MiniTest::Mock.new }
+    subject { rule.violation_type }
 
     it('returns :absent') { assert_equal :not_blank, subject }
   end

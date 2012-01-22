@@ -38,7 +38,7 @@ module Aequitas
           end
         end
 
-        def violation_type(resource)
+        def violation_type
           :not_a_number
         end
 

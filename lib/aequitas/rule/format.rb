@@ -60,7 +60,7 @@ module Aequitas
         false
       end
 
-      def violation_type(resource)
+      def violation_type
         :invalid
       end
 

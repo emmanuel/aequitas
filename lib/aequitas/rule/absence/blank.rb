@@ -11,7 +11,7 @@ module Aequitas
           Aequitas.blank?(value)
         end
 
-        def violation_type(resource)
+        def violation_type
           :not_blank
         end
 

@@ -11,7 +11,7 @@ module Aequitas
           value.nil?
         end
 
-        def violation_type(resource)
+        def violation_type
           :not_nil
         end
 

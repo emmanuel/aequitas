@@ -11,7 +11,7 @@ module Aequitas
           /\A[+-]?\d+\z/
         end
 
-        def violation_type(resource)
+        def violation_type
           :not_an_integer
         end
 

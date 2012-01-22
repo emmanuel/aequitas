@@ -8,7 +8,7 @@ module Aequitas
 
       equalize_on *(superclass.equalizer.keys + [:method])
 
-      attr_reader :method
+      attr_reader :method, :violation_type
 
       def initialize(attribute_name, options={})
         super
@@ -25,10 +25,6 @@ module Aequitas
         else
           Violation::Rule.new(resource, error_message, :rule => self)
         end
-      end
-
-      def violation_type(resource)
-        @violation_type
       end
 
     end # class Method

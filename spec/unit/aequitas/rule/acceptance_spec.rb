@@ -61,9 +61,7 @@ module Aequitas
       end
 
       describe '#violation_type' do
-        subject { rule.violation_type(resource) }
-
-        let(:resource) { MiniTest::Mock.new }
+        subject { rule.violation_type }
 
         it('returns :accepted') { assert_equal :accepted, subject }
       end

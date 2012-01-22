@@ -35,7 +35,7 @@ module Aequitas
         resource.instance_variable_get("@#{@confirmation_attribute_name}")
       end
 
-      def violation_type(resource)
+      def violation_type
         :confirmation
       end
 

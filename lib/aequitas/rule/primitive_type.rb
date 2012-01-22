@@ -22,7 +22,7 @@ module Aequitas
         value.is_a?(primitive)
       end
 
-      def violation_type(resource)
+      def violation_type
         :primitive
       end
 

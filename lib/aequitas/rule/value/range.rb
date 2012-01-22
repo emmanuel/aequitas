@@ -11,7 +11,7 @@ module Aequitas
           expected.cover?(value)
         end
 
-        def violation_type(resource)
+        def violation_type
           :value_between
         end
 

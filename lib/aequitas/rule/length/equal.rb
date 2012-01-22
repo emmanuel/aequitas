@@ -17,7 +17,7 @@ module Aequitas
           @expected = options.fetch(:expected)
         end
 
-        def violation_type(resource)
+        def violation_type
           :wrong_length
         end
 
