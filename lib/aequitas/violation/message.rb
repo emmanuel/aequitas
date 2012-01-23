@@ -24,7 +24,7 @@ module Aequitas
 
       # @api public
       def type
-        nil
+        :unspecified
       end
 
       # @api public
