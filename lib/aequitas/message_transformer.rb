@@ -67,27 +67,27 @@ module Aequitas
         #
         # @return [Hash{Symbol=>String}]
         attr_reader :error_messages
-      end
 
-      # Merges the specified +error_messages+ hash into the internal hash of
-      # error messages.
-      #
-      # @param [Hash{Symbol=>String}] error_messages
-      #   The error messages to be merged.
-      def self.error_messages=(error_messages)
-        unless error_messages.is_a?(Hash)
-          raise ArgumentError, "+error_messages+ must be a hash" 
+        # Merges the specified +error_messages+ hash into the internal hash of
+        # error messages.
+        #
+        # @param [Hash{Symbol=>String}] error_messages
+        #   The error messages to be merged.
+        def error_messages=(error_messages)
+          unless error_messages.is_a?(Hash)
+            raise ArgumentError, "+error_messages+ must be a hash" 
+          end
+
+          self.error_messages.merge!(error_messages)
         end
 
-        self.error_messages.merge!(error_messages)
-      end
-
-      def self.error_message(violation_type, attribute_name, violation_values)
-        if message = self.error_messages[violation_type]
-          attribute_name = ::DataMapper::Inflector.humanize(attribute_name)
-          message % [attribute_name, *violation_values].flatten
-        else
-          violation_type.to_s
+        def error_message(violation_type, attribute_name, violation_values)
+          if message = self.error_messages[violation_type]
+            attribute_name = ::DataMapper::Inflector.humanize(attribute_name)
+            message % [attribute_name, *violation_values].flatten
+          else
+            violation_type.to_s
+          end
         end
       end
 
