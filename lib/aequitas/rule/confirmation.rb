@@ -27,7 +27,7 @@ module Aequitas
         if skip?(value) || value == confirmation_value(resource)
           nil
         else
-          Violation::Rule.new(resource, custom_message, :rule => self)
+          new_violation(resource, value)
         end
       end
 

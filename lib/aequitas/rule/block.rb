@@ -25,7 +25,7 @@ module Aequitas
         if result
           nil
         else
-          Violation::Rule.new(resource, error_message, :rule => self)
+          new_violation(resource)
         end
       end
 

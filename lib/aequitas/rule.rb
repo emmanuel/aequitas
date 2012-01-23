@@ -77,7 +77,7 @@ module Aequitas
       if skip?(value) || valid_value?(value)
         nil
       else
-        Violation::Rule.new(resource, custom_message, :rule => self)
+        new_violation(resource, value)
       end
     end
 
@@ -124,6 +124,12 @@ module Aequitas
     alias_method :to_s, :inspect
 
   private
+
+    def new_violation(resource, value = nil)
+      Violation::Rule.new(resource, custom_message,
+        :rule  => self,
+        :value => value)
+    end
 
     def assert_kind_of(name, value, *klasses)
       klasses.each { |k| return if value.kind_of?(k) }

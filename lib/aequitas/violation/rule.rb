@@ -21,7 +21,8 @@ module Aequitas
       def initialize(resource, message, options = {})
         super
 
-        @rule = options.fetch(:rule)
+        @rule  = options.fetch(:rule)
+        @value = options.fetch(:value, nil)
       end
 
       # @api public
@@ -36,7 +37,7 @@ module Aequitas
 
       # @api private
       def info
-        rule.violation_info
+        rule.violation_info.merge(:value => @value)
       end
 
       # @api private
