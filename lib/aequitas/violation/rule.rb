@@ -36,7 +36,7 @@ module Aequitas
 
       # @api private
       def info
-        rule.violation_info(resource)
+        rule.violation_info
       end
 
       # @api private
