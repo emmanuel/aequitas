@@ -6,6 +6,14 @@ module Aequitas
   class Violation
     class Message < Violation
 
+      # Name of the attribute which this Violation pertains to
+      #
+      # @return [Symbol]
+      #   the name of the validated attribute associated with this violation
+      #
+      # @api public
+      attr_reader :attribute_name
+
       # Configure a Violation instance
       # 
       # @param [Object] resource

@@ -36,20 +36,12 @@ module Aequitas
 
     # Rule which generated this Violation
     #
-    # @return [Aequitas::Rule]
+    # @return [Aequitas::Rule, nil]
     #   validaiton rule that triggered this violation
+    #   or nil, if called on a Violation type that doesn't need a rule
     # 
     # @api public
     attr_reader :rule
-
-    # Name of the attribute which this Violation pertains to
-    #
-    # @return [Symbol]
-    #   the name of the validated attribute associated with this violation
-    #
-    # @api public
-    attr_reader :attribute_name
-
 
     # Configure a Violation instance
     # 

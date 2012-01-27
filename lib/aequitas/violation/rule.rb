@@ -25,22 +25,27 @@ module Aequitas
         @value = options.fetch(:value, nil)
       end
 
+      # Name of the attribute which this Violation pertains to
+      #
+      # @return [Symbol]
+      #   the name of the validated attribute associated with this violation
+      #
       # @api public
       def attribute_name
         rule.attribute_name
       end
 
-      # @api private
+      # @api public
       def type
         rule.violation_type
       end
 
-      # @api private
+      # @api public
       def info
         rule.violation_info.merge(:value => @value)
       end
 
-      # @api private
+      # @api public
       def values
         rule.violation_values
       end
