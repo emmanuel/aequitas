@@ -111,7 +111,7 @@ module Aequitas
     # @return [self]
     def concat(other)
       other.rule_sets.each do |context_name, rule_set|
-        add_rules_to_context(context_name, rules)
+        add_rules_to_context(context_name, rule_set)
       end
 
       self
