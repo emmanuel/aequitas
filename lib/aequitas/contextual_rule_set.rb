@@ -15,11 +15,29 @@ module Aequitas
     equalize_on :rule_sets
 
     # MessageTransformer to use for transforming Violations on Resources
-    # instantiated from the model to which this ContextualRuleSet is bound
+    #
+    # When set, overrides Violation.default_transformer when transforming
+    # violations on instances of the class to which this ContextualRuleSet
+    # is attached.
+    #
+    # @return [MessageTransformer, nil]
     #
     # @api public
+    #
+    # TODO: rework the default transformer lookup strategy
+    #   It's wonky that violations get a transformer from the ContextualRuleSet
+    #   of the class of the instance to which they apply (too much coupling).
+    #   I'm currently leaning towards Violations looking up a transformer from
+    #   the Rule that produced them.
+    #   That said, I don't know if it's better for a Violation to look up its
+    #   transformer from their Rule, or from the instance they are attached to.
+    #
     attr_accessor :transformer
 
+    # Mapping of context names to RuleSet instances
+    #
+    # @return [Hash]
+    #
     # @api private
     attr_reader :rule_sets
 
@@ -35,14 +53,6 @@ module Aequitas
       define_context(:default)
     end
 
-    def define_context(context_name)
-      rule_sets.fetch(context_name) do |context_name|
-        rule_sets[context_name] = RuleSet.new
-      end
-
-      self
-    end
-
     # Delegate #validate to RuleSet
     #
     # @api public
@@ -52,8 +62,9 @@ module Aequitas
 
     # Return the RuleSet for a given context name
     #
-    # @param [String] name
+    # @param [Symbol] context_name
     #   Context name for which to return a RuleSet
+    #
     # @return [RuleSet]
     #   RuleSet for the given context
     #
@@ -68,9 +79,22 @@ module Aequitas
     #   name of the attribute for which to retrieve applicable Rules
     #
     # @return [Array]
-    #   list of Rules applicable to +attribute_name+
+    #   list of Rules applicable to +attribute_name+ in the default context
+    #
+    # @api public
     def [](attribute_name)
       context(:default).fetch(attribute_name, [])
+    end
+
+    # Define a named context rule set
+    #
+    # @api private
+    def define_context(context_name)
+      rule_sets.fetch(context_name) do |context_name|
+        rule_sets[context_name] = RuleSet.new
+      end
+
+      self
     end
 
     # Create a new rule of the given class for each name in +attribute_names+
@@ -91,6 +115,8 @@ module Aequitas
     #   the context in which the new rule should be run
     #
     # @return [self]
+    #
+    # @api private
     def add(rule_class, attribute_names, options = {}, &block)
       context_names = extract_context_names(options)
 
@@ -109,25 +135,12 @@ module Aequitas
     #   the ContextualRuleSet whose rules are to be assimilated
     #
     # @return [self]
+    #
+    # @api private
     def concat(other)
       other.rule_sets.each do |context_name, rule_set|
         add_rules_to_context(context_name, rule_set)
       end
-
-      self
-    end
-
-    # Define a context and append rules to it
-    #
-    # @param [Symbol] context_name
-    #   name of the context to define and append rules to
-    # @param [RuleSet, Array] rules
-    #   Rules to append to +context_name+
-    #
-    # @return [self]
-    def add_rules_to_context(context_name, rules)
-      define_context(context_name)
-      context(context_name).concat(rules)
 
       self
     end
@@ -171,8 +184,41 @@ module Aequitas
       !context_name.nil? && context_defined?(context_name)
     end
 
+  private
+
     def context_defined?(context_name)
       rule_sets.include?(context_name)
+    end
+
+    # Define a context and append rules to it
+    #
+    # @param [Symbol] context_name
+    #   name of the context to define and append rules to
+    # @param [RuleSet, Array] rules
+    #   Rules to append to +context_name+
+    #
+    # @return [self]
+    #
+    # @api private
+    def add_rules_to_context(context_name, rules)
+      define_context(context_name)
+      context(context_name).concat(rules)
+
+      self
+    end
+
+    # Allow :context to be aliased to :group, :when & :on
+    #
+    # @param [Hash] options
+    #   the options from which +context_names+ is to be extracted
+    #
+    # @return [Array(Symbol)]
+    #   the context name(s) from +options+
+    #
+    # @api private
+    def extract_context_names(options)
+      context_name = options.values_at(:context, :group, :when, :on).compact.first
+      Array(context_name || :default)
     end
 
     # Assert that the given validation context name
@@ -191,24 +237,9 @@ module Aequitas
       unless valid_context?(context_name)
         actual   = context_name.inspect
         expected = rule_sets.keys.inspect
-        raise InvalidContextError, "#{actual} is an invalid context, known contexts are #{expected}"
+        raise InvalidContextError,
+          "#{actual} is an invalid context, known contexts are #{expected}"
       end
-    end
-
-  private
-
-    # Allow :context to be aliased to :group, :when & :on
-    #
-    # @param [Hash] options
-    #   the options from which +context_names+ is to be extracted
-    #
-    # @return [Array(Symbol)]
-    #   the context name(s) from +options+
-    #
-    # @api private
-    def extract_context_names(options)
-      context_name = options.values_at(:context, :group, :when, :on).compact.first
-      Array(context_name || :default)
     end
 
   end # class ContextualRuleSet
