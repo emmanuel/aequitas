@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+require 'set'
 require 'aequitas/rule'
 
 module Aequitas
@@ -16,7 +17,7 @@ module Aequitas
       def initialize(attribute_name, options = {})
         super
 
-        @accept = Array(options.fetch(:accept, DEFAULT_ACCEPTED_VALUES))
+        @accept = Array(options.fetch(:accept, DEFAULT_ACCEPTED_VALUES)).to_set
 
         skip_condition.default_to_allowing_nil!
       end
