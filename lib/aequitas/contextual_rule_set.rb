@@ -49,10 +49,13 @@ module Aequitas
 
     def initialize
       @rule_sets = Hash.new
-      define_context(:default)
+      define_context(default_context_name)
     end
 
-    # Delegate #validate to RuleSet
+    # Delegate #validate to the appropriate RuleSet
+    # 
+    # @return [ViolationSet]
+    #   the collection of Violations applicable to the given resource
     #
     # @api public
     def validate(resource, context_name)
@@ -82,18 +85,7 @@ module Aequitas
     #
     # @api public
     def [](attribute_name)
-      context(:default).fetch(attribute_name, [])
-    end
-
-    # Define a named context rule set
-    #
-    # @api private
-    def define_context(context_name)
-      rule_sets.fetch(context_name) do |context_name|
-        rule_sets[context_name] = RuleSet.new
-      end
-
-      self
+      context(default_context_name).fetch(attribute_name, [])
     end
 
     # Create a new rule of the given class for each name in +attribute_names+
@@ -108,7 +100,7 @@ module Aequitas
     #
     # @param [Hash] options
     #    Options supplied to validation macro, example:
-    #    {:context=>:default, :maximum=>50, :allow_nil=>true, :message=>nil}
+    #    {:maximum=>50, :allow_nil=>true}
     #
     # @option [Symbol] :context, :group, :when, :on
     #   the context in which the new rule should be run
@@ -144,24 +136,27 @@ module Aequitas
       self
     end
 
-    # Test if the validation context name is valid for this contextual rule set.
-    #   A validation context name is valid if not nil and either:
-    #     1) no rule sets are defined for this contextual rule set
-    #   OR
-    #     2) there is a rule set defined for the given context name
-    #
-    # @param [Symbol] context
-    #   the context to test
-    #
-    # @return [Boolean]
-    #   true if the context is valid
-    #
-    # @api private
-    def valid_context?(context_name)
-      !context_name.nil? && context_defined?(context_name)
+  private
+
+    def default_context_name
+      :default
     end
 
-  private
+    # Initialize and assign a RuleSet for the named context
+    #
+    # @param [Symbol] context_name
+    #   the name of the context to be defined. noop if already defined
+    #
+    # @return [self]
+    #
+    # @api private
+    def define_context(context_name)
+      rule_sets.fetch(context_name) do |context_name|
+        rule_sets[context_name] = RuleSet.new
+      end
+
+      self
+    end
 
     def context_defined?(context_name)
       rule_sets.include?(context_name)
@@ -195,28 +190,7 @@ module Aequitas
     # @api private
     def extract_context_names(options)
       context_name = options.values_at(:context, :group, :when, :on).compact.first
-      Array(context_name || :default)
-    end
-
-    # Assert that the given validation context name
-    #   is valid for this contextual rule set
-    #
-    # @param [Symbol] context
-    #   the context to test
-    #
-    # @raise [InvalidContextError]
-    #   raised if the context is not valid for this contextual rule set
-    #
-    # @api private
-    #
-    # TODO: is this method actually needed?
-    def assert_valid_context(context_name)
-      unless valid_context?(context_name)
-        actual   = context_name.inspect
-        expected = rule_sets.keys.inspect
-        raise InvalidContextError,
-          "#{actual} is an invalid context, known contexts are #{expected}"
-      end
+      Array(context_name || default_context_name)
     end
 
   end # class ContextualRuleSet
