@@ -56,7 +56,7 @@ module Aequitas
   # 
   # @api public
   def default_validation_context
-    validation_rules.current_context
+    :default
   end
 
   # @return [ContextualRuleSet]

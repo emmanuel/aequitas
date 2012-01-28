@@ -3,7 +3,6 @@
 require 'forwardable'
 require 'aequitas/support/value_object'
 require 'aequitas/exceptions'
-require 'aequitas/context'
 require 'aequitas/rule_set'
 
 module Aequitas
@@ -143,28 +142,6 @@ module Aequitas
       end
 
       self
-    end
-
-    # Returns the current validation context on the stack if valid for this contextual rule set,
-    #   nil if no RuleSets are defined (and no context names are on the validation context stack),
-    #   or :default if the current context is invalid for this rule set or
-    #     if no contexts have been defined for this contextual rule set and
-    #     no context name is on the stack.
-    #
-    # @return [Symbol]
-    #   the current validation context from the stack (if valid for this model),
-    #   nil if no context name is on the stack and no contexts are defined for
-    #   this model, or :default if the context on the stack is invalid for
-    #   this model or no context is on the stack and this model has at least
-    #   one validation context
-    #
-    # @api private
-    #
-    # TODO: this logic behind this method is too complicated.
-    #   simplify the semantics of #current_context, #validate
-    def current_context
-      context = Aequitas::Context.current
-      valid_context?(context) ? context : :default
     end
 
     # Test if the validation context name is valid for this contextual rule set.
