@@ -58,7 +58,7 @@ module Aequitas
     #   the collection of Violations applicable to the given resource
     #
     # @api public
-    def validate(resource, context_name)
+    def validate(resource, context_name = default_context_name)
       context(context_name).validate(resource)
     end
 
@@ -108,6 +108,9 @@ module Aequitas
     # @return [self]
     #
     # @api private
+    # 
+    # TODO: push responsibility for the array of attribute_names out to methods
+    #   in Aequitas::Macros.
     def add(rule_class, attribute_names, options = {}, &block)
       context_names = extract_context_names(options)
 
@@ -188,6 +191,8 @@ module Aequitas
     #   the context name(s) from +options+
     #
     # @api private
+    # 
+    # TODO: move this responsibility into Aequitas::Macros
     def extract_context_names(options)
       context_name = options.values_at(:context, :group, :when, :on).compact.first
       Array(context_name || default_context_name)
