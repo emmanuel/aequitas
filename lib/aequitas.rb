@@ -19,6 +19,14 @@ module Aequitas
     validate(context_name).errors.empty?
   end
 
+  # @return [ViolationSet]
+  #   the collection of current validation errors for this resource
+  #
+  # @api public
+  def errors
+    @errors ||= ViolationSet.new(self)
+  end
+
   # Command a resource to populate its ViolationSet with any violations of
   # its validation Rules in +context_name+
   #
@@ -38,17 +46,9 @@ module Aequitas
     validation_rules.validate(self, context_name)
   end
 
-  # @return [ViolationSet]
-  #   the collection of current validation errors for this resource
+  # The name of the default validation context for this Resource.
   #
-  # @api public
-  def errors
-    @errors ||= ViolationSet.new(self)
-  end
-
-  # The default validation context for this Resource.
-  # This Resource's default context can be overridden by implementing
-  # #default_validation_context
+  # Overriding #default_validation_context .
   # 
   # @return [Symbol]
   #   the current validation context from the context stack
@@ -59,19 +59,26 @@ module Aequitas
     validation_rules.current_context
   end
 
+  # @return [ContextualRuleSet]
+  # 
   # @api private
   def validation_rules
     self.class.validation_rules
   end
 
-  # Retrieve the value of the given property name for the purpose of validation.
-  # Default implementation is to send the attribute name arg to the receiver
-  # and use the resulting value as the attribute value for validation
-  # 
+  # Retrieve the value of the given property name for the purpose of validation
+  #
+  # Defaults to sending the attribute name arg to the receiver and
+  # using the resulting value as the attribute value for validation
+  #
   # @param [Symbol] attribute_name
   #   the name of the attribute for which to retrieve
   #   the attribute value for validation.
-  # 
+  #
+  # @return [Object]
+  #   the value of the attribute identified by +attribute_name+
+  #   for the purpose of validation
+  #
   # @api public
   def validation_attribute_value(attribute_name)
     __send__(attribute_name) if respond_to?(attribute_name, true)
