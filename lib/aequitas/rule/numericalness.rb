@@ -50,6 +50,7 @@ module Aequitas
         # Avoid Scientific Notation in Float to_s
         when Float      then value.to_d.to_s('F')
         when BigDecimal then value.to_s('F')
+        when Rational   then value_as_string(value.to_f)
         else value.to_s
         end
       end
