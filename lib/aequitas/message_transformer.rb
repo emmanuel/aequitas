@@ -83,16 +83,11 @@ module Aequitas
 
         def error_message(violation_type, attribute_name, violation_values)
           if message = self.error_messages[violation_type]
-            attribute_name = ::DataMapper::Inflector.humanize(attribute_name)
             message % [attribute_name, *violation_values].flatten
           else
             violation_type.to_s
           end
         end
-      end
-
-      def initialize
-        require 'dm-core'
       end
 
       def transform(violation)
