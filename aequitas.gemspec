@@ -164,6 +164,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency("minitest", ["~> 2.8"])
-  s.add_development_dependency("virtus",   ["~> 0.2.0"])
+  s.add_development_dependency("virtus",   ["~> 0.0.9"])
   s.add_development_dependency("dm-core",  ["~> 1.3.0"])
 end
