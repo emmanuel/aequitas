@@ -12,7 +12,9 @@ module Aequitas
         def initialize(attribute_name, options = {})
           @attribute = options.fetch(:attribute)
 
-          super(attribute_name, :primitive => attribute.class.primitive)
+          options[:primitive] ||= attribute.class.primitive
+
+          super(attribute_name, options)
         end
 
         def expected_type?(value)

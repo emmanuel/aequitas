@@ -113,9 +113,7 @@ module Aequitas
         raise ArgumentError, "+violation+ must be specified" if violation.nil?
 
         resource       = violation.resource
-        # TODO: resource#model and Model#model_name are assumptions from DM
-        #   Figure out a more flexible way to lookup error messages in I18n
-        model_name     = resource.model.model_name
+        model_name     = resource.class.name
         attribute_name = violation.attribute_name
         # TODO: Include attribute value in Violation; it may have changed by now
         # attribute_value = violation.attribute_value
