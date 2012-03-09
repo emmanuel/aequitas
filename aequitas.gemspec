@@ -19,4 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency('minitest', ['~> 2.8'])
   s.add_development_dependency('virtus',   ['~> 0.2.0'])
+  if RUBY_VERSION < '1.9.1'
+    s.add_dependency('backports')
+  end
 end

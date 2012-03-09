@@ -1,4 +1,4 @@
-require_relative '../../spec_helper'
+require 'spec_helper'
 require 'aequitas/rule'
 
 module Aequitas
@@ -15,12 +15,12 @@ module Aequitas
 
       it 'sets #custom_message to the :message option' do
         message = 'foo'
-        assert_same message, Rule.new(:bar, message: message).custom_message
+        assert_same message, Rule.new(:bar, :message => message).custom_message
       end
 
       it 'initializes #guard with the :if and :unless options' do
-        expected_guard = Rule::Guard.new(if: :a, unless: :b)
-        assert_equal expected_guard, Rule.new(:bar, if: :a, unless: :b).guard
+        expected_guard = Rule::Guard.new(:if => :a, :unless => :b)
+        assert_equal expected_guard, Rule.new(:bar, :if => :a, :unless => :b).guard
       end
     end
 

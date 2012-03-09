@@ -1,4 +1,4 @@
-require_relative '../../../spec_helper'
+require 'spec_helper'
 require 'aequitas/rule/guard'
 
 module Aequitas
@@ -7,17 +7,17 @@ module Aequitas
       describe '#initialize' do
         it 'stores the :if option as #if_test' do
           expected = 'foo'
-          assert_same expected, Guard.new(if: expected).if_test
+          assert_same expected, Guard.new(:if => expected).if_test
         end
 
         it 'stores the :unless option as #unless_test' do
           expected = 'foo'
-          assert_same expected, Guard.new(unless: expected).unless_test
+          assert_same expected, Guard.new(:unless => expected).unless_test
         end
       end
 
       describe '#allow?' do
-        let(:rule_guard) { Guard.new(if: if_test, unless: unless_test) }
+        let(:rule_guard) { Guard.new(:if => if_test, :unless => unless_test) }
         let(:if_test) { nil }
         let(:unless_test) { nil }
 

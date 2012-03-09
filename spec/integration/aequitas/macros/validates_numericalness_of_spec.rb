@@ -1,5 +1,5 @@
-require_relative '../../../spec_helper'
-require_relative '../../shared/macros/integration_spec'
+require 'spec_helper'
+require 'shared/macros/integration_spec'
 require 'aequitas'
 
 Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numericalness_of' do

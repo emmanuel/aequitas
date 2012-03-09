@@ -1,4 +1,4 @@
-require_relative '../../../spec_helper'
+require 'spec_helper'
 require 'aequitas/rule/acceptance'
 
 describe Aequitas::Rule::Acceptance do
@@ -10,7 +10,7 @@ describe Aequitas::Rule::Acceptance do
     subject { rule }
 
     describe 'when the :accept option is present' do
-      let(:options) { { accept: [:foo] } }
+      let(:options) { { :accept => [:foo] } }
 
       it 'sets #accept to the provided value as a Set' do
         assert_equal [:foo].to_set, subject.accept
@@ -32,7 +32,7 @@ describe Aequitas::Rule::Acceptance do
     end
 
     describe 'when the :allow_nil option is false' do
-      let(:options) { { allow_nil: false } }
+      let(:options) { { :allow_nil => false } }
 
       it 'sets allow_nil? to false' do
         refute_predicate subject.skip_condition, :allow_nil?
@@ -43,7 +43,7 @@ describe Aequitas::Rule::Acceptance do
   describe '#valid_value?' do
     subject { rule.valid_value?(value) }
 
-    let(:options) { { accept: ['a'] } }
+    let(:options) { { :accept => ['a'] } }
 
     describe "when testing a value that is among the #accept values" do
       let(:value) { 'a' }

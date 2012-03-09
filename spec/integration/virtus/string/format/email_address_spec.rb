@@ -1,4 +1,4 @@
-require File.expand_path('../../../../spec_helper', File.dirname(__FILE__))
+require 'spec_helper'
 require 'virtus'
 require 'aequitas'
 require 'aequitas/virtus_integration'

@@ -1,4 +1,4 @@
-require_relative '../../../spec_helper'
+require 'spec_helper'
 require 'aequitas/support/blank'
 
 module Aequitas
@@ -28,7 +28,7 @@ module Aequitas
     end
 
     it 'returns false when testing an non-empty Hash' do
-      refute_operator Aequitas, :blank?, { foo: :bar }
+      refute_operator Aequitas, :blank?, { :foo => :bar }
     end
 
     it 'returns false when testing an non-empty Array' do

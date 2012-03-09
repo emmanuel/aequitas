@@ -1,4 +1,4 @@
-require_relative '../../../../spec_helper'
+require 'spec_helper'
 require 'aequitas/rule/acceptance'
 
 describe Aequitas::Rule::Acceptance, '#valid_value?' do
@@ -8,7 +8,7 @@ describe Aequitas::Rule::Acceptance, '#valid_value?' do
   let(:attribute_name) { :foo }
   let(:options) { Hash.new }
 
-  let(:options) { { accept: ['a'] } }
+  let(:options) { { :accept => ['a'] } }
 
   describe "when testing a value that is among the #accept values" do
     let(:value) { 'a' }

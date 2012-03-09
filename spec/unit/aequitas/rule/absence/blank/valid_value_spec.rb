@@ -1,4 +1,4 @@
-require_relative '../../../../../spec_helper'
+require 'spec_helper'
 require 'aequitas/rule/absence/blank'
 
 describe Aequitas::Rule::Absence::Blank, '#valid_value?' do

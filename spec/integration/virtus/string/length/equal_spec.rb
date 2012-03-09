@@ -1,4 +1,4 @@
-require_relative '../../../../spec_helper'
+require 'spec_helper'
 require 'virtus'
 require 'aequitas'
 require 'aequitas/virtus_integration'

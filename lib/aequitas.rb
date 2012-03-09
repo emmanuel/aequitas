@@ -1,6 +1,11 @@
 # -*- encoding: utf-8 -*-
 
+if RUBY_VERSION < '1.9.1'
+  require 'backports'
+end
+
 require 'aequitas/version'
+
 
 require 'aequitas/class_methods'
 require 'aequitas/violation_set'

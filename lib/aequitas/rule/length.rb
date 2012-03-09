@@ -69,7 +69,7 @@ module Aequitas
         # calculate length of multi-byte-encoded strings
         #   as characters rather than bytes
         def value_length(value)
-          value.to_str.scan(/./u).size
+          value.to_s.scan(/./u).size
         end
       end
 
