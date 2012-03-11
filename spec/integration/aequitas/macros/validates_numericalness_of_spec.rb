@@ -1,5 +1,5 @@
-require 'spec_helper'
-require 'shared/macros/integration_spec'
+require_relative '../../../spec_helper'
+require_relative '../../shared/macros/integration_spec'
 require 'aequitas'
 
 Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numericalness_of' do
@@ -22,6 +22,12 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     describe 'when validated attribute is non-numeric' do
       let(:attribute_value) { 'a' }
+
+      it_should_be_an_invalid_instance
+    end
+
+    describe 'when validated attribute is nil' do
+      let(:attribute_value) { nil }
 
       it_should_be_an_invalid_instance
     end
