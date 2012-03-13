@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-if RUBY_VERSION < '1.9.1'
+if RUBY_VERSION < '1.9'
   require 'backports'
 end
 
