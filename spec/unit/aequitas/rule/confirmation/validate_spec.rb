@@ -44,6 +44,13 @@ describe Aequitas::Rule::Confirmation, '#validate' do
         resource.expect(:instance_variable_get,
                         "#{attribute_value}asdf",
                         ["@#{attribute_name}_confirmation"])
+        # Restore the original equals? method on rubinius, since equal? 
+        # itself gets mocked away
+        class << resource
+          def equal?(other)
+            self.object_id == other.object_id
+          end
+        end
         # Yuck... not sure how to handle this better
         #   Issue is that Violation#== compares resource with itself
         resource.expect(:==, true, [resource])

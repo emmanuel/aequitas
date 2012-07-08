@@ -443,7 +443,7 @@ module Aequitas
     #
     #   class Page
     #     include Virtus
-    #     include Aequita
+    #     include Aequitas
     #
     #     attribute :zip_code, String
     #
