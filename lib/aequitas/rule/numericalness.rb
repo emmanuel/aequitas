@@ -1,10 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'bigdecimal'
-require 'bigdecimal/util'
-require 'aequitas/rule'
-require 'aequitas/rule/value'
-
 module Aequitas
   class Rule
     class Numericalness < Rule
@@ -58,6 +53,3 @@ module Aequitas
     end # class Numericalness
   end # class Rule
 end # module Aequitas
-
-require 'aequitas/rule/numericalness/integer'
-require 'aequitas/rule/numericalness/non_integer'

@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule'
-
 module Aequitas
   class Rule
     class PrimitiveType < Rule
@@ -33,5 +31,3 @@ module Aequitas
     end # class PrimitiveType
   end # class Rule
 end # module Aequitas
-
-require 'aequitas/rule/primitive_type/virtus'

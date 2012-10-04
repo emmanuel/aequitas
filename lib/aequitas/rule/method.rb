@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule'
-
 module Aequitas
   class Rule
     class Method < Rule

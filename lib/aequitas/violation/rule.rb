@@ -1,9 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/exceptions'
-require 'aequitas/support/value_object'
-require 'aequitas/message_transformer'
-
 module Aequitas
   class Violation
     class Rule < Violation

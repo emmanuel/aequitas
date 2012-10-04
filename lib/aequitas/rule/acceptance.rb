@@ -1,8 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'set'
-require 'aequitas/rule'
-
 module Aequitas
   class Rule
     # TODO: update this to inherit from Rule::Within::Set

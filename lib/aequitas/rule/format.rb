@@ -1,7 +1,4 @@
-# -*- encoding: utf-8 -*-
-
-require 'aequitas/rule'
-require 'aequitas/exceptions'
+#encoding: utf-8
 
 module Aequitas
   class Rule
@@ -76,9 +73,3 @@ module Aequitas
     end # class Format
   end # class Rule
 end # module Aequitas
-
-require 'aequitas/rule/format/email_address'
-require 'aequitas/rule/format/url'
-
-require 'aequitas/rule/format/proc'
-require 'aequitas/rule/format/regexp'

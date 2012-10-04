@@ -1,9 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'bigdecimal'
-require 'bigdecimal/util'
-require 'aequitas/rule'
-
 module Aequitas
   class Rule
     class Value < Rule
@@ -55,11 +51,3 @@ module Aequitas
     end # class Value
   end # class Rule
 end # module Aequitas
-
-require 'aequitas/rule/value/equal'
-require 'aequitas/rule/value/greater_than'
-require 'aequitas/rule/value/greater_than_or_equal'
-require 'aequitas/rule/value/less_than'
-require 'aequitas/rule/value/less_than_or_equal'
-require 'aequitas/rule/value/not_equal'
-require 'aequitas/rule/value/range'

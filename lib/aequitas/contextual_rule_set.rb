@@ -1,10 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'forwardable'
-require 'aequitas/support/value_object'
-require 'aequitas/exceptions'
-require 'aequitas/rule_set'
-
 module Aequitas
   class ContextualRuleSet
     extend ValueObject

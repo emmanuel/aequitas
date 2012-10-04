@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/contextual_rule_set'
-require 'aequitas/macros'
 
 module Aequitas
   module ClassMethods

@@ -1,19 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule'
-
-require 'aequitas/rule/absence'
-require 'aequitas/rule/acceptance'
-require 'aequitas/rule/block'
-require 'aequitas/rule/confirmation'
-require 'aequitas/rule/format'
-require 'aequitas/rule/length'
-require 'aequitas/rule/method'
-require 'aequitas/rule/numericalness'
-require 'aequitas/rule/presence'
-require 'aequitas/rule/primitive_type'
-require 'aequitas/rule/within'
-
 module Aequitas
   module Macros
     def self.extract_options(arguments)

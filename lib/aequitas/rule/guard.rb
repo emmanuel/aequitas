@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/support/value_object'
-
 module Aequitas
   class Rule
     class Guard

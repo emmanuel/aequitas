@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/virtus_integration/inline_attribute_rule_extractor'
-
 module Aequitas
   module VirtusIntegration
     module InlineAttributeRuleExtractor

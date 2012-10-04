@@ -1,11 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/support/blank'
-require 'aequitas/support/value_object'
-require 'aequitas/rule/guard'
-require 'aequitas/rule/skip_condition'
-require 'aequitas/violation'
-
 module Aequitas
   class Rule
     extend ValueObject

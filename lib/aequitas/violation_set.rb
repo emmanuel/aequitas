@@ -1,9 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/support/blank'
-require 'aequitas/support/ordered_hash'
-require 'aequitas/violation'
-
 module Aequitas
   class ViolationSet
 

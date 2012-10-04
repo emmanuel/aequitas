@@ -1,9 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'forwardable'
-require 'set'
-require 'aequitas/support/value_object'
-
 module Aequitas
   class RuleSet
     # Holds a collection of Rule instances to be run against

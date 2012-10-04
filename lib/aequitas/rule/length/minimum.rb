@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule/length'
-
 module Aequitas
   class Rule
     class Length

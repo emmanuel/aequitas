@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule/primitive_type'
-
 module Aequitas
   class Rule
     class PrimitiveType

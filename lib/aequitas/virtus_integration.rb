@@ -1,5 +1,4 @@
 require 'aequitas'
-require 'aequitas/virtus_integration/inline_attribute_rule_extractor'
 
 module Virtus
   class Attribute
@@ -29,3 +28,12 @@ module Aequitas
     end
   end
 end
+
+require 'aequitas/rule/primitive_type/virtus'
+require 'aequitas/virtus_integration'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor/object'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor/array'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor/boolean'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor/numeric'
+require 'aequitas/virtus_integration/inline_attribute_rule_extractor/string'

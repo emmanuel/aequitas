@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/violation'
-
 module Aequitas
   class Violation
     class Message < Violation

@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule/absence'
-
 module Aequitas
   class Rule
     class Absence

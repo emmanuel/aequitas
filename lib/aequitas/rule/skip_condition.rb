@@ -1,8 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/support/blank'
-require 'aequitas/support/value_object'
-
 module Aequitas
   class Rule
     class SkipCondition
