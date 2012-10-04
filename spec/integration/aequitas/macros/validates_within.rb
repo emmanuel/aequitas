@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'shared/macros/integration_spec'
-require 'aequitas'
 
 Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_within' do
   before do

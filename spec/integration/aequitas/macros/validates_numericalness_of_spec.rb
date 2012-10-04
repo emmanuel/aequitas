@@ -1,6 +1,4 @@
-require_relative '../../../spec_helper'
-require_relative '../../shared/macros/integration_spec'
-require 'aequitas'
+require 'spec_helper'
 
 Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numericalness_of' do
   describe 'with no options' do

@@ -1,7 +1,4 @@
 require 'spec_helper'
-require 'virtus'
-require 'aequitas'
-require 'aequitas/virtus_integration'
 
 describe Aequitas::VirtusIntegration::ClassMethods do
   let(:class_under_test) do

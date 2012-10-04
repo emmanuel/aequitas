@@ -1,11 +1,10 @@
 require 'spec_helper'
-require 'shared/macros/integration_spec'
-require 'aequitas'
 
 Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_format_of' do
   describe 'with a Proc' do
     before do
       class_under_test.validates_format_of attribute_name, :with => lambda { |value| value.valid? }
+      skip
     end
 
     describe 'when format proc returns true' do
