@@ -7,6 +7,7 @@ end
 require 'bigdecimal'
 require 'bigdecimal/util'
 require 'forwardable'
+require 'immutable'
 
 
 module Aequitas
