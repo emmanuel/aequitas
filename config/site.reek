@@ -2,15 +2,14 @@
 UncommunicativeParameterName:
   accept: []
   exclude: []
-  enabled: true
+  enabled: false # Todo enable
   reject:
   - !ruby/regexp /^.$/
   - !ruby/regexp /[0-9]$/
   - !ruby/regexp /[A-Z]/
 LargeClass:
-  max_methods: 10
-  exclude: 
-  - "Mutant::Matcher::Method" # 13 methods
+  max_methods: 12 # Todo decrease to 10
+  exclude: []
   enabled: true
   max_instance_variables: 3
 UncommunicativeMethodName:
@@ -22,9 +21,8 @@ UncommunicativeMethodName:
   - !ruby/regexp /[0-9]$/
   - !ruby/regexp /[A-Z]/
 LongParameterList:
-  max_params: 2
-  exclude: 
-  - "Mutant::Context::Constant#initialize" # 3 params
+  max_params: 3 # TODO decrease to 2
+  exclude: []
   enabled: true
   overrides: {}
 FeatureEnvy:
@@ -38,7 +36,7 @@ BooleanParameter:
   enabled: true
 IrresponsibleModule:
   exclude: []
-  enabled: true
+  enabled: false
 UncommunicativeModuleName:
   accept: []
   exclude: []
@@ -59,18 +57,18 @@ Duplication:
   allow_calls: []
   exclude: []
   enabled: true
-  max_calls: 1
+  max_calls: 2 # Todo decrease to 1
 UtilityFunction:
-  max_helper_calls: 0
+  max_helper_calls: 1 # Todo decrease to 0
   exclude: []
   enabled: true
 Attribute:
   exclude: []
   enabled: false
 UncommunicativeVariableName:
-  accept: []
+  accept: [] # TODO remove them
   exclude: []
-  enabled: true
+  enabled: false
   reject:
   - !ruby/regexp /^.$/
   - !ruby/regexp /[0-9]$/

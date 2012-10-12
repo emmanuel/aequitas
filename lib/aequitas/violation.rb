@@ -51,7 +51,7 @@ module Aequitas
     # @api public
     def initialize(resource, message, options = {})
       @resource       = resource
-      @custom_message = evaluate_message(message)
+      @custom_message = message
     end
 
     # @api public
@@ -87,21 +87,6 @@ module Aequitas
         transformer
       else
         Violation.default_transformer
-      end
-    end
-
-    # TODO: Drop this or heavily refactor it.
-    #   This is too complicated and coupled to DM.
-    def evaluate_message(message)
-      if message.respond_to?(:call)
-        if resource.respond_to?(:model) && resource.model.respond_to?(:properties)
-          property = resource.model.properties[attribute_name]
-          message.call(resource, property)
-        else
-          message.call(resource)
-        end
-      else
-        message
       end
     end
 

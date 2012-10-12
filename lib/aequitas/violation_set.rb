@@ -58,17 +58,6 @@ module Aequitas
       other.each { |violation| self << violation }
     end
 
-    # Collect all violations into a single list.
-    # 
-    # @api public
-    def full_messages
-      violations.inject([]) do |list, (attribute_name, violations)|
-        messages = violations
-        messages = violations.full_messages if violations.respond_to?(:full_messages)
-        list.concat(messages)
-      end
-    end
-
     # Return validation violations for a particular attribute_name.
     #
     # @param [Symbol] attribute_name
