@@ -1,6 +1,6 @@
 module Aequitas
   # Mixin to define external validators
-  module External
+  module Validator
 
     module InstanceMethods
 
