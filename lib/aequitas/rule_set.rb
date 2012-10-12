@@ -5,7 +5,6 @@ module Aequitas
   # A set of rules
   class RuleSet
     # Holds a collection of Rule instances to be run against
-    # Resources to validate the Resources in a specific context
 
     extend ValueObject
     extend Forwardable
@@ -85,9 +84,6 @@ module Aequitas
     #    Options supplied to validation macro, example:
     #    {:maximum=>50, :allow_nil=>true}
     #
-    # @option [Symbol] :context, :group, :when, :on
-    #   the context in which the new rule should be run
-    #
     # @return [self]
     #
     # @api private
@@ -106,7 +102,7 @@ module Aequitas
       self
     end
 
-    # Execute all rules in this context against the resource.
+    # Execute all rules against the resource.
     # 
     # @param [Object] resource
     #   the resource to be validated
