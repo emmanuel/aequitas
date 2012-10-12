@@ -6,6 +6,20 @@ module Aequitas
 
       equalize_on *superclass.equalizer.keys + [:expected]
 
+      # Return rules for attribute 
+      #
+      # @param [Symbol] attribute_name
+      #
+      # @param [Options] options
+      #
+      # @return [Enumerable<Rule>]
+      #
+      # @api private
+      #
+      # FIXME: 
+      #
+      #   Refactor this with use instances of an extractor
+      #
       def self.rules_for(attribute_name, options)
         eq  = options.values_at(:eq,  :equal, :equals, :equal_to, :exactly).compact.first
         ne  = options.values_at(:ne,  :not_equal_to).compact.first

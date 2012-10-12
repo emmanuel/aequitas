@@ -21,6 +21,17 @@ module Aequitas
           # inline_rules.concat Array(extract_primitive_type_rule)
         end
 
+        def extract_length_rules
+          length = options.fetch(:length, false)
+
+          case length
+          when ::Integer; Rule::Length::Equal.new(attribute.name, :expected => length)
+          when ::Range;   Rule::Length::Range.new(attribute.name, :range    => length)
+          when ::FalseClass;
+          else raise ArgumentError, "expected Integer or Range :length, got: #{length.inspect}"
+          end
+        end
+
         def extract_presence_rule
           required = options.fetch(:required, false)
           Rule::Presence::NotBlank.new(attribute.name) if required
