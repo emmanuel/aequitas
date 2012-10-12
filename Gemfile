@@ -32,3 +32,13 @@ group :metrics do
   gem 'yard-spellcheck', '~> 0.1.5'
   gem 'pelusa',          '~> 0.2.1'
 end
+
+group :metrics do
+  gem 'flay',            '~> 1.4.2'
+  gem 'flog',            '~> 2.5.1'
+  gem 'reek',            '~> 1.2.8', :git => 'https://github.com/dkubb/reek.git'
+  gem 'roodi',           '~> 2.1.0'
+  gem 'yardstick',       '~> 0.5.0'
+  gem 'yard-spellcheck', '~> 0.1.5'
+  gem 'pelusa',          '~> 0.2.1'
+end
