@@ -10,10 +10,11 @@ module Aequitas
       #   the validated object
       # @param [String, #call, Hash] message
       #   an optional custom message for this Violation
-      # @param [Rule] rule
+      # @param [Hash] options
       #   the Rule whose violation triggered the creation of the receiver
       #
       # @api private
+      #
       def initialize(resource, message, options = {})
         super
 
