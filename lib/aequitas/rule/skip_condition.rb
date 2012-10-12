@@ -10,9 +10,13 @@ module Aequitas
       attr_reader :allow_nil
       attr_reader :allow_blank
 
+      def self.extract(options, name)
+        !!options[name] if options.include?(name)
+      end
+
       def initialize(options = {})
-        @allow_nil   = !!options[:allow_nil]   if options.include?(:allow_nil)
-        @allow_blank = !!options[:allow_blank] if options.include?(:allow_blank)
+        @allow_nil   = self.class.extract(options, :allow_nil)
+        @allow_blank = self.class.extract(options, :allow_blank)
       end
 
       # Test a value to determine if it should be skipped,

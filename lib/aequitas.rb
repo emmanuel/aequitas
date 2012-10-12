@@ -92,7 +92,6 @@ module Aequitas
 end # module Aequitas
 
 require 'aequitas/support/blank'
-require 'aequitas/support/ordered_hash'
 require 'aequitas/support/value_object'
 require 'aequitas/macros'
 require 'aequitas/class_methods'

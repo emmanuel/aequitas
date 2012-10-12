@@ -16,7 +16,7 @@ module Aequitas
     # TODO: replace OrderedHash with OrderedSet and remove vendor'd OrderedHash
     def initialize(resource)
       @resource   = resource
-      @violations = OrderedHash.new { |h,k| h[k] = [] }
+      @violations = []
     end
 
     # Clear existing validation violations.
@@ -50,7 +50,7 @@ module Aequitas
     end
 
     def <<(violation)
-      violations[violation.attribute_name] << violation
+      violations << violation
       self
     end
 
@@ -71,19 +71,21 @@ module Aequitas
     # 
     # TODO: use a data structure that ensures uniqueness
     def on(attribute_name)
-      violations[attribute_name].uniq
+      violations.select { |violation| violation.attribute_name == attribute_name }.uniq
     end
 
+    # FIXME: Inneficient workaround to keep api stable while refactoring
+    #
     # @api public
     def each
-      violations.each_value do |v|
-        yield(v) unless Aequitas.blank?(v)
+      violations.map(&:attribute_name).uniq.each do |name|
+        yield on(name)
       end
     end
 
     # @api public
     def empty?
-      violations.all? { |_, violations| violations.empty? }
+      violations.empty?
     end
 
     # @api public
