@@ -9,19 +9,25 @@ require 'bigdecimal/util'
 require 'forwardable'
 require 'immutable'
 
-
+# Library namespace
 module Aequitas
 
-  def self.included(base)
+  # Hook called when module is included
+  #
+  # @param [Module|Class] descendant
+  #
+  # @api private
+  #
+  def self.included(descendant)
     super
-    base.extend ClassMethods
+    descendant.extend(ClassMethods)
   end
 
-  # Check if a resource is valid in a given context
+  # Check if a resource is valid 
   #
   # @api public
-  def valid?(context_name = default_validation_context)
-    validate(context_name).errors.empty?
+  def valid?
+    validate.errors.empty?
   end
 
   # @return [ViolationSet]
@@ -33,13 +39,12 @@ module Aequitas
   end
 
   # Command a resource to populate its ViolationSet with any violations of
-  # its validation Rules in +context_name+
   #
   # @api public
-  def validate(context_name = default_validation_context)
-    # TODO: errors.replace(validation_violations(context_name))
+  def validate
+    # TODO: errors.replace(validation_violations)
     errors.clear
-    validation_violations(context_name).each { |v| errors.add(v) }
+    validation_violations.each { |v| errors.add(v) }
 
     self
   end
@@ -47,24 +52,11 @@ module Aequitas
   # Get a list of violations for the receiver *without* mutating it
   # 
   # @api private
-  def validation_violations(context_name = default_validation_context)
-    validation_rules.validate(self, context_name)
+  def validation_violations
+    validation_rules.validate(self)
   end
 
-  # The name of the default validation context for this Resource.
-  #
-  # Overriding #default_validation_context .
-  # 
-  # @return [Symbol]
-  #   the current validation context from the context stack
-  #   (if valid for this model), or :default
-  # 
-  # @api public
-  def default_validation_context
-    :default
-  end
-
-  # @return [ContextualRuleSet]
+  # @return [uleSet]
   # 
   # @api private
   def validation_rules
@@ -95,7 +87,7 @@ require 'aequitas/support/blank'
 require 'aequitas/support/value_object'
 require 'aequitas/macros'
 require 'aequitas/class_methods'
-require 'aequitas/contextual_rule_set'
+require 'aequitas/rule_set'
 require 'aequitas/exceptions'
 require 'aequitas/validator'
 require 'aequitas/message_transformer'

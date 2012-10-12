@@ -23,7 +23,7 @@ module Aequitas
       def virtus_add_attribute(attribute)
         super
         inline_attribute_rules = InlineAttributeRuleExtractor.extract(attribute)
-        validation_rules.context(:default).concat(inline_attribute_rules)
+        validation_rules.concat(inline_attribute_rules)
       end
     end
   end

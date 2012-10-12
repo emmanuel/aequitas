@@ -5,11 +5,11 @@ module Aequitas
   module ClassMethods
     include Macros
 
-    # Return the ContextualRuleSet for this model
+    # Return the RuleSet for this model
     #
     # @api public
     def validation_rules
-      @validation_rules ||= ContextualRuleSet.new
+      @validation_rules ||= RuleSet.new
     end
 
   private

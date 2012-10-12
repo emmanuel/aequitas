@@ -35,7 +35,7 @@ module Aequitas
 
       # Return validation rules
       #
-      # @return [ContextualRuleSet]
+      # @return [RuleSet]
       # 
       # @api private
       #
