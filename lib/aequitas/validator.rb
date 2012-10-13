@@ -74,11 +74,7 @@ module Aequitas
       #
       def initialize(object)
         @object = object
-        @violations = ViolationSet.new(self)
-
-        validation_rules.validate(self).each do |violation|
-          violations.add(violation)
-        end
+        @violations = ViolationSet.new(validation_rules.validate(self).each.to_a)
       end
 
     end

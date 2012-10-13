@@ -5,57 +5,25 @@ module Aequitas
 
     include Enumerable
 
+    # Return violations
+    #
+    # @return [Enumerable<Violations>]
+    #
     # @api private
-    attr_reader :resource
-
-    # @api private
+    #
     attr_reader :violations
-    # TODO: why was this private?
     private :violations
 
-    # TODO: replace OrderedHash with OrderedSet and remove vendor'd OrderedHash
-    def initialize(resource)
-      @resource   = resource
-      @violations = []
-    end
-
-    # Clear existing validation violations.
-    # 
-    # @api public
-    def clear
-      violations.clear
-    end
-
-    # Add a validation error. Use the attribute_name :general if the violations
-    # does not apply to a specific field of the Resource.
+    # Initialize object
     #
-    # @param [Symbol, Violation] attribute_name_or_violation
-    #   The name of the field that caused the violation, or
-    #   the Violation which describes the validation violation
-    # @param [NilClass, String, #call, Hash] message
-    #   The message to add.
-    # 
-    # @see Violation#initialize
-    # 
-    # @api public
-    def add(attribute_name_or_violation, message = nil)
-      violation = 
-        if attribute_name_or_violation.kind_of?(Violation)
-          attribute_name_or_violation
-        else
-          Violation::Message.new(resource, message, :attribute_name => attribute_name_or_violation)
-        end
-
-      self << violation
-    end
-
-    def <<(violation)
-      violations << violation
-      self
-    end
-
-    def concat(other)
-      other.each { |violation| self << violation }
+    # @param [Enumerable<Violations>]
+    #
+    # @return [undefined]
+    #
+    # @api private
+    #
+    def initialize(violations = [])
+      @violations = violations
     end
 
     # Return validation violations for a particular attribute_name.
@@ -83,25 +51,14 @@ module Aequitas
       end
     end
 
+    # FIXME: Remove array like interfaces
+    def size
+      violations.size
+    end
+
     # @api public
     def empty?
       violations.empty?
-    end
-
-    # @api public
-    # 
-    # FIXME: calling #to_sym on uncontrolled input is an
-    # invitation for a memory leak
-    def [](attribute_name)
-      violations[attribute_name.to_sym]
-    end
-
-    def method_missing(meth, *args, &block)
-      violations.send(meth, *args, &block)
-    end
-
-    def respond_to?(method)
-      super || violations.respond_to?(method)
     end
 
   end # class ViolationSet

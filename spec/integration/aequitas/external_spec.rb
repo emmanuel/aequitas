@@ -46,6 +46,11 @@ describe Aequitas::Validator do
       refute_predicate subject, :valid?
     end
 
+#   it 'returns resource as validated object on violations' do
+#     p subject.violations.on(:name).first.resource
+#     assert_same subject.violations.on(:name).first.resource, object
+#   end
+
     it 'violations on invalid attributes are not empty' do
       assert_equal subject.violations.on(:name).first.message, 'name must not be blank' 
     end

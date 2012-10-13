@@ -30,21 +30,26 @@ module Aequitas
     validate.errors.empty?
   end
 
+  # Return violations
+  #
   # @return [ViolationSet]
   #   the collection of current validation errors for this resource
   #
   # @api public
+  #
   def errors
-    @errors ||= ViolationSet.new(self)
+    @errors ||= ViolationSet.new
   end
 
   # Command a resource to populate its ViolationSet with any violations of
   #
+  # @return [self]
+  #
   # @api public
+  #
   def validate
     # TODO: errors.replace(validation_violations)
-    errors.clear
-    validation_violations.each { |v| errors.add(v) }
+    @errors = ViolationSet.new(validation_violations)
 
     self
   end
@@ -52,13 +57,15 @@ module Aequitas
   # Get a list of violations for the receiver *without* mutating it
   # 
   # @api private
+  #
   def validation_violations
     validation_rules.validate(self)
   end
 
-  # @return [uleSet]
+  # @return [RuleSet]
   # 
   # @api private
+  #
   def validation_rules
     self.class.validation_rules
   end
