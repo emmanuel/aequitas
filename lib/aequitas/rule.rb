@@ -6,13 +6,36 @@ module Aequitas
 
     equalize_on :attribute_name, :custom_message, :guard, :skip_condition
 
+    # Return attribute name
+    #
+    # @return [Symbol]
+    #
     # @api private
+    #
     attr_reader :attribute_name
+
+    # Return custom message
+    #
+    # @return [String]
+    #
     # @api private
+    #
     attr_reader :custom_message
+
+    # Return guard
+    #
+    # @return [Guard]
+    #
     # @api private
+    #
     attr_reader :guard
+
+    # Return guard
+    #
+    # @return [SkipCondition]
+    #
     # @api private
+    #
     attr_reader :skip_condition
 
     # Get the validators for the given attribute_name and options
@@ -29,7 +52,7 @@ module Aequitas
       Array(new(attribute_name, options, &block))
     end
 
-    # Construct a validator. Capture the :if and :unless clauses when
+    # Initialize a rule. Capture the :if and :unless clauses when
     # present.
     #
     # @param [String, Symbol] attribute_name
@@ -62,9 +85,14 @@ module Aequitas
     # @param [Object] resource
     #   the target object to be validated
     # 
-    # @return [NilClass, Violation]
-    #   NilClass if +resource+ is valid
-    #   Violation with additional info if +resource+ is invalid
+    # @return [nil]
+    #   if +resource+ is valid
+    #
+    # @return [Violation]
+    #   otherwise
+    #
+    # @api private
+    #
     def validate(resource)
       value = attribute_value(resource)
 
@@ -75,27 +103,45 @@ module Aequitas
       end
     end
 
-    # Determines if this validator should be run against the resource
-    # by delegating to the guard configured for this rule
+    # Test if rule should run on resource
+    #
+    # @return [true]
+    #   if rule should be executed on resource
+    #
+    # @return [false]
+    #   otherwise
+    #
+    # @api private
+    #
     def execute?(resource)
       guard.allow?(resource)
     end
 
-    # Test the value to see if it is blank or nil, and if it is allowed.
-    # Note that allowing blank without explicitly denying nil allows nil
-    # values, since nil.blank? is true.
+    # Test if rule is skipped on value
     #
     # @param [Object] value
-    #   The value to test.
+    #   the value to test
     #
-    # @return [Boolean]
-    #   true if blank/nil is allowed, and the value is blank/nil.
+    # @return [true]
+    #   if value should be skipped
+    #
+    # @return [false]
+    #   otherwise
     #
     # @api private
+    #
     def skip?(value)
       skip_condition.skip?(value)
     end
 
+    # Return attribute value to execute on rule
+    #
+    # @param [Object] resource
+    #
+    # @return [Object]
+    #
+    # @api private
+    # 
     def attribute_value(resource)
       resource.validation_attribute_value(attribute_name)
     end
@@ -114,8 +160,6 @@ module Aequitas
     def violation_data
       [ ]
     end
-
-    alias_method :to_s, :inspect
 
   private
 

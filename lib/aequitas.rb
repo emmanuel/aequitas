@@ -12,6 +12,29 @@ require 'immutable'
 # Library namespace
 module Aequitas
 
+  # Return default message transformer
+  #
+  # @return [MessageTransfomer]
+  #
+  # @api private
+  #
+  def self.default_transformer
+    @default_transformer ||= MessageTransformer.default
+  end
+
+  # Set default message transformer
+  #
+  # @param [MessageTransformer] transformer
+  #
+  # @return [self]
+  #
+  # @api private
+  #
+  def self.default_transformer=(transformer)
+    @default_transformer = transformer
+    self
+  end
+
   # Hook called when module is included
   #
   # @param [Module|Class] descendant

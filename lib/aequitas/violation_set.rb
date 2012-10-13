@@ -16,7 +16,7 @@ module Aequitas
 
     # Initialize object
     #
-    # @param [Enumerable<Violations>]
+    # @param [Enumerable<Violations>] violations
     #
     # @return [undefined]
     #

@@ -6,64 +6,72 @@ module Aequitas
 
     equalize_on :resource, :rule, :custom_message, :attribute_name
 
-    def self.default_transformer
-      @default_transformer ||= MessageTransformer.default
-    end
-
-    def self.default_transformer=(transformer)
-      @default_transformer = transformer
-    end
-
-    # Object that triggered this Violation
+    # Return object validated in this violation
     #
     # @return [Object]
-    #   object which triggered this violation
     # 
-    # @api public
+    # @api private
+    #
     attr_reader :resource
 
-    # Custom message for this Violation
+    # Return custom message for this validation
     #
     # @return [String, #call]
     #   custom message returned by #message and #to_s
     #
-    # @api public
+    # @api private
+    #
     attr_reader :custom_message
 
     # Rule which generated this Violation
     #
     # @return [Aequitas::Rule, nil]
-    #   validaiton rule that triggered this violation
-    #   or nil, if called on a Violation type that doesn't need a rule
+    #   validaiton rule that triggered this violation if present
+    #
+    # @return [nil]
+    #   otherwise
     # 
-    # @api public
+    # @api private
+    #
     attr_reader :rule
 
-    # Configure a Violation instance
+    # Initialize object
     # 
     # @param [Object] resource
     #   the validated object
+    #
     # @param [String, #call, Hash] message
     #   an optional custom message for this Violation
+    #
     # @param [Hash] options
-    #   options hash for configuring concrete subclasses
+    #   for configuring concrete subclasses
+    #
+    # @return [undefined]
     #
     # @api public
-    def initialize(resource, message, options = {})
+    #
+    def initialize(resource, message = nil, options = {})
       @resource       = resource
       @custom_message = message
     end
 
-    # @api public
+    # Return message 
+    #
+    # @param [MessageTransformer] transformer
+    #   option messagetransfomer
+    #
+    # @return [String]
+    #
+    # @api private
+    #
     def message(transformer = Undefined)
       return @custom_message if @custom_message
 
-      transformer = self.transformer if Undefined.equal?(transformer)
+      transformer = Aequitas.default_transformer if Undefined.equal?(transformer)
 
       transformer.transform(self)
     end
 
-    # @api public
     alias_method :to_s, :message
 
     # @api public
@@ -79,11 +87,6 @@ module Aequitas
     # @api public
     def values
       raise NotImplementedError, "#{self.class}#values is not implemented"
-    end
-
-    # @api private
-    def transformer
-      Violation.default_transformer
     end
 
     # In general we want Aequitas::ValueObject-type equality/equivalence,

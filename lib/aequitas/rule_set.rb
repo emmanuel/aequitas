@@ -47,7 +47,7 @@ module Aequitas
 
     # Append rule
     #
-    # @param [Rule]
+    # @param [Rule] rule
     #
     # @return [self]
     #
