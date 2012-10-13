@@ -25,7 +25,14 @@ module Aequitas
 
   # Check if a resource is valid 
   #
+  # @return [true]
+  #   if resource is valid
+  #
+  # @return [false]
+  #   otherwise
+  #  
   # @api public
+  #
   def valid?
     validate.errors.empty?
   end

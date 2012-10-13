@@ -39,8 +39,8 @@ module Aequitas
       # 
       # @api private
       #
-      def validation_rules
-        self.class.validation_rules
+      def rules
+        self.class.rules
       end
 
       # Retrieve the value of the given property name for the purpose of validation
@@ -74,7 +74,7 @@ module Aequitas
       #
       def initialize(object)
         @object = object
-        @violations = ViolationSet.new(validation_rules.validate(self).each.to_a)
+        @violations = ViolationSet.new(rules.validate(self).each.to_a)
       end
 
     end
