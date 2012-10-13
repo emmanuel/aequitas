@@ -6,9 +6,9 @@ module Aequitas
 
       # Return validated object
       #
-      # @api private
-      #
       # @return [Object]
+      #
+      # @api private
       #
       attr_reader :object
 
@@ -19,7 +19,6 @@ module Aequitas
       # @api private
       #
       attr_reader :violations
-
 
       # Test if validator is valid
       #
@@ -40,7 +39,7 @@ module Aequitas
       # @api private
       #
       def rules
-        self.class.rules
+        self.class.validation_rules
       end
 
       # Retrieve the value of the given property name for the purpose of validation

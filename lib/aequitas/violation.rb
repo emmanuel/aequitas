@@ -83,11 +83,7 @@ module Aequitas
 
     # @api private
     def transformer
-      if resource.respond_to?(:validation_rules) && transformer = resource.validation_rules.transformer
-        transformer
-      else
-        Violation.default_transformer
-      end
+      Violation.default_transformer
     end
 
     # In general we want Aequitas::ValueObject-type equality/equivalence,

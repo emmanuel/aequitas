@@ -7,17 +7,25 @@ module Aequitas
 
     # Return the RuleSet for this model
     #
-    # @api public
+    # @return [RuleSet]
+    #
+    # @api private
+    #
     def validation_rules
       @validation_rules ||= RuleSet.new
     end
 
   private
 
+    # Hook called when module is included
+    #
+    # @param [Class|Module] descendant
+    #
     # @api private
-    def inherited(base)
+    #
+    def inherited(descendant)
       super
-      base.validation_rules.concat(validation_rules)
+      descendant.validation_rules.concat(validation_rules)
     end
 
   end # module ClassMethods

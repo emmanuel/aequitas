@@ -18,14 +18,6 @@ module Aequitas
     # @api public
     def_delegators :rules, :each, :empty?
 
-    # Return message transformer
-    #
-    # @return [nil]
-    #
-    # @api private
-    #
-    attr_reader :transformer
-
     # Return rules
     #
     # @return [Enumerable<Rule>]
