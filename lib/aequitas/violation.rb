@@ -3,6 +3,7 @@
 module Aequitas
   class Violation
     extend ValueObject
+    include Adamantium
     
     equalize_on :resource, :rule, :custom_message, :attribute_name
 
