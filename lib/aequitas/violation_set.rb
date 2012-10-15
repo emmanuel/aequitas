@@ -3,7 +3,7 @@
 module Aequitas
   class ViolationSet
 
-    include Enumerable
+    include Enumerable, Adamantium
 
     # Return violations
     #
