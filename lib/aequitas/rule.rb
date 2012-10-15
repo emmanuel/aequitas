@@ -65,11 +65,11 @@ module Aequitas
     # @option [String, Hash] :message
     #   A custom message that will be used for any violations of this rule
     # @option [Symbol, Proc] :if
-    #   The name of a method (on the valiated resource) or a Proc to call
-    #   (with the resource) to determine if the rule should be applied.
+    #   The name of a method (on the valiated context) or a Proc to call
+    #   (with the context) to determine if the rule should be applied.
     # @option [Symbol, Proc] :unless
-    #   The name of a method (on the valiated resource) or a Proc to call
-    #   (with the resource) to determine if the rule should *not* be applied.
+    #   The name of a method (on the valiated context) or a Proc to call
+    #   (with the context) to determine if the rule should *not* be applied.
     # @option [Boolean] :allow_nil
     #   Whether to skip applying this rule on nil values
     # @option [Boolean] :allow_blank
@@ -81,41 +81,41 @@ module Aequitas
       @skip_condition = options.fetch(:skip_condition) { SkipCondition.new(options) }
     end
 
-    # Validate the +resource+ arg against this Rule
+    # Validate the +context+ arg against this Rule
     # 
-    # @param [Object] resource
+    # @param [Object] context
     #   the target object to be validated
     # 
     # @return [nil]
-    #   if +resource+ is valid
+    #   if +context+ is valid
     #
     # @return [Violation]
     #   otherwise
     #
     # @api private
     #
-    def validate(resource)
-      value = attribute_value(resource)
+    def validate(context)
+      value = attribute_value(context)
 
       if skip?(value) || valid_value?(value)
         nil
       else
-        new_violation(resource, value)
+        new_violation(context, value)
       end
     end
 
-    # Test if rule should run on resource
+    # Test if rule should run on context
     #
     # @return [true]
-    #   if rule should be executed on resource
+    #   if rule should be executed on context
     #
     # @return [false]
     #   otherwise
     #
     # @api private
     #
-    def execute?(resource)
-      guard.allow?(resource)
+    def execute?(context)
+      guard.allow?(context)
     end
 
     # Test if rule is skipped on value
@@ -137,35 +137,53 @@ module Aequitas
 
     # Return attribute value to execute on rule
     #
-    # @param [Object] resource
+    # @param [Object] context
     #
     # @return [Object]
     #
     # @api private
     # 
-    def attribute_value(resource)
-      resource.validation_attribute_value(attribute_name)
+    def attribute_value(context)
+      context.validation_attribute_value(attribute_name)
     end
 
+    # Return violation info
+    #
+    # @return [Hash]
+    #
     # @api private
+    #
     def violation_info
       Hash[ violation_data ]
     end
+    memoize :violation_info
 
+    # Return violation values
+    #
+    # @return [Enumerable<Object>]
+    #
     # @api private
+    #
     def violation_values
-      violation_data.map { |(_, value)| value }
+      violation_info.value
     end
+    memoize :violation_values
 
+    # Return violation data
+    #
+    # @return [Array]
+    #
     # @api private
+    #
     def violation_data
       [ ]
     end
+    memoize :violation_data
 
   private
 
-    def new_violation(resource, value = nil)
-      Violation::Rule.new(resource, custom_message,
+    def new_violation(context, value = nil)
+      Violation::Rule.new(context, custom_message,
         :rule  => self,
         :value => value)
     end
