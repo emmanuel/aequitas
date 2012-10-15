@@ -72,17 +72,5 @@ module Aequitas
       transformer.transform(self)
     end
 
-    alias_method :to_s, :message
-
-    # In general we want Aequitas::ValueObject-type equality/equivalence,
-    # but this allows direct equivalency test against Strings, which is handy
-    def ==(other)
-      if other.respond_to?(:to_str)
-        self.to_s == other.to_str
-      else
-        super
-      end
-    end
-
   end # class Violation
 end # module Aequitas
