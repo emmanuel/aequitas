@@ -5,7 +5,7 @@ module Aequitas
     extend ValueObject
     include Adamantium
     
-    equalize_on :resource, :rule, :custom_message, :attribute_name
+    equalize_on :context, :rule, :custom_message, :attribute_name
 
     # Return object validated in this violation
     #
@@ -13,7 +13,7 @@ module Aequitas
     # 
     # @api private
     #
-    attr_reader :resource
+    attr_reader :context
 
     # Return custom message for this validation
     #
@@ -57,7 +57,7 @@ module Aequitas
 
     # Initialize object
     # 
-    # @param [Object] resource
+    # @param [Object] context
     #   the validated object
     #
     # @param [String, #call, Hash] message
@@ -70,8 +70,8 @@ module Aequitas
     #
     # @api private
     #
-    def initialize(resource, message = nil, options = {})
-      @resource       = resource
+    def initialize(context, message = nil, options = {})
+      @context       = context
       @custom_message = message
     end
 
