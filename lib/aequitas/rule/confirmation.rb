@@ -30,7 +30,7 @@ module Aequitas
       end
 
       def confirmation_value(resource)
-        resource.instance_variable_get("@#{@confirmation_attribute_name}")
+        resource.validation_attribute_value(@confirmation_attribute_name)
       end
 
       def violation_type

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_absence_of' do
-  before { class_under_test.validates_absence_of attribute_name }
+  before { context_under_test.validates_absence_of attribute_name }
 
   describe 'when validated attribute is present' do
     let(:attribute_value) { :foo }

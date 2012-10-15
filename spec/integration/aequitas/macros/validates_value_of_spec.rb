@@ -5,7 +5,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_value_o
 
   describe 'with a lambda that returns lower and upper bounds' do
     before do
-      class_under_test.validates_value_of attribute_name, :in => bound
+      context_under_test.validates_value_of attribute_name, :in => bound
     end
 
     let(:bound) { lambda { (Date.today - 5)..Date.today } }

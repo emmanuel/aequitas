@@ -3,7 +3,7 @@ require 'spec_helper'
 Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_length_of' do
   describe 'with :is or :equal options' do
     before do
-      class_under_test.validates_length_of attribute_name, :is => 3
+      context_under_test.validates_length_of attribute_name, :is => 3
     end
 
     describe 'when validated attribute value is expected length' do
@@ -21,7 +21,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_length_
 
   describe 'with :max or :maximum options' do
     before do
-      class_under_test.validates_length_of attribute_name, :max => 3
+      context_under_test.validates_length_of attribute_name, :max => 3
     end
 
     describe 'when validated attribute value is at most expected length' do
@@ -39,7 +39,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_length_
 
   describe 'with :min or :minimum options' do
     before do
-      class_under_test.validates_length_of attribute_name, :min => 3
+      context_under_test.validates_length_of attribute_name, :min => 3
     end
 
     describe 'when validated attribute value is at least expected length' do
@@ -57,7 +57,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_length_
 
   describe 'with :in or :within options' do
     before do
-      class_under_test.validates_length_of attribute_name, :in => 2..3
+      context_under_test.validates_length_of attribute_name, :in => 2..3
     end
 
     describe 'when validated attribute value length is within expected range' do

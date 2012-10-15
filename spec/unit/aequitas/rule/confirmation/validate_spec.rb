@@ -29,7 +29,7 @@ describe Aequitas::Rule::Confirmation, '#validate' do
     before { skip_condition.expect(:skip?, false, [attribute_value]) }
 
     describe 'and the value equals the confirmation value' do
-      before { resource.expect(:instance_variable_get, attribute_value, ["@#{rule.confirmation_attribute_name}"]) }
+      before { resource.expect(:validation_attribute_value, attribute_value, [rule.confirmation_attribute_name]) }
 
       it('returns nil') { assert_equal nil, subject }
     end
@@ -41,9 +41,7 @@ describe Aequitas::Rule::Confirmation, '#validate' do
 
       before do
         options[:skip_condition].expect(:skip?, false, [attribute_value])
-        resource.expect(:instance_variable_get,
-                        "#{attribute_value}asdf",
-                        ["@#{attribute_name}_confirmation"])
+        resource.expect(:validation_attribute_value, "#{attribute_value}asdf", [:"#{attribute_name}_confirmation"])
         # Restore the original equals? method on rubinius, since equal? 
         # itself gets mocked away
         class << resource

@@ -3,8 +3,8 @@ require 'spec_helper'
 Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_confirmation_of' do
   before do
     class_under_test.send(:attr_accessor, "#{attribute_name}_confirmation")
-    class_under_test.validates_confirmation_of attribute_name
-    subject.send("#{attribute_name}_confirmation=", confirmation_value)
+    context_under_test.validates_confirmation_of attribute_name
+    resource.send("#{attribute_name}_confirmation=", confirmation_value)
   end
 
   describe 'when confirmation value matches' do
