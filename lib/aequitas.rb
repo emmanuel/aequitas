@@ -1,9 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-if RUBY_VERSION < '1.9'
-  require 'backports'
-end
-
+require 'backports'
 require 'bigdecimal'
 require 'bigdecimal/util'
 require 'forwardable'
