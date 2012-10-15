@@ -74,21 +74,6 @@ module Aequitas
 
     alias_method :to_s, :message
 
-    # @api public
-    def type
-      raise NotImplementedError, "#{self.class}#type is not implemented"
-    end
-
-    # @api public
-    def info
-      raise NotImplementedError, "#{self.class}#info is not implemented"
-    end
-
-    # @api public
-    def values
-      raise NotImplementedError, "#{self.class}#values is not implemented"
-    end
-
     # In general we want Aequitas::ValueObject-type equality/equivalence,
     # but this allows direct equivalency test against Strings, which is handy
     def ==(other)

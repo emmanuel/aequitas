@@ -38,6 +38,7 @@ module Aequitas
     # @api public
     # 
     # TODO: use a data structure that ensures uniqueness
+    #
     def on(attribute_name)
       violations.select { |violation| violation.attribute_name == attribute_name }.uniq
     end
