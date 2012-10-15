@@ -3,6 +3,7 @@
 module Aequitas
   class Rule
     extend ValueObject
+    include Adamantium
 
     equalize_on :attribute_name, :custom_message, :guard, :skip_condition
 
