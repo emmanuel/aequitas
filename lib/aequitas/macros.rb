@@ -9,10 +9,6 @@ module Aequitas
     # Validates that the specified attribute is "blank" via the
     # attribute's #blank? method.
     #
-    # @note
-    #   dm-core's support lib adds the #blank? method to many classes,
-    # @see lib/dm-core/support/blank.rb (dm-core) for more information.
-    #
     # @example [Usage]
     #   require 'virtus'
     #   require 'aequitas'
@@ -31,6 +27,8 @@ module Aequitas
     #     # a call to #validate will return false unless
     #     # all three attributes are blank
     #   end
+    #
+    # @api public
     #
     def validates_absence_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
@@ -65,6 +63,8 @@ module Aequitas
     #     # and
     #     # terms_accepted is one of ["1", 1, "true", true, "t"]
     #   end
+    #
+    # @api public
     #
     def validates_acceptance_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
@@ -107,6 +107,8 @@ module Aequitas
     #     # and
     #     # email == email_repeated
     #   end
+    #
+    # @api public
     #
     def validates_confirmation_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
@@ -153,6 +155,8 @@ module Aequitas
     #     # and
     #     # zip_code is a string of 5 digits
     #   end
+    #
+    # @api public
     #
     def validates_format_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
@@ -218,6 +222,8 @@ module Aequitas
     #     # just_right is between 1 and 10 (inclusive of both 1 and 10)
     #   end
     #
+    # @api public
+    #
     def validates_length_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
       validation_rules.add(Rule::Length, attribute_names, options)
@@ -263,6 +269,8 @@ module Aequitas
     # @option [Boolean] :integer_only
     #   Use to restrict allowed values to integers.
     #
+    # @api public
+    #
     def validates_numericalness_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
       validation_rules.add(Rule::Value,         attribute_names, options)
@@ -299,6 +307,9 @@ module Aequitas
     #     # a call to valid? will return false unless
     #     # all three attributes are not blank (according to Aequitas.blank?)
     #   end
+    #
+    # @api public
+    #
     def validates_presence_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
       validation_rules.add(Rule::Presence::NotBlank, attribute_names, options)
@@ -323,6 +334,9 @@ module Aequitas
     #     # the birth_date is something that can be properly
     #     # casted into a Date object.
     #   end
+    #
+    # @api public
+    #
     def validates_primitive_type_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
       validation_rules.add(Rule::PrimitiveType, attribute_names, options)
@@ -360,6 +374,9 @@ module Aequitas
     #     # a call to valid? will return false unless
     #     # the two properties conform to their sets
     #   end
+    #
+    # @api public
+    #
     def validates_within(*attribute_names)
       options = Macros.extract_options(attribute_names)
       validation_rules.add(Rule::Within, attribute_names, options)
@@ -402,6 +419,8 @@ module Aequitas
     #
     #     # it will add returned error message to :zip_code field
     #   end
+    #
+    # @api public
     #
     def validates_with_block(*attribute_names, &block)
       unless block_given?
@@ -448,6 +467,8 @@ module Aequitas
     #     # populate the object's errors with "You're in the
     #     # wrong zip code" unless zip_code == "94301"
     #   end
+    #
+    # @api public
     #
     def validates_with_method(*attribute_names)
       options = Macros.extract_options(attribute_names)

@@ -8,6 +8,8 @@ require 'bigdecimal'
 require 'bigdecimal/util'
 require 'forwardable'
 require 'adamantium'
+require 'equalizer'
+require 'abstract_class'
 
 # Library namespace
 module Aequitas
