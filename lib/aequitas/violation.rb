@@ -2,8 +2,8 @@
 
 module Aequitas
   class Violation
-    extend Aequitas::ValueObject
-
+    extend ValueObject
+    
     equalize_on :resource, :rule, :custom_message, :attribute_name
 
     # Return object validated in this violation
@@ -35,26 +35,6 @@ module Aequitas
     #
     attr_reader :rule
 
-    # Initialize object
-    # 
-    # @param [Object] resource
-    #   the validated object
-    #
-    # @param [String, #call, Hash] message
-    #   an optional custom message for this Violation
-    #
-    # @param [Hash] options
-    #   for configuring concrete subclasses
-    #
-    # @return [undefined]
-    #
-    # @api public
-    #
-    def initialize(resource, message = nil, options = {})
-      @resource       = resource
-      @custom_message = message
-    end
-
     # Return message 
     #
     # @param [MessageTransformer] transformer
@@ -70,6 +50,28 @@ module Aequitas
       transformer = Aequitas.default_transformer if Undefined.equal?(transformer)
 
       transformer.transform(self)
+    end
+
+  private
+
+    # Initialize object
+    # 
+    # @param [Object] resource
+    #   the validated object
+    #
+    # @param [String, #call, Hash] message
+    #   an optional custom message for this Violation
+    #
+    # @param [Hash] options
+    #   for configuring concrete subclasses
+    #
+    # @return [undefined]
+    #
+    # @api private
+    #
+    def initialize(resource, message = nil, options = {})
+      @resource       = resource
+      @custom_message = message
     end
 
   end # class Violation
