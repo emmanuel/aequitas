@@ -89,7 +89,7 @@ module Aequitas
     def self.included(descendant)
       super
       descendant.class_eval do
-        include ::Immutable
+        include ::Adamantium
         include InstanceMethods
       end
       descendant.extend(ClassMethods)

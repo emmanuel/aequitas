@@ -7,7 +7,7 @@ end
 require 'bigdecimal'
 require 'bigdecimal/util'
 require 'forwardable'
-require 'immutable'
+require 'adamantium'
 
 # Library namespace
 module Aequitas

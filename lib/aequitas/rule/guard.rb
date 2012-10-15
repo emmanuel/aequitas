@@ -10,6 +10,14 @@ module Aequitas
       attr_reader :if_test
       attr_reader :unless_test
 
+      # Initialize object
+      #
+      # @param [Hash] options
+      #
+      # @return [undefined]
+      #
+      # @api private
+      #
       def initialize(options = {})
         @if_test     = options.fetch(:if,     nil)
         @unless_test = options.fetch(:unless, nil)
