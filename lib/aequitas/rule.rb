@@ -165,7 +165,7 @@ module Aequitas
     # @api private
     #
     def violation_values
-      violation_info.value
+      violation_info.values
     end
     memoize :violation_values
 
