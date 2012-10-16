@@ -368,8 +368,8 @@ module Aequitas
     #     attribute :review_state, String
     #     attribute :rating, Integer
     #
-    #     validates_within :review_state, :set => STATES
-    #     validates_within :rating,       :set => 1..5
+    #     validates_inclusion_of :review_state, :within => STATES
+    #     validates_inclusion_of :rating,       :within => 1..5
     #
     #     # a call to valid? will return false unless
     #     # the two properties conform to their sets
@@ -377,7 +377,7 @@ module Aequitas
     #
     # @api public
     #
-    def validates_within(*attribute_names)
+    def validates_inclusion_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
       validation_rules.add(Rule::Within, attribute_names, options)
     end

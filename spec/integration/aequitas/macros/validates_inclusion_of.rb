@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_within' do
+Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_inclusion_of' do
   before do
-    context_under_test.validates_within attribute_name, :set => Set[*set]
+    context_under_test.validates_inclusion_of attribute_name, :within => Set[*set]
   end
 
   let(:set) { [:a, :b, :c] }
