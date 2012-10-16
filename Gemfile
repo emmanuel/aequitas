@@ -10,6 +10,7 @@ gem 'equalizer',           :git => 'https://github.com/dkubb/equalizer.git'
 group :development do
   gem 'rake',    '~> 0.9.2'
   gem 'yard',    '~> 0.8.1'
+  gem 'virtus',  '~> 0.5.2'
   gem 'minitest'
 end
 
@@ -17,7 +18,6 @@ group :guard do
   gem 'guard',         '~> 1.4.0'
   gem 'guard-bundler'
   gem 'guard-minitest'
-  gem 'virtus',        '~> 0.5.2'
   # Remove this once https://github.com/nex3/rb-inotify/pull/20 is solved.
   # This patch makes rb-inotify a nice player with listen so it does not poll.
   gem 'rb-inotify', :git => 'https://github.com/mbj/rb-inotify'
