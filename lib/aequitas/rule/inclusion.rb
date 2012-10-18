@@ -2,16 +2,16 @@
 
 module Aequitas
   class Rule
-    class Within < Rule
+    class Inclusion < Rule
 
-      equalize_on *superclass.equalizer.keys + [:set]
+      equalize_on *superclass.equalizer.keys + [:within]
 
-      attr_reader :set
+      attr_reader :within
 
       def initialize(attribute_name, options={})
         super
 
-        @set = options.fetch(:set)
+        @set = options.fetch(:within)
       end
 
       def valid_value?(value)
@@ -24,7 +24,7 @@ module Aequitas
 
       # TODO: is it worth converting to a String (dumping this information)?
       def violation_data
-        [ [ :set, set.to_a.join(', ') ] ]
+        [ [ :within, set.to_a.join(', ') ] ]
       end
 
     end # class Within
