@@ -27,6 +27,6 @@ module Aequitas
         [ [ :within, set.to_a.join(', ') ] ]
       end
 
-    end # class Within
+    end # class Inclusion
   end # class Rule
 end # module Aequitas

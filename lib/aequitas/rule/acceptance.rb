@@ -2,7 +2,7 @@
 
 module Aequitas
   class Rule
-    # TODO: update this to inherit from Rule::Within::Set
+    # TODO: update this to inherit from Rule::Inclusion::Set
     class Acceptance < Rule
 
       equalize_on *(superclass.equalizer.keys + [:accept])

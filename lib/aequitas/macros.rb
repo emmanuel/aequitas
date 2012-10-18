@@ -379,7 +379,7 @@ module Aequitas
     #
     def validates_inclusion_of(*attribute_names)
       options = Macros.extract_options(attribute_names)
-      validation_rules.add(Rule::Within, attribute_names, options)
+      validation_rules.add(Rule::Inclusion, attribute_names, options)
     end
 
     # Validate using the given block. The block given needs to return:
