@@ -4,7 +4,7 @@ module Aequitas
   class Rule
     class Inclusion < Rule
 
-      equalize_on *superclass.equalizer.keys + [:within]
+      equalize_on *superclass.equalizer.keys + [:set]
 
       attr_reader :set
 
