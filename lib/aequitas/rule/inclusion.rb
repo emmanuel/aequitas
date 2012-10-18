@@ -6,7 +6,7 @@ module Aequitas
 
       equalize_on *superclass.equalizer.keys + [:within]
 
-      attr_reader :within
+      attr_reader :set
 
       def initialize(attribute_name, options={})
         super
