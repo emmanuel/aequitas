@@ -81,14 +81,16 @@ the #errors method.
 
 For example:
 
-  validator = AccountValidator.new(Account.new(:name => "Jose"))
-  if validator.valid?
-    # my_account is valid and can be saved
-  else
-    validator.errors.each do |e|
-      puts e
-    end
+```ruby
+validator = AccountValidator.new(Account.new(:name => "Jose"))
+if validator.valid?
+  # my_account is valid and can be saved
+else
+  validator.errors.each do |e|
+    puts e
   end
+end
+```
 
 See Aequitas::ViolationSet for all you can do with the #errors method.
 
