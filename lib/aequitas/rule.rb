@@ -2,10 +2,20 @@
 
 module Aequitas
   class Rule
-    extend ValueObject
-    include Adamantium
+    include AbstractClass, Adamantium::Flat
 
-    equalize_on :attribute_name, :custom_message, :guard, :skip_condition
+    # Initialize equalizer
+    #
+    # @param [Symbol] *extra
+    #
+    # @return [undefined]
+    #
+    # @api private
+    #
+    def self.equalize(*extra)
+      include Equalizer.new(:attribute_name, :custom_message, :guard, :skip_condition, *extra)
+    end
+    private_class_method :equalize
 
     # Return attribute name
     #
@@ -156,7 +166,6 @@ module Aequitas
     def violation_info
       Hash[ violation_data ]
     end
-    memoize :violation_info
 
     # Return violation values
     #
@@ -167,7 +176,6 @@ module Aequitas
     def violation_values
       violation_info.values
     end
-    memoize :violation_values
 
     # Return violation data
     #
@@ -178,7 +186,6 @@ module Aequitas
     def violation_data
       [ ]
     end
-    memoize :violation_data
 
   private
 

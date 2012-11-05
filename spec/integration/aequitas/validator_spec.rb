@@ -47,7 +47,6 @@ describe Aequitas::Validator do
     end
 
 #   it 'returns resource as validated object on violations' do
-#     p subject.violations.on(:name).first.resource
 #     assert_same subject.violations.on(:name).first.resource, object
 #   end
 

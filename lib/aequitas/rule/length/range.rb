@@ -5,7 +5,7 @@ module Aequitas
     class Length
       class Range < Length 
 
-        equalize_on *superclass.superclass.equalizer.keys + [:range]
+        equalize(:range)
 
         attr_reader :range
 

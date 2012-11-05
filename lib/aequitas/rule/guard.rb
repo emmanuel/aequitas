@@ -3,9 +3,7 @@
 module Aequitas
   class Rule
     class Guard
-      extend ValueObject
-
-      equalize_on :if_test, :unless_test
+      include Adamantium::Flat, Equalizer.new(:if_test, :unless_test)
 
       attr_reader :if_test
       attr_reader :unless_test

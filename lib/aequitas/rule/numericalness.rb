@@ -4,7 +4,7 @@ module Aequitas
   class Rule
     class Numericalness < Rule
 
-      equalize_on *superclass.equalizer.keys + [:expected]
+      equalize(:expected)
 
       # TODO: move options normalization into the validator macros?
       def self.rules_for(attribute_name, options)

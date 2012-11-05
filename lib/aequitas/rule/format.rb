@@ -13,7 +13,7 @@ module Aequitas
         :url           => '%s is not a valid URL',
       }
 
-      equalize_on *superclass.equalizer.keys + [:format]
+      equalize(:format)
 
       # @raise [UnknownValidationFormat]
       #   if the :as (or :with) option is a Symbol that is not a key in FORMATS,
@@ -45,9 +45,6 @@ module Aequitas
         super
 
         @format = options.fetch(:format)
-
-        skip_condition.default_to_allowing_nil!
-        skip_condition.default_to_allowing_blank!
       end
 
       def valid_value?(value)

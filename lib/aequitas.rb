@@ -120,7 +120,6 @@ module Aequitas
 end # module Aequitas
 
 require 'aequitas/support/blank'
-require 'aequitas/support/value_object'
 require 'aequitas/macros'
 require 'aequitas/class_methods'
 require 'aequitas/rule_set'

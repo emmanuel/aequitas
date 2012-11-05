@@ -4,7 +4,7 @@ module Aequitas
   class Rule
     class Value < Rule
 
-      equalize_on *superclass.equalizer.keys + [:expected]
+      equalize(:expected)
 
       # Builder for rules from options hash
       class Builder
@@ -46,7 +46,7 @@ module Aequitas
 
         # Rule builder
         class Rule 
-          include Adamantium
+          include Adamantium::Flat
 
           # Return build rule
           #

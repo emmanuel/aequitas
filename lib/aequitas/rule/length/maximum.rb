@@ -5,7 +5,7 @@ module Aequitas
     class Length
       class Maximum < Length
 
-        equalize_on *superclass.superclass.equalizer.keys + [:bound]
+        equalize(:bound)
 
         attr_reader :bound
 

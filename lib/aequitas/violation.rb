@@ -2,10 +2,7 @@
 
 module Aequitas
   class Violation
-    extend ValueObject
-    include Adamantium
-    
-    equalize_on :context, :rule, :custom_message, :attribute_name
+    include Adamantium::Flat, Equalizer.new(:context, :rule, :custom_message, :attribute_name)
 
     # Return object validated in this violation
     #

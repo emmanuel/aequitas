@@ -5,7 +5,7 @@ module Aequitas
     class Format
       class Regexp < Format
 
-        equalize_on *superclass.equalizer.keys + [:format_name]
+        equalize(:format_name)
 
         attr_reader :format_name
 

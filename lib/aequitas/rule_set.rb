@@ -6,11 +6,9 @@ module Aequitas
   class RuleSet
     # Holds a collection of Rule instances to be run against
 
-    extend ValueObject
+    include Equalizer.new(:rules)
     extend Forwardable
     include Enumerable
-
-    equalize_on :rules
 
     # @api public
     def_delegators :attribute_index, :[], :fetch
