@@ -43,7 +43,7 @@ validator.errors # => []
 
 other = ProrammingLanguage.new('')
 
-validator = ProgrammingLanguageValidator.new(ruby)
+validator = ProgrammingLanguageValidator.new(other)
 validator.valid? # => false
 validator.errors # => [<Aequitas::Rule::Violation ....>]
 
