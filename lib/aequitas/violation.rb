@@ -1,126 +1,76 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/exceptions'
-require 'aequitas/support/value_object'
-require 'aequitas/message_transformer'
-
 module Aequitas
   class Violation
-    extend Aequitas::ValueObject
+    include Adamantium::Flat, Equalizer.new(:context, :rule, :custom_message, :attribute_name)
 
-    equalize_on :resource, :rule, :custom_message, :attribute_name
-
-    def self.default_transformer
-      @default_transformer ||= MessageTransformer.default
-    end
-
-    def self.default_transformer=(transformer)
-      @default_transformer = transformer
-    end
-
-    # Object that triggered this Violation
+    # Return object validated in this violation
     #
     # @return [Object]
-    #   object which triggered this violation
     # 
-    # @api public
-    attr_reader :resource
+    # @api private
+    #
+    attr_reader :context
 
-    # Custom message for this Violation
+    # Return custom message for this validation
     #
     # @return [String, #call]
     #   custom message returned by #message and #to_s
     #
-    # @api public
+    # @api private
+    #
     attr_reader :custom_message
 
     # Rule which generated this Violation
     #
     # @return [Aequitas::Rule, nil]
-    #   validaiton rule that triggered this violation
-    #   or nil, if called on a Violation type that doesn't need a rule
+    #   validaiton rule that triggered this violation if present
+    #
+    # @return [nil]
+    #   otherwise
     # 
-    # @api public
+    # @api private
+    #
     attr_reader :rule
 
-    # Configure a Violation instance
-    # 
-    # @param [Object] resource
-    #   the validated object
-    # @param [String, #call, Hash] message
-    #   an optional custom message for this Violation
-    # @param [Hash] options
-    #   options hash for configuring concrete subclasses
+    # Return message 
     #
-    # @api public
-    def initialize(resource, message, options = {})
-      @resource       = resource
-      @custom_message = evaluate_message(message)
-    end
-
-    # @api public
+    # @param [MessageTransformer] transformer
+    #   option messagetransfomer
+    #
+    # @return [String]
+    #
+    # @api private
+    #
     def message(transformer = Undefined)
       return @custom_message if @custom_message
 
-      transformer = self.transformer if Undefined.equal?(transformer)
+      transformer = Aequitas.default_transformer if Undefined.equal?(transformer)
 
       transformer.transform(self)
     end
 
-    # @api public
-    alias_method :to_s, :message
+  private
 
-    # @api public
-    def type
-      raise NotImplementedError, "#{self.class}#type is not implemented"
-    end
-
-    # @api public
-    def info
-      raise NotImplementedError, "#{self.class}#info is not implemented"
-    end
-
-    # @api public
-    def values
-      raise NotImplementedError, "#{self.class}#values is not implemented"
-    end
-
+    # Initialize object
+    # 
+    # @param [Object] context
+    #   the validated object
+    #
+    # @param [String, #call, Hash] message
+    #   an optional custom message for this Violation
+    #
+    # @param [Hash] options
+    #   for configuring concrete subclasses
+    #
+    # @return [undefined]
+    #
     # @api private
-    def transformer
-      if resource.respond_to?(:validation_rules) && transformer = resource.validation_rules.transformer
-        transformer
-      else
-        Violation.default_transformer
-      end
-    end
-
-    # TODO: Drop this or heavily refactor it.
-    #   This is too complicated and coupled to DM.
-    def evaluate_message(message)
-      if message.respond_to?(:call)
-        if resource.respond_to?(:model) && resource.model.respond_to?(:properties)
-          property = resource.model.properties[attribute_name]
-          message.call(resource, property)
-        else
-          message.call(resource)
-        end
-      else
-        message
-      end
-    end
-
-    # In general we want Aequitas::ValueObject-type equality/equivalence,
-    # but this allows direct equivalency test against Strings, which is handy
-    def ==(other)
-      if other.respond_to?(:to_str)
-        self.to_s == other.to_str
-      else
-        super
-      end
+    #
+    def initialize(context, message = nil, options = {})
+      @context       = context
+      @custom_message = message
     end
 
   end # class Violation
 end # module Aequitas
-
-require 'aequitas/violation/rule'
-require 'aequitas/violation/message'

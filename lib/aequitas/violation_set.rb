@@ -1,76 +1,28 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/support/blank'
-require 'aequitas/support/ordered_hash'
-require 'aequitas/violation'
-
 module Aequitas
   class ViolationSet
 
-    include Enumerable
+    include Adamantium::Flat, Enumerable, Equalizer.new(:violations)
 
-    # @api private
-    attr_reader :resource
-
-    # @api private
-    attr_reader :violations
-    # TODO: why was this private?
-    private :violations
-
-    # TODO: replace OrderedHash with OrderedSet and remove vendor'd OrderedHash
-    def initialize(resource)
-      @resource   = resource
-      @violations = OrderedHash.new { |h,k| h[k] = [] }
-    end
-
-    # Clear existing validation violations.
-    # 
-    # @api public
-    def clear
-      violations.clear
-    end
-
-    # Add a validation error. Use the attribute_name :general if the violations
-    # does not apply to a specific field of the Resource.
+    # Return violations
     #
-    # @param [Symbol, Violation] attribute_name_or_violation
-    #   The name of the field that caused the violation, or
-    #   the Violation which describes the validation violation
-    # @param [NilClass, String, #call, Hash] message
-    #   The message to add.
-    # 
-    # @see Violation#initialize
-    # 
-    # @api public
-    def add(attribute_name_or_violation, message = nil)
-      violation = 
-        if attribute_name_or_violation.kind_of?(Violation)
-          attribute_name_or_violation
-        else
-          Violation::Message.new(resource, message, :attribute_name => attribute_name_or_violation)
-        end
+    # @return [Enumerable<Violations>]
+    #
+    # @api private
+    #
+    attr_reader :violations
 
-      self << violation
-    end
-
-    def <<(violation)
-      violations[violation.attribute_name] << violation
-      self
-    end
-
-    def concat(other)
-      other.each { |violation| self << violation }
-    end
-
-    # Collect all violations into a single list.
-    # 
-    # @api public
-    def full_messages
-      violations.inject([]) do |list, (attribute_name, violations)|
-        messages = violations
-        messages = violations.full_messages if violations.respond_to?(:full_messages)
-        list.concat(messages)
-      end
+    # Initialize object
+    #
+    # @param [Enumerable<Violations>] violations
+    #
+    # @return [undefined]
+    #
+    # @api private
+    #
+    def initialize(violations = [])
+      @violations = violations
     end
 
     # Return validation violations for a particular attribute_name.
@@ -84,37 +36,65 @@ module Aequitas
     # 
     # @api public
     # 
-    # TODO: use a data structure that ensures uniqueness
     def on(attribute_name)
-      violations[attribute_name].uniq
+      violations.select { |violation| violation.attribute_name == attribute_name }
     end
 
-    # @api public
-    def each
-      violations.each_value do |v|
-        yield(v) unless Aequitas.blank?(v)
-      end
-    end
-
-    # @api public
-    def empty?
-      violations.all? { |_, violations| violations.empty? }
-    end
-
+    # Return attribute names with at least one violation
+    #
+    # @return [Enumerable<Symbol>]
+    # 
     # @api public
     # 
-    # FIXME: calling #to_sym on uncontrolled input is an
-    # invitation for a memory leak
-    def [](attribute_name)
-      violations[attribute_name.to_sym]
+    def attribute_names
+      violations.each_with_object(Set.new) do |violation, names|
+        names << violation.attribute_name
+      end
+    end
+    memoize :attribute_names
+
+    # Enumerate violations
+    #
+    # @return [self]
+    #   if block given
+    #
+    # @return [Enumerator<Violation]
+    #   otherwise
+    #
+    # @api public
+    #
+    def each
+      return to_enum unless block_given?
+
+      attribute_names.each do |name|
+        yield on(name)
+      end
+
+      self
     end
 
-    def method_missing(meth, *args, &block)
-      violations.send(meth, *args, &block)
+    # Return amount of violations
+    #
+    # @return [Fixnum]
+    #
+    # @api public
+    #
+    def size
+      violations.size
     end
 
-    def respond_to?(method)
-      super || violations.respond_to?(method)
+    # Test if any violation is present
+    #
+    # @return [true]
+    #   if there is at least one violation
+    #
+    # @return [false]
+    #   otherwise
+    #
+    # @api private
+    #
+    def empty?
+      violations.empty?
     end
 
   end # class ViolationSet

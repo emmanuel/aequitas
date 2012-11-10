@@ -1,45 +1,84 @@
 # -*- encoding: utf-8 -*-
 
-if RUBY_VERSION < '1.9'
-  require 'backports'
-end
+require 'backports'
+require 'bigdecimal'
+require 'bigdecimal/util'
+require 'forwardable'
+require 'adamantium'
+require 'equalizer'
+require 'abstract_class'
 
-require 'aequitas/version'
-
-
-require 'aequitas/class_methods'
-require 'aequitas/violation_set'
-
+# Library namespace
 module Aequitas
 
-  def self.included(base)
-    super
-    base.extend ClassMethods
-  end
-
-  # Check if a resource is valid in a given context
+  # Return default message transformer
   #
-  # @api public
-  def valid?(context_name = default_validation_context)
-    validate(context_name).errors.empty?
+  # @return [MessageTransfomer]
+  #
+  # @api private
+  #
+  def self.default_transformer
+    @default_transformer ||= MessageTransformer.default
   end
 
+  # Set default message transformer
+  #
+  # @param [MessageTransformer] transformer
+  #
+  # @return [self]
+  #
+  # @api private
+  #
+  def self.default_transformer=(transformer)
+    @default_transformer = transformer
+    self
+  end
+
+  # Hook called when module is included
+  #
+  # @param [Module|Class] descendant
+  #
+  # @api private
+  #
+  def self.included(descendant)
+    super
+    descendant.extend(ClassMethods)
+  end
+
+  # Check if a resource is valid 
+  #
+  # @return [true]
+  #   if resource is valid
+  #
+  # @return [false]
+  #   otherwise
+  #  
+  # @api public
+  #
+  def valid?
+    validate.errors.empty?
+  end
+
+  # Return violations
+  #
   # @return [ViolationSet]
   #   the collection of current validation errors for this resource
   #
   # @api public
+  #
   def errors
-    @errors ||= ViolationSet.new(self)
+    @errors ||= ViolationSet.new
   end
 
   # Command a resource to populate its ViolationSet with any violations of
-  # its validation Rules in +context_name+
+  #
+  # @return [self]
   #
   # @api public
-  def validate(context_name = default_validation_context)
-    # TODO: errors.replace(validation_violations(context_name))
-    errors.clear
-    validation_violations(context_name).each { |v| errors.add(v) }
+  #
+  def validate
+    # TODO: errors.replace(validation_violations)
+    @errors = ViolationSet.new(validation_violations)
 
     self
   end
@@ -47,26 +86,15 @@ module Aequitas
   # Get a list of violations for the receiver *without* mutating it
   # 
   # @api private
-  def validation_violations(context_name = default_validation_context)
-    validation_rules.validate(self, context_name)
-  end
-
-  # The name of the default validation context for this Resource.
   #
-  # Overriding #default_validation_context .
-  # 
-  # @return [Symbol]
-  #   the current validation context from the context stack
-  #   (if valid for this model), or :default
-  # 
-  # @api public
-  def default_validation_context
-    :default
+  def validation_violations
+    validation_rules.validate(self)
   end
 
-  # @return [ContextualRuleSet]
+  # @return [RuleSet]
   # 
   # @api private
+  #
   def validation_rules
     self.class.validation_rules
   end
@@ -90,3 +118,53 @@ module Aequitas
   end
 
 end # module Aequitas
+
+require 'aequitas/support/blank'
+require 'aequitas/macros'
+require 'aequitas/class_methods'
+require 'aequitas/rule_set'
+require 'aequitas/exceptions'
+require 'aequitas/validator'
+require 'aequitas/message_transformer'
+require 'aequitas/rule'
+require 'aequitas/rule/absence'
+require 'aequitas/rule/absence/blank'
+require 'aequitas/rule/absence/nil'
+require 'aequitas/rule/acceptance'
+require 'aequitas/rule/block'
+require 'aequitas/rule/confirmation'
+require 'aequitas/rule/format'
+require 'aequitas/rule/format/email_address'
+require 'aequitas/rule/format/proc'
+require 'aequitas/rule/format/regexp'
+require 'aequitas/rule/format/url'
+require 'aequitas/rule/guard'
+require 'aequitas/rule/length'
+require 'aequitas/rule/length/equal'
+require 'aequitas/rule/length/maximum'
+require 'aequitas/rule/length/minimum'
+require 'aequitas/rule/length/range'
+require 'aequitas/rule/method'
+require 'aequitas/rule/numericalness'
+require 'aequitas/rule/numericalness/integer'
+require 'aequitas/rule/numericalness/non_integer'
+require 'aequitas/rule/presence'
+require 'aequitas/rule/presence/not_blank'
+require 'aequitas/rule/presence/not_nil'
+require 'aequitas/rule/primitive_type'
+require 'aequitas/rule/skip_condition'
+require 'aequitas/rule/value'
+require 'aequitas/rule/value/equal'
+require 'aequitas/rule/value/greater_than'
+require 'aequitas/rule/value/greater_than_or_equal'
+require 'aequitas/rule/value/less_than'
+require 'aequitas/rule/value/less_than_or_equal'
+require 'aequitas/rule/value/not_equal'
+require 'aequitas/rule/value/range'
+require 'aequitas/rule/inclusion'
+require 'aequitas/rule_set'
+require 'aequitas/version'
+require 'aequitas/violation'
+require 'aequitas/violation/message'
+require 'aequitas/violation/rule'
+require 'aequitas/violation_set'

@@ -1,17 +1,21 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/support/value_object'
-
 module Aequitas
   class Rule
     class Guard
-      extend ValueObject
-
-      equalize_on :if_test, :unless_test
+      include Adamantium::Flat, Equalizer.new(:if_test, :unless_test)
 
       attr_reader :if_test
       attr_reader :unless_test
 
+      # Initialize object
+      #
+      # @param [Hash] options
+      #
+      # @return [undefined]
+      #
+      # @api private
+      #
       def initialize(options = {})
         @if_test     = options.fetch(:if,     nil)
         @unless_test = options.fetch(:unless, nil)

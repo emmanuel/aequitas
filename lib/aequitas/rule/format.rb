@@ -1,7 +1,4 @@
-# -*- encoding: utf-8 -*-
-
-require 'aequitas/rule'
-require 'aequitas/exceptions'
+#encoding: utf-8
 
 module Aequitas
   class Rule
@@ -16,7 +13,7 @@ module Aequitas
         :url           => '%s is not a valid URL',
       }
 
-      equalize_on *superclass.equalizer.keys + [:format]
+      equalize(:format)
 
       # @raise [UnknownValidationFormat]
       #   if the :as (or :with) option is a Symbol that is not a key in FORMATS,
@@ -48,9 +45,6 @@ module Aequitas
         super
 
         @format = options.fetch(:format)
-
-        skip_condition.default_to_allowing_nil!
-        skip_condition.default_to_allowing_blank!
       end
 
       def valid_value?(value)
@@ -76,9 +70,3 @@ module Aequitas
     end # class Format
   end # class Rule
 end # module Aequitas
-
-require 'aequitas/rule/format/email_address'
-require 'aequitas/rule/format/url'
-
-require 'aequitas/rule/format/proc'
-require 'aequitas/rule/format/regexp'

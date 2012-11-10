@@ -1,12 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule'
-
 module Aequitas
   class Rule
     class Method < Rule
 
-      equalize_on *(superclass.equalizer.keys + [:method])
+      equalize(:method)
 
       attr_reader :method, :violation_type
 

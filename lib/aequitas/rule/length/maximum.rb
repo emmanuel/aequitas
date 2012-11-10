@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule/length'
-
 module Aequitas
   class Rule
     class Length
       class Maximum < Length
 
-        equalize_on *superclass.superclass.equalizer.keys + [:bound]
+        equalize(:bound)
 
         attr_reader :bound
 

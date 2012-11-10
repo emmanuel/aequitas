@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-require 'aequitas/rule/format'
-
 module Aequitas
   class Rule
     class Format

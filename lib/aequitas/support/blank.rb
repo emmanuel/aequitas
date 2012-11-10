@@ -1,10 +1,17 @@
 module Aequitas
+
   # Determines whether the specified +value+ is blank.
   #
-  # An object is blank if it's false, empty, or a whitespace string.
-  # For example, "", "   ", +nil+, [], and {} are blank.
+  # @param [Object] value
   #
-  # @api semipublic
+  # @return [true]
+  #   if object is fale empty or a whitespace string
+  #
+  # @return [false]
+  #   otherwise
+  #
+  # @api private
+  #
   def self.blank?(value)
     case value
     when ::NilClass, ::FalseClass

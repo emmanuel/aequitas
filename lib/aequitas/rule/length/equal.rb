@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule/length'
-
 module Aequitas
   class Rule
     class Length
       class Equal < Length
 
-        equalize_on *superclass.superclass.equalizer.keys + [:expected]
+        equalize(:expected)
 
         attr_reader :expected
 

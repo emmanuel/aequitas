@@ -1,11 +1,9 @@
 require 'spec_helper'
-require 'shared/macros/integration_spec'
-require 'aequitas'
 
 Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_with_block' do
   before do
     block_value = self.block_value
-    class_under_test.validates_with_block(attribute_name) { block_value }
+    context_under_test.validates_with_block(attribute_name) { block_value }
   end
   let(:attribute_value) { MiniTest::Mock.new }
 

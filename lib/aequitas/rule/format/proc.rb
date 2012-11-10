@@ -1,6 +1,4 @@
-# -*- encoding: utf-8 -*-
-
-require 'aequitas/rule/format'
+#encoding: utf-8
 
 module Aequitas
   class Rule

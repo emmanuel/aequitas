@@ -1,11 +1,9 @@
-require_relative '../../../spec_helper'
-require_relative '../../shared/macros/integration_spec'
-require 'aequitas'
+require 'spec_helper'
 
 Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numericalness_of' do
   describe 'with no options' do
     before do
-      class_under_test.validates_numericalness_of attribute_name
+      context_under_test.validates_numericalness_of attribute_name
     end
 
     describe 'when validated attribute is a float' do
@@ -35,7 +33,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
   describe 'with :only_integer option' do
     before do
-      class_under_test.validates_numericalness_of attribute_name, :only_integer => true
+      context_under_test.validates_numericalness_of attribute_name, :only_integer => true
     end
 
     describe 'when validated attribute is an integer' do
@@ -59,7 +57,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
   describe 'with :eq, :equal, :equals, :exactly, or :equal_to options' do
     before do
-      class_under_test.validates_numericalness_of attribute_name, :eq => bound
+      context_under_test.validates_numericalness_of attribute_name, :eq => bound
     end
 
     let(:bound) { 1 }
@@ -88,7 +86,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
   describe 'with :ne or :not_equal_to options' do
     before do
-      class_under_test.validates_numericalness_of attribute_name, :ne => bound
+      context_under_test.validates_numericalness_of attribute_name, :ne => bound
     end
 
     let(:bound) { 1 }
@@ -117,7 +115,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
   describe 'with :gt or :greater_than options' do
     before do
-      class_under_test.validates_numericalness_of attribute_name, :gt => bound
+      context_under_test.validates_numericalness_of attribute_name, :gt => bound
     end
 
     let(:bound) { 1 }
@@ -146,7 +144,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
   describe 'with :lt or :less_than options' do
     before do
-      class_under_test.validates_numericalness_of attribute_name, :lt => bound
+      context_under_test.validates_numericalness_of attribute_name, :lt => bound
     end
 
     let(:bound) { 1 }
@@ -175,7 +173,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
   describe 'with :gte or :greater_than_or_equal_to options' do
     before do
-      class_under_test.validates_numericalness_of attribute_name, :gte => bound
+      context_under_test.validates_numericalness_of attribute_name, :gte => bound
     end
 
     let(:bound) { 1 }
@@ -204,7 +202,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
   describe 'with :lte or :less_than_or_equal_to options' do
     before do
-      class_under_test.validates_numericalness_of attribute_name, :lte => bound
+      context_under_test.validates_numericalness_of attribute_name, :lte => bound
     end
 
     let(:bound) { 1 }
@@ -234,7 +232,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
   describe 'with :in or :within options' do
     describe 'with lower and upper bounds' do
       before do
-        class_under_test.validates_numericalness_of attribute_name, :in => bound
+        context_under_test.validates_numericalness_of attribute_name, :in => bound
       end
 
       let(:bound) { 1..5 }
@@ -254,7 +252,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     # describe 'with no lower bound' do
     #   before do
-    #     class_under_test.validates_within attribute_name, :range => range
+    #     context_under_test.validates_within attribute_name, :range => range
     #   end
     # 
     #   let(:range) { -(1.0/0)..5 }
@@ -274,7 +272,7 @@ Aequitas::Macros::IntegrationSpec.describe Aequitas::Macros, '#validates_numeric
 
     # describe 'with no upper bound' do
     #   before do
-    #     class_under_test.validates_within attribute_name, :range => range
+    #     context_under_test.validates_within attribute_name, :range => range
     #   end
     # 
     #   let(:range) { 1..(1.0/0) }

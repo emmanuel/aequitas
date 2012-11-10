@@ -1,24 +1,52 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/support/blank'
-require 'aequitas/support/value_object'
-require 'aequitas/rule/guard'
-require 'aequitas/rule/skip_condition'
-require 'aequitas/violation'
-
 module Aequitas
   class Rule
-    extend ValueObject
+    include AbstractClass, Adamantium::Flat
 
-    equalize_on :attribute_name, :custom_message, :guard, :skip_condition
-
+    # Initialize equalizer
+    #
+    # @param [Symbol] *extra
+    #
+    # @return [undefined]
+    #
     # @api private
+    #
+    def self.equalize(*extra)
+      include Equalizer.new(:attribute_name, :custom_message, :guard, :skip_condition, *extra)
+    end
+    private_class_method :equalize
+
+    # Return attribute name
+    #
+    # @return [Symbol]
+    #
+    # @api private
+    #
     attr_reader :attribute_name
+
+    # Return custom message
+    #
+    # @return [String]
+    #
     # @api private
+    #
     attr_reader :custom_message
+
+    # Return guard
+    #
+    # @return [Guard]
+    #
     # @api private
+    #
     attr_reader :guard
+
+    # Return guard
+    #
+    # @return [SkipCondition]
+    #
     # @api private
+    #
     attr_reader :skip_condition
 
     # Get the validators for the given attribute_name and options
@@ -35,7 +63,7 @@ module Aequitas
       Array(new(attribute_name, options, &block))
     end
 
-    # Construct a validator. Capture the :if and :unless clauses when
+    # Initialize a rule. Capture the :if and :unless clauses when
     # present.
     #
     # @param [String, Symbol] attribute_name
@@ -47,11 +75,11 @@ module Aequitas
     # @option [String, Hash] :message
     #   A custom message that will be used for any violations of this rule
     # @option [Symbol, Proc] :if
-    #   The name of a method (on the valiated resource) or a Proc to call
-    #   (with the resource) to determine if the rule should be applied.
+    #   The name of a method (on the valiated context) or a Proc to call
+    #   (with the context) to determine if the rule should be applied.
     # @option [Symbol, Proc] :unless
-    #   The name of a method (on the valiated resource) or a Proc to call
-    #   (with the resource) to determine if the rule should *not* be applied.
+    #   The name of a method (on the valiated context) or a Proc to call
+    #   (with the context) to determine if the rule should *not* be applied.
     # @option [Boolean] :allow_nil
     #   Whether to skip applying this rule on nil values
     # @option [Boolean] :allow_blank
@@ -63,70 +91,106 @@ module Aequitas
       @skip_condition = options.fetch(:skip_condition) { SkipCondition.new(options) }
     end
 
-    # Validate the +resource+ arg against this Rule
+    # Validate the +context+ arg against this Rule
     # 
-    # @param [Object] resource
+    # @param [Object] context
     #   the target object to be validated
     # 
-    # @return [NilClass, Violation]
-    #   NilClass if +resource+ is valid
-    #   Violation with additional info if +resource+ is invalid
-    def validate(resource)
-      value = attribute_value(resource)
+    # @return [nil]
+    #   if +context+ is valid
+    #
+    # @return [Violation]
+    #   otherwise
+    #
+    # @api private
+    #
+    def validate(context)
+      value = attribute_value(context)
 
       if skip?(value) || valid_value?(value)
         nil
       else
-        new_violation(resource, value)
+        new_violation(context, value)
       end
     end
 
-    # Determines if this validator should be run against the resource
-    # by delegating to the guard configured for this rule
-    def execute?(resource)
-      guard.allow?(resource)
-    end
-
-    # Test the value to see if it is blank or nil, and if it is allowed.
-    # Note that allowing blank without explicitly denying nil allows nil
-    # values, since nil.blank? is true.
+    # Test if rule should run on context
     #
-    # @param [Object] value
-    #   The value to test.
+    # @return [true]
+    #   if rule should be executed on context
     #
-    # @return [Boolean]
-    #   true if blank/nil is allowed, and the value is blank/nil.
+    # @return [false]
+    #   otherwise
     #
     # @api private
+    #
+    def execute?(context)
+      guard.allow?(context)
+    end
+
+    # Test if rule is skipped on value
+    #
+    # @param [Object] value
+    #   the value to test
+    #
+    # @return [true]
+    #   if value should be skipped
+    #
+    # @return [false]
+    #   otherwise
+    #
+    # @api private
+    #
     def skip?(value)
       skip_condition.skip?(value)
     end
 
-    def attribute_value(resource)
-      resource.validation_attribute_value(attribute_name)
+    # Return attribute value to execute on rule
+    #
+    # @param [Object] context
+    #
+    # @return [Object]
+    #
+    # @api private
+    # 
+    def attribute_value(context)
+      context.validation_attribute_value(attribute_name)
     end
 
+    # Return violation info
+    #
+    # @return [Hash]
+    #
     # @api private
+    #
     def violation_info
       Hash[ violation_data ]
     end
 
+    # Return violation values
+    #
+    # @return [Enumerable<Object>]
+    #
     # @api private
+    #
     def violation_values
-      violation_data.map { |(_, value)| value }
+      violation_info.values
     end
 
+    # Return violation data
+    #
+    # @return [Array]
+    #
     # @api private
+    #
     def violation_data
       [ ]
     end
 
-    alias_method :to_s, :inspect
-
   private
 
-    def new_violation(resource, value = nil)
-      Violation::Rule.new(resource, custom_message,
+    def new_violation(context, value = nil)
+      Violation::Rule.new(context, custom_message,
         :rule  => self,
         :value => value)
     end

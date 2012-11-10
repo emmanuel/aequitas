@@ -1,15 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-require 'bigdecimal'
-require 'bigdecimal/util'
-require 'aequitas/rule'
-require 'aequitas/rule/value'
-
 module Aequitas
   class Rule
     class Numericalness < Rule
 
-      equalize_on *superclass.equalizer.keys + [:expected]
+      equalize(:expected)
 
       # TODO: move options normalization into the validator macros?
       def self.rules_for(attribute_name, options)
@@ -58,6 +53,3 @@ module Aequitas
     end # class Numericalness
   end # class Rule
 end # module Aequitas
-
-require 'aequitas/rule/numericalness/integer'
-require 'aequitas/rule/numericalness/non_integer'

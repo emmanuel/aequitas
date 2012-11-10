@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule'
-
 module Aequitas
   class Rule
     class Length < Rule
@@ -76,9 +74,3 @@ module Aequitas
     end # class Length
   end # class Rule
 end # module Aequitas
-
-# meh, I don't like doing this, but the superclass must be loaded before subclasses
-require 'aequitas/rule/length/equal'
-require 'aequitas/rule/length/range'
-require 'aequitas/rule/length/minimum'
-require 'aequitas/rule/length/maximum'

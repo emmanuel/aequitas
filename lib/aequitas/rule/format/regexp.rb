@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/rule/format'
-
 module Aequitas
   class Rule
     class Format
       class Regexp < Format
 
-        equalize_on *superclass.equalizer.keys + [:format_name]
+        equalize(:format_name)
 
         attr_reader :format_name
 

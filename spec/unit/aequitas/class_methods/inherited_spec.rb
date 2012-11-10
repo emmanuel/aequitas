@@ -17,7 +17,7 @@ describe Aequitas::ClassMethods, '#inherited' do
     assert_includes subject.validation_rules[attribute_name], expected_rule
   end
 
-  it "the descendant has access to validation rules added to the parent after inheritance" do
+  it 'the descendant has access to validation rules added to the parent after inheritance' do
     skip 'implement inheritance references instead of statically copying (ala Virtus::AttributeSet)'
     assert_predicate descendant_class.validation_rules[:default], :empty?
     base_class.validation_rules.add(rule_class, [attribute_name])

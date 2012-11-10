@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/violation'
-
 module Aequitas
   class Violation
     class Message < Violation
@@ -20,7 +18,7 @@ module Aequitas
       #   the validated object
       # @param [String, #call, Hash] message
       #   an optional custom message for this Violation
-      # @param [Symbol] attribute_name
+      # @param [Hash] options
       #   the name of the attribute whose validation rule was violated
       #   or nil, if a Rule was provided.
       # 

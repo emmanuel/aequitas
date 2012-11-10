@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/virtus_integration/inline_attribute_rule_extractor'
-
 module Aequitas
   module VirtusIntegration
     module InlineAttributeRuleExtractor
@@ -21,6 +19,17 @@ module Aequitas
           inline_rules = []
           inline_rules.concat Array(extract_presence_rule)
           # inline_rules.concat Array(extract_primitive_type_rule)
+        end
+
+        def extract_length_rules
+          length = options.fetch(:length, false)
+
+          case length
+          when ::Integer; Rule::Length::Equal.new(attribute.name, :expected => length)
+          when ::Range;   Rule::Length::Range.new(attribute.name, :range    => length)
+          when ::FalseClass;
+          else raise ArgumentError, "expected Integer or Range :length, got: #{length.inspect}"
+          end
         end
 
         def extract_presence_rule

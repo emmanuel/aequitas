@@ -1,9 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'aequitas/exceptions'
-require 'aequitas/support/value_object'
-require 'aequitas/message_transformer'
-
 module Aequitas
   class Violation
     class Rule < Violation
@@ -14,10 +10,11 @@ module Aequitas
       #   the validated object
       # @param [String, #call, Hash] message
       #   an optional custom message for this Violation
-      # @param [Rule] rule
+      # @param [Hash] options
       #   the Rule whose violation triggered the creation of the receiver
       #
       # @api private
+      #
       def initialize(resource, message, options = {})
         super
 
