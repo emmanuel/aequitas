@@ -3,7 +3,7 @@
 module Aequitas
   class ViolationSet
 
-    include Enumerable, Adamantium::Flat
+    include Adamantium::Flat, Enumerable
 
     # Return violations
     #
@@ -12,7 +12,6 @@ module Aequitas
     # @api private
     #
     attr_reader :violations
-    private :violations
 
     # Initialize object
     #
@@ -37,27 +36,63 @@ module Aequitas
     # 
     # @api public
     # 
-    # TODO: use a data structure that ensures uniqueness
-    #
     def on(attribute_name)
-      violations.select { |violation| violation.attribute_name == attribute_name }.uniq
+      violations.select { |violation| violation.attribute_name == attribute_name }
     end
 
-    # FIXME: Inneficient workaround to keep api stable while refactoring
+    # Return attribute names with at least one violation
     #
+    # @return [Enumerable<Symbol>]
+    # 
     # @api public
-    def each
-      violations.map(&:attribute_name).uniq.each do |name|
-        yield on(name)
+    # 
+    def attribute_names
+      violations.each_with_object(Set.new) do |violation, names|
+        names << violation.attribute_name
       end
     end
+    memoize :attribute_names
 
-    # FIXME: Remove array like interfaces
+    # Enumerate violations
+    #
+    # @return [self]
+    #   if block given
+    #
+    # @return [Enumerator<Violation]
+    #   otherwise
+    #
+    # @api public
+    #
+    def each
+      return to_enum unless block_given?
+
+      attribute_names.each do |name|
+        yield on(name)
+      end
+
+      self
+    end
+
+    # Return amount of violations
+    #
+    # @return [Fixnum]
+    #
+    # @api public
+    #
     def size
       violations.size
     end
 
-    # @api public
+    # Test if any violation is present
+    #
+    # @return [true]
+    #   if there is at least one violation
+    #
+    # @return [false]
+    #   otherwise
+    #
+    # @api private
+    #
     def empty?
       violations.empty?
     end
