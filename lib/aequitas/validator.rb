@@ -4,13 +4,13 @@ module Aequitas
 
     module InstanceMethods
 
-      # Return validated object
+      # Return validated subject
       #
       # @return [Object]
       #
       # @api private
       #
-      attr_reader :object
+      attr_reader :subject
 
       # Return violation set
       #
@@ -58,21 +58,21 @@ module Aequitas
       # @api public
       #
       def validation_attribute_value(attribute_name)
-        object.__send__(attribute_name) if object.respond_to?(attribute_name, true)
+        subject.__send__(attribute_name) if subject.respond_to?(attribute_name, true)
       end
 
     private
 
-      # Initialize object
+      # Initialize subject
       #
-      # @param [Object] object
+      # @param [Object] subject
       #
       # @return [undefined]
       #
       # @api private
       #
-      def initialize(object)
-        @object = object
+      def initialize(subject)
+        @subject = subject
         @violations = ViolationSet.new(rules.validate(self).each.to_a)
       end
 
