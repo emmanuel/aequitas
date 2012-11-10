@@ -3,7 +3,7 @@
 module Aequitas
   class ViolationSet
 
-    include Adamantium::Flat, Enumerable
+    include Adamantium::Flat, Enumerable, Equalizer.new(:violations)
 
     # Return violations
     #
